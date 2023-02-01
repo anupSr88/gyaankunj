@@ -19,7 +19,7 @@ function HeaderComp(props) {
 
   return (
     <>
-    <Navbar className='headerCss'>
+    <Navbar fixed='top' className='headerCss'>
       
       <img src={GyaanKunj} alt="Logo" />
         
@@ -34,7 +34,7 @@ function HeaderComp(props) {
           </Nav>
         </Navbar.Collapse>
         {/* <img style={{height:"69px", width:"69px", borderRadius:"50%", position:"relative", right:"50px"}} src={ProfileLogo} /> */}
-        <button className='loginBtn' onClick={openLoginPage}>Log In</button>
+        <button className='headerLoginBtn' onClick={openLoginPage}>Log In</button>
       
     </Navbar>
     <LoginPage show={showLogin} onHide={() => {setShowLogin(false)}}/>

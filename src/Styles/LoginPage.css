@@ -1,12 +1,14 @@
 .ModalContentMain {
-    height: 543px;
-    width: 1074px;
+    height: 539px;
+    width: 876px;
     background-color: white;
     border-radius: 1%;
 }
 
 .loginForm{
-    margin-top: 86px;
+    margin-top: 42px;
+    position: relative;
+    left: 42px;
 }
 
 .loginForm h1 {
@@ -15,7 +17,8 @@
 
 .loginImageContent{
     width: 304px;
-    border-top-left-radius: 1%;
+    position: relative;
+    right: 10px;
 }
 
 .loginFormContent{

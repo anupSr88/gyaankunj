@@ -1,7 +1,6 @@
-.carousel-main {
-    height: 400px;
-    background-color: #754FFE;
-    display: flex;
+.dashboardImg img{
+    height: 568px;
+    width: 100%;
 }
 
 .gyaankunjDesc{

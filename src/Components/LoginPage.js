@@ -2,8 +2,14 @@ import React from "react";
 import { Row, Col, Modal, Form, Button } from "react-bootstrap";
 import "../Styles/LoginPage.css";
 import loginImage from "../Images/loginImage.png";
+import closeBtn from "../Images/closeBtn.png";
+
 
 const LoginPage = (props) => {
+
+  const closeLoginModal = () => {
+    props.onHide()
+  }
   return (
     <>
       <Modal
@@ -13,7 +19,9 @@ const LoginPage = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
+        
         <div className="ModalContentMain">
+          
           <Row>
             <Col md={3}>
               <div className="loginImage">
@@ -24,10 +32,10 @@ const LoginPage = (props) => {
                 />
               </div>
             </Col>
-            <Col md={9}>
+            <Col md={8}>
               <div className="loginForm">
-                <h1 style={{textAlign: "center", font: "normal normal bold 35px/50px Roboto", letterSpacing: "0px", color: "#0B1785"}}>Digitalize your school in minutes</h1>
-                <h1 style={{textAlign: "center", font: "normal normal bold 35px/50px Roboto", letterSpacing: "0px", color: "#5AB6DE"}}> with Gyankunj</h1>
+                <h1 style={{textAlign: "center", font: "normal normal bold 26px/34px Roboto", letterSpacing: "0px", color: "#0B1785"}}>Digitalize your school in minutes</h1>
+                <h1 style={{textAlign: "center", font: "normal normal bold 26px/34px Roboto", letterSpacing: "0px", color: "#5AB6DE"}}> with Gyankunj</h1>
                 <div className="loginFormContent">
                   <Form>
                     <Form.Group className="mb-2" controlId="formBasicEmail">
@@ -48,6 +56,9 @@ const LoginPage = (props) => {
                   </Form>
                 </div>
               </div>
+            </Col>
+            <Col md={1}>
+            <img alt="close" src = {closeBtn} onClick={closeLoginModal} style={{position: "relative", top: "15px", cursor:"pointer"}}/>
             </Col>
           </Row>
         </div>

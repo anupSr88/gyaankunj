@@ -4,6 +4,16 @@
     height: 90px;
 }
 
+.headerLoginBtn {
+    width: 172px;
+height: 48px;
+/* UI Properties */
+border: 2px solid #2F5CE0;
+border-radius: 4px;
+opacity: 1;
+padding-right: 10px;
+}
+
 .headerCss img {
     height: 90px;
 }

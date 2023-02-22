@@ -19,7 +19,8 @@ function HeaderComp(props) {
 
   return (
     <>
-    <Navbar fixed='top' className='headerCss'>
+    
+    <Navbar style={{paddingRight:"40px"}} fixed='top' className='headerCss'>
       
       <img src={GyaanKunj} alt="Logo" />
         
@@ -37,6 +38,7 @@ function HeaderComp(props) {
         <button className='headerLoginBtn' onClick={openLoginPage}>Log In</button>
       
     </Navbar>
+    
     <LoginPage show={showLogin} onHide={() => {setShowLogin(false)}}/>
     </>
      

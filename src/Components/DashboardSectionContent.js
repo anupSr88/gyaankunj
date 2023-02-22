@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Modal, Form, Button } from "react-bootstrap";
+import axios from 'axios';
 import "../Styles/DashboardSectionContent.css";
 import DashboardBg1 from '../Images/DashboardBg1.png'
 import parentImg from '../Images/parentImg.png'
@@ -16,11 +17,50 @@ import whtToChImg6 from '../Images/whtToChImg6.png'
 import whtToChImg7 from '../Images/whtToChImg7.png'
 import whtToChImg8 from '../Images/whtToChImg8.png'
 import whtToChImg9 from '../Images/whtToChImg9.png'
+import blurredBackdrop from '../Images/blurredBackdrop.png'
+import campusImg from '../Images/campusImg.png'
+import districtImg from '../Images/districtImg.png'
+import studentCountImg from '../Images/studentCountImg.png'
+import { useEffect } from "react";
+import '../Styles/DashboardCarousel.css'
+import DashboardImage1 from '../Images/DashboardImage1.png'
 
 
 const DashboardSectionContent = () => {
+
+  useEffect(() => {
+    apiTesting();
+    // fetch('http://0.0.0.0:5005/view_assignments?teacher_id=EMP2', {
+    //   'method':'GET',
+    //   headers : {
+    //     'x-access-tokens': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNfaWQiOiI2Zjc1MmQ4Ni02MDY2LTQyMDEtOWEwZi0wMDlkNTc4OWQxNWMiLCJleHAiOjE2Nzk1ODQyNTN9.6gWcYxsoXuAZH-8MELq1TrYBMcjtHgHf8Gz49BMs_NY',
+    //   },
+    // })
+    // .then((res) => console.log("Response - ", res.json()))
+  },[])
+
+  // const baseUrl = "http://0.0.0.0:5005"
+  const config = {
+    
+  url: `http://0.0.0.0:5005/view_assignments?teacher_id=EMP2`,
+  method:'get',
+  ContentType:'application/json',
+  };
+
+
+
+  const apiTesting = () => {
+    axios(config)   
+    .then((res) => console.log(res.data))
+    .catch((err) => console.log("error occured"))
+  }
+
+
     return (
       <>
+      <div className="dashboardImg">
+            <img alt="dashboard image" src={DashboardImage1} />
+        </div>
         <div
           className="dashboardContentMain"
           style={{ background: `url(${DashboardBg1})` }}
@@ -167,9 +207,31 @@ const DashboardSectionContent = () => {
             </Col>
             <Col md={3}>
               <div className="whyToChooseImg" style={{ background: `url(${whtToChImg9})` }}></div>
-              <p>Effective Tracking & Reporting</p>
+              <p>Tracking & Reporting</p>
             </Col>
           </Row>
+          </div>
+        </div>
+        <div className="dashboardEndContent" style={{ background: `url(${blurredBackdrop})` }}>
+          <h1>Our presence across the country</h1>
+          <div className="EndContentInner">
+            <Row>
+              <Col md={4} style={{height: "304px"}}>
+              <img alt="campusImg" src = {campusImg} />
+              <p>100+</p>
+              <p>Campuses</p>
+              </Col>
+              <Col md={4} style={{height: "304px"}}>
+              <img alt="districtImg" src = {districtImg} />
+              <p>100+</p>
+              <p>Districts</p>
+              </Col>
+              <Col md={4} style={{height: "304px"}}>
+              <img alt="studentCountImg" src = {studentCountImg} />
+              <p>100+</p>
+              <p>Students</p>
+              </Col>
+            </Row>
           </div>
         </div>
       </>

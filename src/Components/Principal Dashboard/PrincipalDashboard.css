@@ -1,0 +1,181 @@
+.dashboardMain {
+    margin-top: 90px;
+    background: #F6F1F1 0% 0% no-repeat padding-box;
+}
+
+.sidebarStyling{
+    height: 600px;
+}
+
+.attendanceOverview {
+    width: 97%;
+    margin-left: 5%;
+    margin-bottom: 2%;
+height: 249px;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 3px 4px #0000001A;
+border: 1px solid #EFF1F4;
+border-radius: 8px;
+opacity: 1;
+
+}
+
+.attendanceOverview h4{
+    padding: 20px;
+    text-align: left;
+font: normal normal bold 22px/34px Roboto;
+letter-spacing: 0px;
+color: #2A2D2F;
+opacity: 1;
+}
+
+.attendanceOverviewInner h6 {
+    background: #F1E7FC 0% 0% no-repeat padding-box;
+border-radius: 0px 8px;
+    height: 37px;
+    width: 128px;
+}
+
+.attendanceOverviewInner{
+    height: 175px;
+    padding-top: 20px
+}
+
+.attendanceOverviewInner span {
+    text-align: left;
+font: normal normal normal 16px/21px Roboto;
+letter-spacing: 0px;
+color: #AEAEAE;
+opacity: 1;
+}
+
+.attendanceOverviewInner p{
+    text-align: center;
+font: normal normal bold 27px/35px Roboto;
+letter-spacing: 0px;
+color: #8A01FF;
+opacity: 1;
+}
+
+.dashboardRightPanel {
+    width: 91%;
+    margin-left: 5%;
+height: 248px;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 3px 4px #0000001A;
+border: 1px solid #EFF1F4;
+border-radius: 8px;
+opacity: 1;
+}
+
+.toggleBtn {
+    width: 45px;
+    margin-right: 10px;
+}
+
+.teacherRoutine {
+    width: 97%;
+    margin-left: 5%;
+    margin-bottom: 2%;
+height: 249px;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 3px 4px #0000001A;
+border: 1px solid #EFF1F4;
+border-radius: 8px;
+opacity: 1;
+overflow: hidden;
+overflow-y: auto;
+
+}
+
+.teacherRoutine h4{
+    padding: 20px;
+    text-align: left;
+font: normal normal bold 22px/34px Roboto;
+letter-spacing: 0px;
+color: #2A2D2F;
+opacity: 1;
+}
+
+.teacherRoutingDD {
+    padding-top: 17px;
+}
+
+.dashboardLogbook{
+    width: 97%;
+    margin-left: 5%;
+    margin-bottom: 20%;
+height: 450px;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 3px 4px #0000001A;
+border: 1px solid #EFF1F4;
+border-radius: 8px;
+opacity: 1;
+overflow: hidden;
+overflow-y: auto;
+}
+
+.dashboardLogbook h4{
+    padding: 20px;
+    text-align: left;
+font: normal normal bold 22px/34px Roboto;
+letter-spacing: 0px;
+color: #2A2D2F;
+opacity: 1;
+}
+
+.DLogbook {
+    padding-top: 17px;
+}
+
+.dropdownHead {
+    background-color: white;
+    color: #8A01FF;
+}
+
+.dashboardRightPanelTop {
+    width: 358px;
+    height: 74px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    /* box-shadow: 0px 3px 6px #B4B3B329; */
+    opacity: 1;
+    height: 249px;
+    box-shadow: 0px 3px 4px #0000001a;
+    border: 1px solid #EFF1F4;
+    border-radius: 8px;
+    margin-bottom: 5%;
+}
+
+.dashboardRightPanelTop h6{
+font: normal normal normal 19px/34px Roboto;
+letter-spacing: 0px;
+color: #2A2D2F;
+opacity: 1;
+background: #F1E7FC 0% 0% no-repeat padding-box;
+    border-radius: 0px 8px;
+    height: 37px;
+    width: 128px;
+}
+
+.dashboardRightPanelTop img{
+    height: 154px;
+    width: 188px;
+    border-radius: 5%;
+}
+
+.dashboardRightPanelCard{
+    height: 48px;
+    margin-bottom: 2px;
+    padding-right: 2px;
+}
+
+.dashboardStatus{
+    background: #66B509 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.react-calendar {
+    border-radius: 2%;
+    border: none;
+}

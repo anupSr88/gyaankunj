@@ -2,16 +2,15 @@
     background-color: white;
     padding: 0px 40px;
     height: 90px;
+    padding-right: 96px;
 }
 
 .headerLoginBtn {
-    width: 172px;
+    width: 125px;
 height: 48px;
-/* UI Properties */
 border: 2px solid #2F5CE0;
 border-radius: 4px;
 opacity: 1;
-padding-right: 10px;
 }
 
 .headerCss img {
@@ -24,4 +23,5 @@ height: 48px;
 border: 2px solid #2F5CE0;
 border-radius: 4px;
 opacity: 1;
+color: #2F5CE0;
 }

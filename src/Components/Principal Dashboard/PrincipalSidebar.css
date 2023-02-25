@@ -1,3 +1,7 @@
+.sidebarStyling {
+    width: 291px;
+}
+
 .sidebarStyling .ps-menu-label {
     text-align: left;
 font: normal normal normal 20px/26px Roboto;
@@ -10,9 +14,31 @@ opacity: 1;
     height: 76px;
 }
 
+.ps-sidebar-root{
+    width: 290px;
+}
+
 .sidebarMenu {
     padding: 40px 0px 0px 40px;
-    width: 264px;
+    width: 295px;
+    font: normal normal normal 20px/26px Roboto;
+letter-spacing: 0px;
+color: #0071FF;
+opacity: 1;
+}
+
+.pro-item-content a{
+    text-decoration: none;
+    
+}
+
+.menuItemStyle{
+    position: relative;
+    top: 13px;
+}
+
+ul{
+    list-style-type: none
 }
 
 .sidebarMenuInner {

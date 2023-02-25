@@ -1,29 +1,51 @@
 import React from 'react';
 import './PrincipalDashboard.css'
 import PrincipalSidebar from './PrincipalSidebar'
+import { Router, Route, Switch } from "react-router-dom";
+import Dashboard from './Dashboard'
+import MasterRoutine from './MasterRoutine/MasterRoutine';
+import AttendanceOverview from './Attendance/AttendanceOverview';
+import ReportSection from './Reports/Reports';
+import LessonPlan from './Lesson Plan/LessonPlan';
+import Resources from './Resources/ResourcesList';
 import { Row, Col, Modal } from "react-bootstrap";
-import DashboardContent from './DashboardContent'
-import DashboardRightPanel from './DashboardRightPanel'
 
 const PrincipalDashboard = () => {
-    return ( 
-        <>
-        <div className='dashboardMain'>
-        <Row>
-            <Col xs={4} md={2}>
-                <PrincipalSidebar />
-            </Col>
-            <Col xs={16} md={7}>
-                <DashboardContent />
-            </Col>
-            <Col xs={4} md={3}>
-                <DashboardRightPanel />
-            </Col>
+    return (
+      <>
+        <Row className="dflex">
+          <Col md={3} className="dashboardMain" style={{width:"20%"}}>
+            <PrincipalSidebar />
+          </Col>
+          {/* <HeaderComp /> */}
+          <Col md={9} style={{width:"80%"}}>
+          <Switch>
+            <Route path="/principalDashboard/Dashboard" component={Dashboard} />
+            <Route
+              path="/principalDashboard/MasterRoutine"
+              component={MasterRoutine}
+            />
+            <Route
+              path="/principalDashboard/LessonPlan"
+              component={LessonPlan}
+            />
+             <Route
+              path="/principalDashboard/AttendanceOverview"
+              component={AttendanceOverview}
+            />
+            <Route
+              path="/principalDashboard/Reports"
+              component={ReportSection}
+            />
+            <Route
+              path="/principalDashboard/Resources"
+              component={Resources}
+            />
+          </Switch>
+          </Col>
         </Row>
-        </div>
-        
-        </>
-     );
+      </>
+    );
 }
 
 export default PrincipalDashboard;

@@ -26,13 +26,13 @@ function HeaderComp(props) {
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          {/* <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Courses</Nav.Link>
             <Nav.Link href="#link">Report</Nav.Link>
             <Nav.Link href="#link">Help</Nav.Link>
             
-          </Nav>
+          </Nav> */}
         </Navbar.Collapse>
         {/* <img style={{height:"69px", width:"69px", borderRadius:"50%", position:"relative", right:"50px"}} src={ProfileLogo} /> */}
         <button className='headerLoginBtn' onClick={openLoginPage}>Log In</button>

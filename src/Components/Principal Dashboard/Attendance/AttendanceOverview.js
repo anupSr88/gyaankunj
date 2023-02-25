@@ -1,53 +1,24 @@
-import React, { useState } from "react";
-import "./PrincipalDashboard.css";
-import { Row, Col, ButtonGroup, ToggleButton, Dropdown } from "react-bootstrap";
-import TableComponent from '../Shared Components/TableComponent'
-import RoutineTableComponent from '../Shared Components/RoutineTable'
-import mockData from '../../Mock Data/mockdata.json'
-import routineData from '../../Mock Data/routineData.json'
+import React from 'react';
+import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar } from "react-bootstrap";
+import { useState } from "react";
 
-const DashboardContent = () => {
-  const [checked, setChecked] = useState(false);
-  const [radioValue, setRadioValue] = useState("1");
-  const [tableData, setTableData] = useState([])
+const AttendanceOverview = () => {
+    const [checked, setChecked] = useState(false);
+    const [radioValue, setRadioValue] = useState("1");
+    const [tableData, setTableData] = useState([])
 
-  const radios = [
-    { name: "A", value: "1" },
-    { name: "B", value: "2" },
-    { name: "C", value: "3" },
-    { name: "D", value: "4" },
-  ];
-
-  const column = [
-    { field:"Period", value:"Period" },
-    { field:"Students present", value:"Student Present" },
-    { field:"Subject", value:"Subject" },
-    { field:"Content taught", value:"Content Taught" },
-    { field:"Homework", value:"Homework" },
-    { field:"Absentees", value:"Absent" },
-]
-
-const routineColumn = [
-    { field:"1st", value: "Subject"},
-    { field:"2nd", value: "Subject"},
-    { field:"3rd", value: "Subject"},
-    { field:"4th", value: "Subject"},
-    { field:"Break", value: "Subject"},
-    { field:"5th", value: "Subject"},
-    { field:"6th", value: "Subject"},
-    { field:"7th", value: "Subject"},
-    { field:"8th", value: "Subject"},
-]
-
-const routineRow = [
-    {field:"Hindi", value: "Hindi"},
-    {field:"Time", value: "Time"},
-    {field:"Teacher", value: "Teacher"}
-]
-
-  return (
-    <div>
-      <div className="attendanceOverview">
+    const now="100"
+  
+    const radios = [
+      { name: "A", value: "1" },
+      { name: "B", value: "2" },
+      { name: "C", value: "3" },
+      { name: "D", value: "4" },
+    ];
+    return (
+        <>
+        <div>
+      <div className="attendanceSectionOverview">
         <Row
           style={{
             height: "74px",
@@ -73,18 +44,18 @@ const routineRow = [
           >
             <h6 style={{ marginLeft: "12px", paddingTop:"5px" ,textAlign: "center", font: "normal normal medium 14px/15px Roboto", letterSpacing: "0px", color: "#821CE8", opacity: "1" }}>Teacher</h6>
             <Row style={{ margin: "10px 0px" }}>
-              <Col md={6}>
+              <Col>
                 <span>Present</span>
               </Col>
-              <Col md={6}>
+              <Col>
                 <p>5000</p>
               </Col>
             </Row>
             <Row>
-              <Col md={6}>
+              <Col>
                 <span>Absent</span>
               </Col>
-              <Col md={6}>
+              <Col>
                 <p>825</p>
               </Col>
             </Row>
@@ -168,11 +139,11 @@ const routineRow = [
                 backgroundColor: "#E1E9F3",
                 height: "53px",
                 paddingTop: "7px",
-                marginLeft: "5px",
+                
               }}
             >
               <Col>
-                <h5>Section</h5>
+                <h5>Select Section</h5>
               </Col>
               <Col>
                 <ButtonGroup>
@@ -198,7 +169,7 @@ const routineRow = [
         </Row>
       </div>
 
-      <div className="teacherRoutine">
+      <div className="teacherAndStdAttendance">
       <Row
           style={{
             height: "74px",
@@ -208,14 +179,14 @@ const routineRow = [
             width: "100%",
           }}
         >
-            <Col md={8}>
-            <h4>Teacher Routine</h4>
+            <Col md={6}>
+            <h4>Students Attendance</h4>
             </Col>
             <Col md={2} className="teacherRoutingDD">
             <span>
                   <Dropdown>
                     <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Section
+                    Select Section
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -230,7 +201,7 @@ const routineRow = [
             <span>
                   <Dropdown>
                     <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Class
+                    Select Class
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -241,15 +212,58 @@ const routineRow = [
                   </Dropdown>
                 </span>
             </Col>
-        </Row>
-        <Row>
-            <Col>
-            <RoutineTableComponent column = {routineColumn} data={routineData} rowData={routineRow} />
+            <Col md={2} className="teacherRoutingDD">
+            <span>
+                  <Dropdown>
+                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
+                    Select Attendance
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Weekly</Dropdown.Item>
+                      <Dropdown.Item href="#/action-2">Monthly </Dropdown.Item>
+                      <Dropdown.Item href="#/action-3">Yearly </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </span>
             </Col>
         </Row>
+        <div className="routineSection">
+            <div>
+              <Row>
+                <Col md={2}>
+                <h6 style={{ marginLeft: "12px", paddingTop:"5px" ,textAlign: "center", font: "normal normal medium 14px/15px Roboto", letterSpacing: "0px", color: "#821CE8", opacity: "1", background: "#F1E7FC 0% 0% no-repeat padding-box", borderRadius: "0px 8px", width: "120px", height: "35px"}}>Teacher</h6>
+                </Col>
+                <Col md={3} style={{textAlign: "initial"}}>
+                    Julie
+                </Col>
+              </Row>
+            </div>
+            <Table striped hover>
+              <thead>
+                <tr style={{background: "#7A9ABF 0% 0% no-repeat padding-box", borderRadius: "4px 4px 0px 0px", opacity: "1"}}>
+                  <th style={{width:"100px"}}>Roll No.</th>
+                  <th style={{width:"230px"}}>Students Name</th>
+                  <th style={{width:"205px"}}>No. of days present</th>
+                  <th style={{width:"205px"}}>No. of days absent</th>
+                  <th>Attendance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                <td>1</td>
+                  <td>Asha</td>
+                  <td>20</td>
+                  <td>0</td>
+                  <td><ProgressBar variant="progressBarColour" now={now} label={`${now} %`} /></td>                 
+                </tr>
+              </tbody>
+            </Table>
+          </div>
+        
       </div>
 
-      <div className="dashboardLogbook">
+      <div className="teacherAndStdAttendance">
       <Row
           style={{
             height: "74px",
@@ -259,17 +273,14 @@ const routineRow = [
             width: "100%",
           }}
         >
-            <Col md={4}>
-            <h4>Log Book</h4>
+            <Col md={6}>
+            <h4>Teachers Attendance</h4>
             </Col>
-            <Col md={4} className="DLogbook">
-            <p>Action : Verify</p>
-            </Col>
-            <Col md={2} className="DLogbook">
+            <Col md={2} className="teacherRoutingDD">
             <span>
                   <Dropdown>
                     <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Section
+                    Select Section
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -280,11 +291,11 @@ const routineRow = [
                   </Dropdown>
                 </span>
             </Col>
-            <Col md={2} className="DLogbook">
+            <Col md={2} className="teacherRoutingDD">
             <span>
                   <Dropdown>
                     <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Class
+                    Select Class
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -295,15 +306,76 @@ const routineRow = [
                   </Dropdown>
                 </span>
             </Col>
-        </Row>
-        <Row>
-            <Col>
-            <TableComponent column = {column} data={mockData}/>
+            <Col md={2} className="teacherRoutingDD">
+            <span>
+                  <Dropdown>
+                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
+                    Select Attendance
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Weekly</Dropdown.Item>
+                      <Dropdown.Item href="#/action-2">Monthly </Dropdown.Item>
+                      <Dropdown.Item href="#/action-3">Yearly </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </span>
             </Col>
+            <div className="routineSection">
+            <div>
+              {/* <Row>
+                <Col md={2}>
+                <h6 style={{ marginLeft: "12px", paddingTop:"5px" ,textAlign: "center", font: "normal normal medium 14px/15px Roboto", letterSpacing: "0px", color: "#821CE8", opacity: "1", background: "#F1E7FC 0% 0% no-repeat padding-box", borderRadius: "0px 8px", width: "120px", height: "35px"}}>Teacher</h6>
+                </Col>
+                <Col md={3} style={{textAlign: "initial"}}>
+                    Julie
+                </Col>
+              </Row> */}
+            </div>
+            <Table striped hover>
+              <thead>
+                <tr style={{background: "#7A9ABF 0% 0% no-repeat padding-box", borderRadius: "4px 4px 0px 0px", opacity: "1"}}>
+                  <th style={{width:"100px"}}>Emp ID</th>
+                  <th style={{width:"230px"}}>Teacher Name</th>
+                  <th style={{width:"205px"}}>No. of days present</th>
+                  <th style={{width:"205px"}}>No. of days absent</th>
+                  <th>Attendance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                <td>1</td>
+                  <td>Asha</td>
+                  <td>20</td>
+                  <td>0</td>
+                  <td><ProgressBar variant="progressBarColour" now={now} label={`${now} %`} /></td>                 
+                </tr>
+
+                <tr>
+                <td>1</td>
+                  <td>Asha</td>
+                  <td>20</td>
+                  <td>0</td>
+                  <td><ProgressBar variant="progressBarColour" now={now} label={`${now} %`} /></td>                 
+                </tr>
+
+                <tr>
+                <td>1</td>
+                  <td>Asha</td>
+                  <td>20</td>
+                  <td>0</td>
+                  <td><ProgressBar variant="progressBarColour" now={now} label={`${now} %`} /></td>                 
+                </tr>
+              </tbody>
+            </Table>
+          </div>
+            
         </Row>
       </div>
     </div>
-  );
-};
+        
+        </>
+    )
+}
 
-export default DashboardContent;
+export default AttendanceOverview;

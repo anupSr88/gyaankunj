@@ -19,36 +19,35 @@ const LoginPage = (props) => {
     props.onHide()
   }
 
-  // useEffect(() => {
-  //   const config = {
-  //     headers:{
-  //       "x-access-tokens": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiI2Zjc1MmQ4Ni02MDY2LTQyMDEtOWEwZi0wMDlkNTc4OWQxNWMiLCJleHAiOjE2NzY4OTMzMTN9.08sgUOL3dUYVo2Xx5wX4-rAXIE4kFjjG0D8WNjQXx2U"
-  //     }
-  //   };
-  //   const url = "/view_assignment_report?teacher_id=EMP2&grade_id=1&section_id=1&subject_id=1";
+  useEffect(() => {
+    const config = {
+      headers:{
+        "x-access-tokens": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNfaWQiOiI2Zjc1MmQ4Ni02MDY2LTQyMDEtOWEwZi0wMDlkNTc4OWQxNWMiLCJleHAiOjE2Nzk5MzI5Mzh9.qnsrz3KA7djBfCGA3ZeS48Uk4zXPWR4O9AyxayWA-mE"
+      }
+    };
+    const url = "/view_assignments?teacher_id=EMP2";
     
-  //   const data ={
-  //     teacher_id: "EMP2",
-  //     grade_id: "1",
-  //     section_id: "1",
-  //     subject_id: "1"
-  //   }
-  //   axios.get(url, config, data)
+    const data ={
+      teacher_id: "EMP2",
+      grade_id: "1",
+      section_id: "1",
+      subject_id: "1"
+    }
+    axios.get(url, config, data)
     
-  //   .then((res) => console.log(res.data))
-  //   .catch((err) => console.log("error occured"))
-  // },[])
+    .then((res) => console.log(res.data))
+    .catch((err) => console.log("error occured"))
+  },[])
 
-  // const loginUser = () => {
-  //   console.log("Login Clicked")
-  //   axios.get('/view_assignments?teacher_id=EMP2')
-  //   .then((res) => console.log(res.data))
-  //   .catch((err) => console.log("error occured"))
-  // }
+  const loginUser = () => {
+    console.log("Login Clicked")
+    axios.get('/view_assignments?teacher_id=EMP2')
+    .then((res) => console.log(res.data))
+    .catch((err) => console.log("error occured"))
+  }
 
   const loginToContinue = () => {
     props.onHide()
-    console.log("myConstant.routesConfig.principaldashboard - ", myConstant.routesConfig.principaldashboard)
     history.push({
       pathname: `${myConstant.routesConfig.principaldashboard}`,
       state: `${myConstant.routesConfig.principaldashboard}`

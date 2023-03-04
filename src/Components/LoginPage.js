@@ -6,53 +6,78 @@ import loginImage from "../Images/loginImage.png";
 import closeBtn from "../Images/closeBtn.png";
 import * as myConstant from './fileConstant'
 import { useHistory } from "react-router-dom";
+import { loginUser } from '../ApiClient'
+import LoginError from './LoginError'
 
 const LoginPage = (props) => {
 
   const history = useHistory();
 
-  console.log("history - ", history)
-
   const [userData, setUserData] = useState('')
+  const [userName, setUserName] = useState('')
+  const [passwordd, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState(false)
 
   const closeLoginModal = () => {
     props.onHide()
   }
 
-  useEffect(() => {
-    const config = {
-      headers:{
-        "x-access-tokens": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNfaWQiOiI2Zjc1MmQ4Ni02MDY2LTQyMDEtOWEwZi0wMDlkNTc4OWQxNWMiLCJleHAiOjE2Nzk5MzI5Mzh9.qnsrz3KA7djBfCGA3ZeS48Uk4zXPWR4O9AyxayWA-mE"
-      }
-    };
-    const url = "/view_assignments?teacher_id=EMP2";
-    
-    const data ={
-      teacher_id: "EMP2",
-      grade_id: "1",
-      section_id: "1",
-      subject_id: "1"
-    }
-    axios.get(url, config, data)
-    
-    .then((res) => console.log(res.data))
-    .catch((err) => console.log("error occured"))
-  },[])
+  // const loginTeacher = () => {
+  //   props.onHide()
+  //   history.push({
+  //     pathname: `${myConstant.teacherRoutesConfig.teacherdashboard}`,
+  //     state: `${myConstant.teacherRoutesConfig.teacherdashboard}`
+  //   })
+  // }
 
-  const loginUser = () => {
-    console.log("Login Clicked")
-    axios.get('/view_assignments?teacher_id=EMP2')
-    .then((res) => console.log(res.data))
-    .catch((err) => console.log("error occured"))
-  }
+  const loginMember = (e) => {
+    let base64 = require("base-64");
 
-  const loginToContinue = () => {
-    props.onHide()
-    history.push({
-      pathname: `${myConstant.routesConfig.principaldashboard}`,
-      state: `${myConstant.routesConfig.principaldashboard}`
-    })
-  }
+    let url = "/login";
+    let username = userName;
+    let password = passwordd;
+
+    let headers = new Headers();
+    headers.set(
+      "Authorization",
+      "Basic " + base64.encode(username + ":" + password)
+    );
+
+    let data = fetch(url, { method: "POST", headers: headers })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("data - ", data);
+        if (data.status === "success") {
+          let user = localStorage.setItem("UserData", JSON.stringify(data));
+          props.onHide();
+          if(data.role === 'admin' || data.role === 'principal') {
+            history.push({
+              pathname: `${myConstant.routesConfig.principaldashboard}`,
+              state: `${myConstant.routesConfig.principaldashboard}`,
+            });
+          }
+          else if(data.role === 'teacher') {
+            history.push({
+              pathname: `${myConstant.teacherRoutesConfig.teacherdashboard}`,
+              state: `${myConstant.teacherRoutesConfig.teacherdashboard}`,
+            });
+          }
+          
+        } else {
+          setErrorMessage(true);
+          setUserName("");
+          setPassword("");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
   return (
     <>
       <Modal
@@ -83,17 +108,17 @@ const LoginPage = (props) => {
                   <Form>
                     <Form.Group className="mb-2" controlId="formBasicEmail">
                       <Form.Label style={{textAlign: "left", font: "normal normal normal 20px/26px Roboto", letterSpacing: "0px", color: "#2A2D2F", opacity: "1"}}>Enter your User ID</Form.Label>
-                      <Form.Control type="email" placeholder="Enter email" />
+                      <Form.Control type="text" placeholder="Enter User ID" value={userName} onChange={(e) => setUserName(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group className="mb-2" controlId="formBasicPassword">
                       <Form.Label style={{textAlign: "left", font: "normal normal normal 20px/26px Roboto", letterSpacing: "0px", color: "#2A2D2F", opacity: "1"}}>Enter your password</Form.Label>
-                      <Form.Control type="password" placeholder="Password" />
+                      <Form.Control type="password" placeholder="Password" value={passwordd} onChange={(e) => setPassword(e.target.value)} />
                     </Form.Group>
                     <Form.Group>
                     <a href="#">Forgot password?</a>
                     </Form.Group>
-                    <Button variant="primary" className="loginBtn" onClick={loginToContinue}>
+                    <Button variant="primary" className="loginBtn" onClick={loginMember}>
                       Submit
                     </Button>
                   </Form>
@@ -106,6 +131,9 @@ const LoginPage = (props) => {
           </Row>
         </div>
       </Modal>
+
+      {errorMessage && <LoginError show = {errorMessage} onHide={() => {setErrorMessage(false)}} />}
+
     </>
   );
 };

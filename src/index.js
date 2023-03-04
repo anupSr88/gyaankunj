@@ -8,7 +8,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 
 // axios.defaults.baseURL = 'https://0.0.0.0:5005'
-axios.defaults.headers.common['x-access-tokens'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNfaWQiOiI2Zjc1MmQ4Ni02MDY2LTQyMDEtOWEwZi0wMDlkNTc4OWQxNWMiLCJleHAiOjE2Nzk1ODQyNTN9.6gWcYxsoXuAZH-8MELq1TrYBMcjtHgHf8Gz49BMs_NY'
+const tokenId = window.localStorage.getItem('Token')
+axios.defaults.headers.common['x-access-tokens'] = tokenId
+console.log("TOKEN", tokenId)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

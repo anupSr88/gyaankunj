@@ -1,8 +1,17 @@
 import React from 'react';
 import { Row, Col, ButtonGroup, Dropdown, Card, Button } from "react-bootstrap";
 import { useState } from "react";
+import AddResources from './AddResources'
 
 const Resources = () => {
+
+  const [showAddResource, setShowAddResource] = useState(false)
+
+  const handleShowModal = () => {
+    setShowAddResource(true)
+}
+
+
     return (
         <>
         <div className='resourcesHeader'>
@@ -34,8 +43,9 @@ const Resources = () => {
                 </span>
             </Col>
             <Col md={2} className='teacherRoutingDD'>
-                <Button variant="outline-primary">
-                  + Add Routine
+                <Button variant="outline-primary"
+                onClick={handleShowModal}>
+                  + Add Resources
                 </Button>{" "}
               </Col>
         </Row>
@@ -87,6 +97,7 @@ const Resources = () => {
               </div>
             </div>
         </div>
+        {showAddResource && <AddResources show={showAddResource} onHide={() => {setShowAddResource(false)}} />}
         </>
     )
 }

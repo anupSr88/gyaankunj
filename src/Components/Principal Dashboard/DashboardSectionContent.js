@@ -1,60 +1,32 @@
 import React from "react";
 import { Row, Col, Modal, Form, Button } from "react-bootstrap";
 import axios from 'axios';
-import "../Styles/DashboardSectionContent.css";
-import DashboardBg1 from '../Images/DashboardBg1.png'
-import parentImg from '../Images/parentImg.png'
-import principleImg from '../Images/principleImg.png'
-import studentImg from '../Images/studentImg.png'
-import teacherImg from '../Images/teacherImg.png'
-import whyGKBg from '../Images/whyGKBg.png'
-import whtToChImg1 from '../Images/whtToChImg1.png'
-import whtToChImg2 from '../Images/whtToChImg2.png'
-import whtToChImg3 from '../Images/whtToChImg3.png'
-import whtToChImg4 from '../Images/whtToChImg4.png'
-import whtToChImg5 from '../Images/whtToChImg5.png'
-import whtToChImg6 from '../Images/whtToChImg6.png'
-import whtToChImg7 from '../Images/whtToChImg7.png'
-import whtToChImg8 from '../Images/whtToChImg8.png'
-import whtToChImg9 from '../Images/whtToChImg9.png'
-import blurredBackdrop from '../Images/blurredBackdrop.png'
-import campusImg from '../Images/campusImg.png'
-import districtImg from '../Images/districtImg.png'
-import studentCountImg from '../Images/studentCountImg.png'
+import "../../Styles/DashboardSectionContent.css";
+import DashboardBg1 from '../../Images/DashboardBg1.png'
+import parentImg from '../../Images/parentImg.png'
+import principleImg from '../../Images/principleImg.png'
+import studentImg from '../../Images/studentImg.png'
+import teacherImg from '../../Images/teacherImg.png'
+import whyGKBg from '../../Images/whyGKBg.png'
+import whtToChImg1 from '../../Images/whtToChImg1.png'
+import whtToChImg2 from '../../Images/whtToChImg2.png'
+import whtToChImg3 from '../../Images/whtToChImg3.png'
+import whtToChImg4 from '../../Images/whtToChImg4.png'
+import whtToChImg5 from '../../Images/whtToChImg5.png'
+import whtToChImg6 from '../../Images/whtToChImg6.png'
+import whtToChImg7 from '../../Images/whtToChImg7.png'
+import whtToChImg8 from '../../Images/whtToChImg8.png'
+import whtToChImg9 from '../../Images/whtToChImg9.png'
+import blurredBackdrop from '../../Images/blurredBackdrop.png'
+import campusImg from '../../Images/campusImg.png'
+import districtImg from '../../Images/districtImg.png'
+import studentCountImg from '../../Images/studentCountImg.png'
 import { useEffect } from "react";
-import '../Styles/DashboardCarousel.css'
-import DashboardImage1 from '../Images/DashboardImage1.png'
+import '../../Styles/DashboardCarousel.css'
+import DashboardImage1 from '../../Images/DashboardImage1.png'
 
 
 const DashboardSectionContent = () => {
-
-  useEffect(() => {
-    apiTesting();
-    // fetch('http://0.0.0.0:5005/view_assignments?teacher_id=EMP2', {
-    //   'method':'GET',
-    //   headers : {
-    //     'x-access-tokens': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNfaWQiOiI2Zjc1MmQ4Ni02MDY2LTQyMDEtOWEwZi0wMDlkNTc4OWQxNWMiLCJleHAiOjE2Nzk1ODQyNTN9.6gWcYxsoXuAZH-8MELq1TrYBMcjtHgHf8Gz49BMs_NY',
-    //   },
-    // })
-    // .then((res) => console.log("Response - ", res.json()))
-  },[])
-
-  // const baseUrl = "http://0.0.0.0:5005"
-  const config = {
-    
-  url: `http://0.0.0.0:5005/view_assignments?teacher_id=EMP2`,
-  method:'get',
-  ContentType:'application/json',
-  };
-
-
-
-  const apiTesting = () => {
-    axios(config)   
-    .then((res) => console.log(res.data))
-    .catch((err) => console.log("error occured"))
-  }
-
 
     return (
       <>

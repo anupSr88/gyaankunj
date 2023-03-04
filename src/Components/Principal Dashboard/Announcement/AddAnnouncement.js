@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
 import Select from 'react-select'
-import { createMasterRoutine, getMasterRoutineData } from '../../../ApiClient'
 
-const AddRoutine = (props) => {
+const AddAnnouncement = (props) => {
+  
 
   const [grade, setGrade] = useState('')
   const [subject, setSubject] = useState('')
@@ -14,8 +14,6 @@ const AddRoutine = (props) => {
   // const handleGrade = (e) => {
   //   console.log("e - ", e)
   // }
-
-  console.log('props - ', props)
 
   //   const [show, setShow] = useState(false);
 
@@ -68,52 +66,32 @@ const AddRoutine = (props) => {
       <Modal
         className="ModalBody"
         {...props}
-        size="xl"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Routine</Modal.Title>
+          <Modal.Title>Add Resources</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Row style={{marginBottom: "42px"}}>
-              <Col md={5}>
-                <span>Add Grade</span>
-                <Select options={gradeOptions} value={grade} onChange={(e) => setGrade(e.target.value)} />
-              </Col>
-              <Col md={2}>
-              </Col>
-              <Col md={5}>
-                <span>Add Subject</span>
-                <Select options={subjectOptions} />
-              </Col>
-            </Row>
-            <Row style={{marginBottom: "42px"}}>
-              <Col md={5}>
-                <span>Teacher Name</span>
-                <Select options={teacherOptions} />
-              </Col>
-              <Col md={2}>
-              </Col>
-              <Col md={5}>
-                <span>Add Period</span>
-                <Select options={periodOptions} />
-              </Col>
-            </Row>
-            <Row style={{marginBottom: "42px"}}>
-              {/* <Col md={5}>
+              <Col md={12}>
                 
-                <span>Add Timings</span>
-                <Select options={timingOptions} />
-              </Col> */}
-              {/* <Col md={2}>
-              </Col> */}
-              <Col md={5}>
-                <span>Add Section</span>
-                <Select options={sectionOptions} />
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form.Label>Announcement Subject</Form.Label>
+        <Form.Control type="text" placeholder="Announcement Subject" />
+      </Form.Group>
               </Col>
-              
+            </Row>
+            <Row style={{marginBottom: "42px"}}>
+              <Col md={12}>
+                
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label>Description</Form.Label>
+        <Form.Control as="textarea" rows={3} placeholder="Add Description" />
+      </Form.Group>
+              </Col>
             </Row>
           </Form>
         </Modal.Body>
@@ -126,4 +104,4 @@ const AddRoutine = (props) => {
   );
 };
 
-export default AddRoutine;
+export default AddAnnouncement;

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
 import Select from 'react-select'
-import { createMasterRoutine, getMasterRoutineData } from '../../../ApiClient'
 
-const AddRoutine = (props) => {
+const AddResources = (props) => {
 
   const [grade, setGrade] = useState('')
   const [subject, setSubject] = useState('')
@@ -14,8 +13,6 @@ const AddRoutine = (props) => {
   // const handleGrade = (e) => {
   //   console.log("e - ", e)
   // }
-
-  console.log('props - ', props)
 
   //   const [show, setShow] = useState(false);
 
@@ -73,7 +70,7 @@ const AddRoutine = (props) => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Routine</Modal.Title>
+          <Modal.Title>Add Resources</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -97,23 +94,9 @@ const AddRoutine = (props) => {
               <Col md={2}>
               </Col>
               <Col md={5}>
-                <span>Add Period</span>
+                <span>Add Book</span>
                 <Select options={periodOptions} />
               </Col>
-            </Row>
-            <Row style={{marginBottom: "42px"}}>
-              {/* <Col md={5}>
-                
-                <span>Add Timings</span>
-                <Select options={timingOptions} />
-              </Col> */}
-              {/* <Col md={2}>
-              </Col> */}
-              <Col md={5}>
-                <span>Add Section</span>
-                <Select options={sectionOptions} />
-              </Col>
-              
             </Row>
           </Form>
         </Modal.Body>
@@ -126,4 +109,4 @@ const AddRoutine = (props) => {
   );
 };
 
-export default AddRoutine;
+export default AddResources;

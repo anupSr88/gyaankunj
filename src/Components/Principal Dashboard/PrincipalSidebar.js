@@ -40,7 +40,7 @@ const PrincipalSidebar = () => {
                 <img alt="close" src={dashboardImg} />
               </Col>
               <Col md={10} style={{textAlign:"left"}}>
-                <MenuItem className="menuItemStyle"> <Link to={myConstant.routesConfig.masterRoutine}> Master Routine </Link> </MenuItem>
+                <MenuItem className="menuItemStyle"><Link to={myConstant.routesConfig.masterRoutine}> Master Routine</Link></MenuItem>
               </Col>
             </Row>
             <Row className="sidebarMenuInner">
@@ -80,7 +80,7 @@ const PrincipalSidebar = () => {
                 <img alt="close" src={dashboardImg} />
               </Col>
               <Col md={10} style={{textAlign:"left"}}>
-                <MenuItem className="menuItemStyle"> Annoucements </MenuItem>
+                <MenuItem className="menuItemStyle"><Link to={myConstant.routesConfig.announcement}> Annoucements </Link></MenuItem>
               </Col>
             </Row>
             <Row className="sidebarMenuInner">
@@ -88,7 +88,7 @@ const PrincipalSidebar = () => {
                 <img alt="close" src={dashboardImg} />
               </Col>
               <Col md={10} style={{textAlign:"left"}}>
-                <MenuItem className="menuItemStyle"> Notifications </MenuItem>
+                <MenuItem className="menuItemStyle"><Link to={myConstant.routesConfig.notifications}> Notifications </Link> </MenuItem>
               </Col>
             </Row>
           </Menu>

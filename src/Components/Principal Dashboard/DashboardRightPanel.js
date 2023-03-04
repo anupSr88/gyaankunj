@@ -3,6 +3,7 @@ import { Row, Col, Card } from "react-bootstrap";
 import DashboardRP from '../../Images/DashboardRP.png'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { Doughnut } from 'react-chartjs-2';
 
 const DashboardRightPanel = () => {
     const [value, onChange] = useState(new Date());
@@ -42,10 +43,8 @@ const DashboardRightPanel = () => {
               margin: "0px",
             }}
           >
-            <Col md={7}>
-              <img alt="dashboard image" src={DashboardRP} />
-            </Col>
-            <Col md={5}>
+            
+            {/* <Col md={5}>
               <h6 style={{ color: "#0040B5", fontWeight: "bold" }}>Teacher</h6>
               <h4 style={{ color: "#0040B5" }}>5555</h4>
               <h6
@@ -58,6 +57,21 @@ const DashboardRightPanel = () => {
                 Student
               </h6>
               <h4 style={{ color: "#608E29" }}>2222</h4>
+            </Col> */}
+            <Col md={6}>
+            <h6 style={{ color: "#0040B5", fontWeight: "bold" }}>Teacher</h6>
+            {/* <Doughnut /> */}
+            </Col>
+            <Col md={6}>
+            <h6
+                style={{
+                  backgroundColor: "#DEFABD",
+                  color: "#608E29",
+                  fontWeight: "bold",
+                }}
+              >
+                Student
+              </h6>
             </Col>
           </Row>
         </div>

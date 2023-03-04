@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './MasterRoutine.css'
 import AddRoutine from './AddRoutine'
+import axios from 'axios'
+import { getMasterRoutineData } from '../../../ApiClient'
 
 const MasterRoutine = () => {
 
     const [showAddRoutine, setShowAddRoutine] = useState(false)
+    const [masterRoutineData, setMasterRoutineData] = useState([])
+
+    useEffect(() => {
+      getMasterRoutine();
+    },[])
 
     const handleShowModal = () => {
-        console.log("Clicked")
-        setShowAddRoutine(true)
+       setShowAddRoutine(true)
+    }
+
+    const getMasterRoutine = () => {
+      getMasterRoutineData()
+      .then((res) => setMasterRoutineData(res.data))
+      .catch((err) => console.log("error"))
     }
 
 
@@ -58,26 +70,25 @@ const MasterRoutine = () => {
                   <th>2nd</th>
                   <th>3rd</th>
                   <th>4th</th>
-                  <th rowSpan={8}>B</th>
+                  <th style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></th>
                   <th>5th</th>
                   <th>6th</th>
                   <th>7th</th>
                   <th>8th</th>
+                  <th>Remedial</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td
-                    rowSpan={3}
-                    style={{ verticalAlign: "middle", textAlign: "center" }}
-                  >
+                  <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="3">
                     1
                   </td>
                   <td>8:00 - 8:30</td>
                   <td>8:00 - 8:30</td>
                   <td>8:00 - 8:30</td>
                   <td>8:00 - 8:30</td>
-                  <td></td>
+                  <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">B<br></br> R<br></br> E<br></br> A<br></br> K</td>
+                  <td>8:00 - 8:30</td>
                   <td>8:00 - 8:30</td>
                   <td>8:00 - 8:30</td>
                   <td>8:00 - 8:30</td>
@@ -88,7 +99,8 @@ const MasterRoutine = () => {
                   <td>Hindi</td>
                   <td>Hindi</td>
                   <td>Hindi</td>
-                  <td></td>
+                  
+                  <td>Hindi</td>
                   <td>Hindi</td>
                   <td>Hindi</td>
                   <td>Hindi</td>
@@ -99,17 +111,20 @@ const MasterRoutine = () => {
                   <td>K.K. Singh</td>
                   <td>K.K. Singh</td>
                   <td>K.K. Singh</td>
-                  <td></td>
+                  
+                  <td>K.K. Singh</td>
                   <td>K.K. Singh</td>
                   <td>K.K. Singh</td>
                   <td>K.K. Singh</td>
                   <td>K.K. Singh</td>
                 </tr>
+                
               </tbody>
+              
             </Table>
           </div>
         </div>
-       {showAddRoutine && <AddRoutine show={showAddRoutine} onHide={() => {setShowAddRoutine(false)}} />}
+       {showAddRoutine && <AddRoutine show={showAddRoutine} onHide={() => {setShowAddRoutine(false)}} masterRoutineData={masterRoutineData} />}
       </>
     );
 }

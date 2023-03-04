@@ -33,3 +33,13 @@ letter-spacing: 0px;
 color: #FFFFFF;
 opacity: 1;
 }
+
+.pdfStyling{
+    display: block;
+    user-select: none;
+    width: 612px;
+    height: 792px;
+    /* padding-left: 17px; */
+    position: relative;
+    left: 29%;
+}

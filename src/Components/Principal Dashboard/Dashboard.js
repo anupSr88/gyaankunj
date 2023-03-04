@@ -1,11 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './PrincipalDashboard.css'
 import PrincipalSidebar from './PrincipalSidebar'
 import { Row, Col, Modal } from "react-bootstrap";
 import DashboardContent from './DashboardContent'
 import DashboardRightPanel from './DashboardRightPanel'
+import {getMasterRoutineData } from '../../ApiClient'
+
+
 
 const Dashboard = () => {
+    useEffect(() => {
+        apiTesting();
+      },[])
+    
+      const apiTesting = () => {
+        getMasterRoutineData()   
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log("error occured"))
+      }
     return ( 
         <>
         <div className='dashboardMain'>

@@ -8,7 +8,9 @@ import AttendanceOverview from './Attendance/AttendanceOverview';
 import ReportSection from './Reports/Reports';
 import LessonPlan from './Lesson Plan/LessonPlan';
 import Resources from './Resources/ResourcesList';
+import Notifications from './Notifications/Notifications';
 import { Row, Col, Modal } from "react-bootstrap";
+import Announcements from './Announcement/Announcement';
 
 const PrincipalDashboard = () => {
     return (
@@ -17,13 +19,12 @@ const PrincipalDashboard = () => {
           <Col md={3} className="dashboardMain" style={{width:"20%"}}>
             <PrincipalSidebar />
           </Col>
-          {/* <HeaderComp /> */}
           <Col md={9} style={{width:"80%"}}>
           <Switch>
             <Route path="/principalDashboard/Dashboard" component={Dashboard} />
             <Route
-              path="/principalDashboard/MasterRoutine"
-              component={MasterRoutine}
+              path="/principalDashboard/masterRoutine"
+              element={MasterRoutine}
             />
             <Route
               path="/principalDashboard/LessonPlan"
@@ -40,6 +41,14 @@ const PrincipalDashboard = () => {
             <Route
               path="/principalDashboard/Resources"
               component={Resources}
+            />
+            <Route
+              path="/principalDashboard/Announcements"
+              component={Announcements}
+            />
+            <Route
+              path="/principalDashboard/Notifications"
+              component={Notifications}
             />
           </Switch>
           </Col>

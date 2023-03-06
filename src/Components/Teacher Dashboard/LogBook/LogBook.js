@@ -2,14 +2,65 @@ import React from 'react';
 import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar, Button } from "react-bootstrap";
 import { useState } from "react";
 import AddLogBook from './AddLogbook'
+import { viewLogBook } from '../../../ApiClient'
+import Select from 'react-select'
+import { useEffect } from 'react';
 
 const LogBook = () => {
 
   const [showAddLogbook, setShowAddLogbook] = useState(false)
+  const [section, setSection] = useState('')
+  const [classData, setClassData] = useState('')
+
+  // useEffect(() => {
+  //   showLogBookData()
+  // })
 
   const handleShowLogBook = () => {
     setShowAddLogbook(true)
   }
+
+  const classOptions = [
+    {value: 1, label: 1},
+    {value: 2, label: 2},
+    {value: 3, label: 3},
+    {value: 4, label: 4},
+    {value: 5, label: 5},
+    {value: 6, label: 6},
+    {value: 7, label: 7},
+    {value: 8, label: 8},
+    {value: 9, label: 9},
+    {value: 10, label: 10},
+   ]
+
+  const sectionOptions = [
+    { value: '1', label: 'A' },
+    { value: '2', label: 'B' },
+    { value: '3', label: 'C' },
+    { value: '4', label: 'D' }
+  ]
+
+  const handleSectionChange = (e) => {
+    setSection(e.value)
+  }
+
+  const handleClassChange = (e) => {
+    setClassData(e.value)
+  }
+
+  const showLogBookData = () => {
+    // const postData = {
+    //   "date":'',
+    //   "grade_id": classData && classData,
+    //   "section_id": section && section
+    // }
+    viewLogBook('', classData, section)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+  }
+
+  console.log("classData - ", classData)
+  console.log("section - ", section)
 
 
     return (
@@ -24,38 +75,21 @@ const LogBook = () => {
             width: "100%",
           }}
         >
-            <Col md={6}>
+            <Col md={5}>
             <h4>Log Book</h4>
             </Col>
             <Col md={2} className="teacherRoutingDD">
             <span>
-                  <Dropdown>
-                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Select Section
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+            <Select placeholder="Select Section" isSearchable={false} options={sectionOptions} onChange={e => handleSectionChange(e)} />
                 </span>
             </Col>
             <Col md={2} className="teacherRoutingDD">
             <span>
-                  <Dropdown>
-                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Select Class
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+            <Select placeholder="Select Class" isSearchable={false} options={classOptions} onChange={e => handleClassChange(e)} />
                 </span>
+            </Col>
+            <Col md={1} style={{paddingTop:"17px"}}>
+              <Button onClick={showLogBookData}>Search</Button>
             </Col>
             <Col md={2} style={{paddingTop:"17px"}}>
                 <Button variant="outline-primary" onClick={handleShowLogBook}>

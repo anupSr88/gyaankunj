@@ -24,7 +24,7 @@ const PrincipalDashboard = () => {
             <Route path="/principalDashboard/Dashboard" component={Dashboard} />
             <Route
               path="/principalDashboard/masterRoutine"
-              element={MasterRoutine}
+              component={MasterRoutine}
             />
             <Route
               path="/principalDashboard/LessonPlan"

@@ -2,16 +2,19 @@ import axios from 'axios'
 
 const apiInstance = axios.create();
 
-apiInstance.interceptors.request.use((config) => {
+apiInstance.interceptors.request.use(async(config) => {
     const token = JSON.parse(localStorage.getItem('UserData'))
-    config.params['auth'] = token.token
+    const tokenId = token.token
+    config.headers = {
+        'x-access-tokens': tokenId
+    }
     console.log(config)
     return config;
 })
 
-const loginUser = (data) => {
-    return apiInstance.post(`/login`, data)
-}
+// const loginUser = (data) => {
+//     return apiInstance.post(`/login`, data)
+// }
 
 const createMasterRoutine = (data) => {
     return apiInstance.post(
@@ -23,8 +26,13 @@ const getMasterRoutineData = () => {
     return apiInstance.get(`/create_master_routine`)
 }
 
+const viewLogBook = (date, grade, section) => {
+    return apiInstance.get(`/view_log_book?date=${date}&grade_id=${grade}&section_id=${section}`)
+}
+
 export {
-    loginUser,
+    // loginUser,
     createMasterRoutine,
-    getMasterRoutineData
+    getMasterRoutineData,
+    viewLogBook
 }

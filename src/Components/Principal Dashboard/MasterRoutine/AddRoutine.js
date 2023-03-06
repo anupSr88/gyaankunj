@@ -10,12 +10,15 @@ const AddRoutine = (props) => {
   const [teacherName, setTeacherName] = useState()
   const [period, setPeriod] = useState('')
   const [section, setSection] = useState('')
+  const [day, setDay] = useState('')
 
   // const handleGrade = (e) => {
   //   console.log("e - ", e)
   // }
 
-  console.log('props - ', props)
+  // setGradeData(props.masterRoutineData.time_table_data.grades)
+
+  // console.log('gradeData - ', gradeData)
 
   //   const [show, setShow] = useState(false);
 
@@ -23,45 +26,109 @@ const AddRoutine = (props) => {
   //   const handleShow = () => setShow(true);
 
   const gradeOptions = [
-    { value: '1', label: '1' }
+   {value: "1", label: 1},
+   {value: "2", label: 2},
+   {value: "3", label: 3},
+   {value: "4", label: 4},
+   {value: "5", label: 5},
+   {value: "6", label: 6},
+   {value: "7", label: 7},
+   {value: "8", label: 8},
+   {value: "9", label: 9},
+   {value: "10", label: 10},
   ]
-
+ 
   const subjectOptions = [
-    { value: 'History', label: 'History' },
-    { value: 'Geography', label: 'Geography' },
-    { value: 'Hindi', label: 'Hindi' },
-    { value: 'English', label: 'English' }
+    { value: '1', label: 'History' },
+    { value: '2', label: 'Geography' },
+    { value: '3', label: 'Hindi' },
+    { value: '4', label: 'English' }
   ]
 
   const teacherOptions = [
-    { value: 'Julie', label: 'Julie' },
-    { value: 'S.K. Tripathy', label: 'S.K. Tripathy' },
-    { value: 'Khan Sir', label: 'Khan Sir' }
+    { value: 'TEACHER_1', label: 'Julie' },
+    { value: 'TEACHER_2', label: 'S.K. Tripathy' },
+    { value: 'TEACHER_3', label: 'Khan Sir' }
   ]
 
   const periodOptions = [
-    { value: '1st', label: '1st' },
-    { value: '2nd', label: '2nd' },
-    { value: '4th', label: '4th' },
-    { value: '5th', label: '5th' },
-    { value: '6th', label: '6th' },
-    { value: '7th', label: '7th' },
-    { value: '8th', label: '8th' },
-    { value: '9th', label: '9th' },
-    { value: '10th', label: '10th' }
+    {value: "1", label: 1},
+   {value: "2", label: 2},
+   {value: "3", label: 3},
+   {value: "4", label: 4},
+   {value: "5", label: 5},
+   {value: "6", label: 6},
+   {value: "7", label: 7},
+   {value: "8", label: 8},
+   {value: "9", label: 9},
+   {value: "10", label: 10},
   ]
 
-  // const timingOptions = [
-  //   { value: '8:00 - 8:30', label: '8:00 - 8:30' },
-  //   { value: '8:30 - 9:00', label: '8:30 - 9:00' },
-  // ]
+  const dayOption = [
+    {value: "Monday", label: "Monday"},
+    {value: "Tuesday", label: "Tuesday"},
+    {value: "Wednesday", label: "Wednesday"},
+    {value: "Thursday", label: "Thursday"},
+    {value: "Friday", label: "Friday"},
+  ]
 
   const sectionOptions = [
-    { value: 'A', label: 'A' },
-    { value: 'B', label: 'B' },
-    { value: 'C', label: 'C' },
-    { value: 'D', label: 'D' }
+    { value: '1', label: 'A' },
+    { value: '2', label: 'B' },
+    { value: '3', label: 'C' },
+    { value: '4', label: 'D' }
   ]
+
+  const handleGradeChange = (e) => {
+    setGrade(e.value)
+  }
+
+  const handleSubjectChange = (e) => {
+    setSubject(e.value)
+  }
+
+  const handleTeacherChange = (e) => {
+    setTeacherName(e.value)
+  }
+
+  const handlePeriodChange = (e) => {
+    setPeriod(e.value)
+  }
+
+  const handleSectionChange = (e) => {
+    setSection(e.value)
+  }
+
+  const handleDayChange = (e) => {
+    setDay(e.value)
+  }
+
+  const postRoutineData = () => {
+    const postData = {
+      "day": day,
+      "values":[
+         {
+            "grade_id": grade,
+            "period": period,
+            "subject_id": subject,
+            "teacher_id":teacherName,
+            "section_id": section
+         }
+      ],
+      "start_date": "",
+      "end_date": ""
+    }
+
+    createMasterRoutine(postData)
+    .then((res) => {
+      console.log("PostData - ",  res)
+      props.onHide()
+    })
+    .catch((err) => console.log("PostData err - ",  err))
+
+
+  }
+  
 
   return (
     <>
@@ -80,46 +147,43 @@ const AddRoutine = (props) => {
             <Row style={{marginBottom: "42px"}}>
               <Col md={5}>
                 <span>Add Grade</span>
-                <Select options={gradeOptions} value={grade} onChange={(e) => setGrade(e.target.value)} />
+                <Select options={gradeOptions} onChange={e => handleGradeChange(e)} />
               </Col>
               <Col md={2}>
               </Col>
               <Col md={5}>
                 <span>Add Subject</span>
-                <Select options={subjectOptions} />
+                <Select options={subjectOptions} onChange={e => handleSubjectChange(e)} />
               </Col>
             </Row>
             <Row style={{marginBottom: "42px"}}>
               <Col md={5}>
                 <span>Teacher Name</span>
-                <Select options={teacherOptions} />
+                <Select options={teacherOptions} onChange={e => handleTeacherChange(e)} />
               </Col>
               <Col md={2}>
               </Col>
               <Col md={5}>
                 <span>Add Period</span>
-                <Select options={periodOptions} />
+                <Select options={periodOptions} onChange={e => handlePeriodChange(e)} />
               </Col>
             </Row>
             <Row style={{marginBottom: "42px"}}>
-              {/* <Col md={5}>
-                
-                <span>Add Timings</span>
-                <Select options={timingOptions} />
-              </Col> */}
-              {/* <Col md={2}>
-              </Col> */}
               <Col md={5}>
                 <span>Add Section</span>
-                <Select options={sectionOptions} />
+                <Select options={sectionOptions} onChange={e => handleSectionChange(e)} />
               </Col>
-              
+              <Col md={2}></Col>
+              <Col md={5}>
+                <span>Add Week Day</span>
+                <Select options={dayOption} onChange={e => handleDayChange(e)} />
+              </Col>
             </Row>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="outline-primary" style={{alignItems:"center"}}>Reset</Button>
-          <Button variant="outline-primary">Submit</Button>
+          <Button variant="outline-primary" onClick={postRoutineData}>Submit</Button>
         </Modal.Footer>
       </Modal>
     </>

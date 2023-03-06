@@ -21,7 +21,7 @@ const MasterRoutine = () => {
     const getMasterRoutine = () => {
       getMasterRoutineData()
       .then((res) => setMasterRoutineData(res.data))
-      .catch((err) => console.log("error"))
+      .catch((err) => console.log("error", err))
     }
 
 

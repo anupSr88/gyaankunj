@@ -17,6 +17,7 @@ import Classes from './Components/Teacher Dashboard/Classes/Classes';
 import TLessonPlan from './Components/Teacher Dashboard/LessonPlan/LessonPlan';
 import { Router, Route, Switch } from "react-router-dom";
 import LogBook from './Components/Teacher Dashboard/LogBook/LogBook';
+import { ProtectedWrapper } from './ProtectedRoute'
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function App() {
         <Route path="/teacherDashboard/Resources" component={Resources} />
         <Route path="/teacherDashboard/Announcements" component={Announcements} />
         <Route path="/teacherDashboard/Notifications" component={Notifications} />
-        <Route path="/" component={DashboardSectionContent} />
+        <Route exact path="/" component={DashboardSectionContent} />
       </Switch>
     </div>
     </>

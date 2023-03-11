@@ -1,6 +1,14 @@
+
 .App {
   text-align: center;
+  overflow-x: hidden;
 }
+
+a{
+  text-underline-offset: none;
+}
+
+/* @import '../node_modules/react-pro-sidebar/dist/scss/styles.scss'; */
 
 .App-logo {
   height: 40vmin;

@@ -1,0 +1,28 @@
+.headerCss {
+    background-color: white;
+    padding: 0px 40px;
+    height: 90px;
+    padding-right: 96px;
+    box-shadow: 0px 3px 6px #B4B3B329;
+}
+
+.headerLoginBtn {
+    width: 125px;
+height: 48px;
+border: 2px solid #2F5CE0;
+border-radius: 4px;
+opacity: 1;
+}
+
+.headerCss img {
+    height: 75px;
+}
+
+.loginBtn{
+    width: 172px;
+height: 48px;
+border: 2px solid #2F5CE0;
+border-radius: 4px;
+opacity: 1;
+color: #2F5CE0;
+}

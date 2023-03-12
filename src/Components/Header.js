@@ -6,7 +6,7 @@ import LoginPage from './LoginPage'
 import '../Styles/HeaderStyle.css'
 import { useState } from 'react';
 import { Row, Col } from "react-bootstrap";
-import { FaAngleDown } from 'react-icons/fa';
+// import { FaAngleDown } from 'react-icons/fa';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import downAngle from "../Images/downAngle.png";

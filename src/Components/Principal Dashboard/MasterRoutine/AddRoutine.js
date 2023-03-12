@@ -122,7 +122,7 @@ const AddRoutine = (props) => {
     createMasterRoutine(postData)
     .then((res) => {
       console.log("PostData - ",  res)
-      props.onHide()
+      props.closeModal();
     })
     .catch((err) => console.log("PostData err - ",  err))
 

@@ -8,7 +8,7 @@ apiInstance.interceptors.request.use(async(config) => {
     config.headers = {
         'x-access-tokens': tokenId
     }
-    console.log(config)
+    // console.log(config)
     return config;
 })
 
@@ -30,9 +30,32 @@ const viewLogBook = (date, grade, section) => {
     return apiInstance.get(`/view_log_book?date=${date}&grade_id=${grade}&section_id=${section}`)
 }
 
+const viewMasterRoutine = (day) => {
+    return apiInstance.get(`/view_master_routine?day=${day}`)
+}
+
+const attendanceOverview = (grade, section) => {
+    return apiInstance.get(`/get_attendance_overview?grade_id=${grade}&section_id=${section}`)
+}
+
+const getReports= (grade, section, userType) => {
+    return apiInstance.get(`/view_report?grade_id=${grade}&section_id=${section}&user_type=${userType}`)
+}
+
+const getResources= (grade, section, subject) => {
+    return apiInstance.get(`/get_content?grade_id=${grade}&section_id=${section}&subject_id=${subject}`)
+}
+
+
+
+
 export {
     // loginUser,
     createMasterRoutine,
     getMasterRoutineData,
-    viewLogBook
+    viewLogBook,
+    viewMasterRoutine,
+    attendanceOverview,
+    getReports,
+    getResources
 }

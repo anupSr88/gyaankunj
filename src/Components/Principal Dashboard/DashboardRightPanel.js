@@ -9,7 +9,7 @@ const DashboardRightPanel = () => {
     const [value, onChange] = useState(new Date());
     return (
       <>
-        <div className="dashboardRightPanelTop">
+        {/* <div className="dashboardRightPanelTop">
           <Row
             style={{
               boxShadow: "rgb(180 179 179 / 16%) 0px 3px 6px",
@@ -43,24 +43,8 @@ const DashboardRightPanel = () => {
               margin: "0px",
             }}
           >
-            
-            {/* <Col md={5}>
-              <h6 style={{ color: "#0040B5", fontWeight: "bold" }}>Teacher</h6>
-              <h4 style={{ color: "#0040B5" }}>5555</h4>
-              <h6
-                style={{
-                  backgroundColor: "#DEFABD",
-                  color: "#608E29",
-                  fontWeight: "bold",
-                }}
-              >
-                Student
-              </h6>
-              <h4 style={{ color: "#608E29" }}>2222</h4>
-            </Col> */}
             <Col md={6}>
             <h6 style={{ color: "#0040B5", fontWeight: "bold" }}>Teacher</h6>
-            {/* <Doughnut /> */}
             </Col>
             <Col md={6}>
             <h6
@@ -74,7 +58,7 @@ const DashboardRightPanel = () => {
               </h6>
             </Col>
           </Row>
-        </div>
+        </div> */}
         <div className="dashboardRightPanelTop">
           <Row
             style={{

@@ -1,10 +1,62 @@
-import React from 'react';
-import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar } from "react-bootstrap";
+import React, { useEffect } from 'react';
+import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar, Button } from "react-bootstrap";
 import { useState } from "react";
+import {getReports} from '../../../ApiClient'
+import Select from 'react-select'
+import SadImg from '../../../Images/SadImg.png'
 
 const ReportSection = () => {
 
-    const now = "60";
+  // const [grade, setGrade] = useState('')
+  // const [section, setSection] = useState('')
+  // const [interval, setInterval] = useState('')
+
+  // useEffect(() => {
+  //   getReportsData()
+  // },[])
+
+  //   const now = "60";
+
+  // const getReportsData = () => {
+  //   const grade_id = grade
+  //   const section_id = section
+  //   getReports(grade_id, section_id)
+  //   .then((res) => console.log('Report Response - ', res.data))
+  //   .then((err) => console.log('Report Err - ', err))
+  // } 
+
+  // const gradeOptions = [
+  //   {value: "1", label: 1},
+  //   {value: "2", label: 2},
+  //   {value: "3", label: 3},
+  //   {value: "4", label: 4},
+  //   {value: "5", label: 5},
+  //   {value: "6", label: 6},
+  //   {value: "7", label: 7},
+  //   {value: "8", label: 8},
+  //   {value: "9", label: 9},
+  //   {value: "10", label: 10},
+  //  ]
+
+  //  const SectionOption = [
+  //   { label: "A", value: "1" },
+  //   { label: "B", value: "2" },
+  //   { label: "C", value: "3" },
+  //   { label: "D", value: "4" },
+  // ];
+
+  // const ReportOption = [
+  //   { label: "Weekly", value: "weekly" },
+  //   { label: "Monthly", value: "monthly" },
+  // ]
+
+  // const handleGradeChange = (e) => {
+  //   setGrade(e.value)
+  // }
+
+  // const handleSectionChange = (e) => {
+  //   setSection(e.value)
+  // }
 
 
     return (
@@ -22,68 +74,26 @@ const ReportSection = () => {
             <Col md={4}>
             <h4>Report</h4>
             </Col>
-            <Col md={2} className="teacherRoutingDD">
-            <span>
-                  <Dropdown>
-                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Select Section
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
+            {/* <Col md={2}>
+            <span>Section</span>
+            <Select className='reportHeading' placeholder="Select Section" options={SectionOption} onChange={e => handleSectionChange(e)} isSearchable={false} />
+                
             </Col>
-            <Col md={2} className="teacherRoutingDD">
-            <span>
-                  <Dropdown>
-                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Select Class
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
+            <Col md={2}>
+            <span>Grade</span>
+            <Select className='reportHeading' placeholder="Select Grade" options={gradeOptions} onChange={e => handleGradeChange(e)} isSearchable={false} />
+                
             </Col>
-            <Col md={2} className="teacherRoutingDD">
-            <span>
-                  <Dropdown>
-                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Select Subject
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
+            <Col md={2}>
+            <span>Report</span>
+            <Select className='reportHeading' placeholder="Select Report" options={ReportOption} isSearchable={false} />
+                
             </Col>
-            <Col md={2} className="teacherRoutingDD">
-            <span>
-                  <Dropdown>
-                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Select Report
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Weekly</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">Monthly </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">Yearly </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
-            </Col>
+            <Col md={2}>
+            <Button variant="outline-primary" style={{marginTop: "19px"}} onClick={getReportsData}>Check Reports</Button>
+            </Col> */}
         </Row>
-        <div className="routineSection">
+        {/* <div className="routineSection">
             <div>
               <Row>
                 <Col md={2}>
@@ -149,7 +159,17 @@ const ReportSection = () => {
                 </tr>
               </tbody>
             </Table>
-          </div>
+          </div> */}
+          <Row>
+            <Col md={12}>
+              <h1 style={{ position:"relative", top: "100px", color: "#0071FF", font: "normal normal normal 29px/26px Roboto"}}>Since you are new here, it will take some time to prepare your report card!!</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12}>
+              <img src = {SadImg} style={{ position:"relative", top: "150px"}} />
+            </Col>
+          </Row>
         
       </div>
         

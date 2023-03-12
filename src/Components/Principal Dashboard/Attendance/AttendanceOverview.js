@@ -1,11 +1,34 @@
 import React from 'react';
 import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar } from "react-bootstrap";
 import { useState } from "react";
+import { attendanceOverview } from '../../../ApiClient'
+import { useEffect } from 'react';
+import Select from 'react-select'
 
 const AttendanceOverview = () => {
     const [checked, setChecked] = useState(false);
     const [radioValue, setRadioValue] = useState("1");
     const [tableData, setTableData] = useState([])
+    const [overallAttendance, setOverallAttendance] = useState({})
+    const [grade, setGrade] = useState('')
+    const [section, setSection] = useState('')
+
+    useEffect(() => {
+      getAttendanceOverview()
+  },[grade, section])
+
+  const gradeOptions = [
+    {value: "1", label: 1},
+    {value: "2", label: 2},
+    {value: "3", label: 3},
+    {value: "4", label: 4},
+    {value: "5", label: 5},
+    {value: "6", label: 6},
+    {value: "7", label: 7},
+    {value: "8", label: 8},
+    {value: "9", label: 9},
+    {value: "10", label: 10},
+   ]
 
     const now="100"
   
@@ -15,6 +38,27 @@ const AttendanceOverview = () => {
       { name: "C", value: "3" },
       { name: "D", value: "4" },
     ];
+
+
+    const handleGradeChange = (e) => {
+      setGrade(e.value)
+    }
+    
+    const handleSectionChange = (e) => {
+      console.log("e -", e)
+      setSection(e.target.defaultValue)
+      setRadioValue(e.currentTarget.value)
+    }
+    
+    const getAttendanceOverview = () => {
+      const grade_id = grade
+        const section_id = section
+      attendanceOverview(grade_id, section_id)
+      .then((res) => setOverallAttendance(res.data))
+      .then((err) => console.log(err))
+    }
+
+
     return (
         <>
         <div>
@@ -48,7 +92,7 @@ const AttendanceOverview = () => {
                 <span>Present</span>
               </Col>
               <Col>
-                <p>5000</p>
+                <p>{overallAttendance?.attendance_overview?.teacher?.present}</p>
               </Col>
             </Row>
             <Row>
@@ -56,7 +100,7 @@ const AttendanceOverview = () => {
                 <span>Absent</span>
               </Col>
               <Col>
-                <p>825</p>
+                <p>{overallAttendance?.attendance_overview?.teacher?.absent}</p>
               </Col>
             </Row>
           </Col>
@@ -71,17 +115,7 @@ const AttendanceOverview = () => {
               </Col>
               <Col md={3}>
                 <span>
-                  <Dropdown>
-                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Class
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                <Select placeholder="Select Grade" options={gradeOptions} onChange={e => handleGradeChange(e)} isSearchable={false} />
                 </span>
               </Col>
             </Row>
@@ -98,7 +132,7 @@ const AttendanceOverview = () => {
                     opacity: "1",
                   }}
                 >
-                  50
+                  {overallAttendance?.attendance_overview?.student?.total}
                 </span>
               </Col>
               <Col>
@@ -112,7 +146,7 @@ const AttendanceOverview = () => {
                     opacity: "1",
                   }}
                 >
-                  45
+                  {overallAttendance?.attendance_overview?.student?.present}
                 </span>
               </Col>
               <Col>
@@ -126,7 +160,7 @@ const AttendanceOverview = () => {
                     opacity: "1",
                   }}
                 >
-                  05
+                  {overallAttendance?.attendance_overview?.student?.absent}
                 </span>
               </Col>
             </Row>
@@ -146,7 +180,7 @@ const AttendanceOverview = () => {
                 <h5>Select Section</h5>
               </Col>
               <Col>
-                <ButtonGroup>
+              <ButtonGroup>
                   {radios.map((radio, idx) => (
                     <ToggleButton
                       className="toggleBtn"
@@ -157,7 +191,8 @@ const AttendanceOverview = () => {
                       name="radio"
                       value={radio.value}
                       checked={radioValue === radio.value}
-                      onChange={(e) => setRadioValue(e.currentTarget.value)}
+                      onChange={(e) => handleSectionChange(e)}
+                      disabled={!grade}
                     >
                       {radio.name}
                     </ToggleButton>

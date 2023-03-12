@@ -3,15 +3,17 @@ import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './MasterRoutine.css'
 import AddRoutine from './AddRoutine'
 import axios from 'axios'
-import { getMasterRoutineData } from '../../../ApiClient'
+import { getMasterRoutineData, viewMasterRoutine } from '../../../ApiClient'
 
 const MasterRoutine = () => {
 
     const [showAddRoutine, setShowAddRoutine] = useState(false)
     const [masterRoutineData, setMasterRoutineData] = useState([])
+    const [fetchedRoutineData, setFetchedRoutineData] = useState([])
 
     useEffect(() => {
-      getMasterRoutine();
+      // getMasterRoutine();
+      viewMasterRoutineData();
     },[])
 
     const handleShowModal = () => {
@@ -22,6 +24,13 @@ const MasterRoutine = () => {
       getMasterRoutineData()
       .then((res) => setMasterRoutineData(res.data))
       .catch((err) => console.log("error", err))
+    }
+
+    const viewMasterRoutineData = () => {
+      const day = "Monday"
+      viewMasterRoutine(day)
+      .then((res) => console.log("Res - ", res))
+      .then((err) => console.log("err - ", err))
     }
 
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Row, Col, Modal, Form, Button } from "react-bootstrap";
 import axios from 'axios';
 import "../../Styles/DashboardSectionContent.css";
@@ -27,6 +27,14 @@ import DashboardImage1 from '../../Images/DashboardImage1.png'
 
 
 const DashboardSectionContent = () => {
+
+  // useState(() => {
+  //   clearStorage()
+  // },[])
+
+  // const clearStorage = () => {
+  //   window.localStorage.clear();
+  // }
 
     return (
       <>

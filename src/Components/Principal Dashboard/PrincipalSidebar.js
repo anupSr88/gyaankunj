@@ -141,7 +141,7 @@ const PrincipalSidebar = () => {
                 <MenuItem className="menuItemStyle">
                   <Link to={myConstant.routesConfig.announcement}>
                     {" "}
-                    Annoucements{" "}
+                    Notice{" "}
                   </Link>
                 </MenuItem>
               </Col>

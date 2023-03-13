@@ -106,14 +106,6 @@ const Resources = () => {
 
         </Row>
         <div>
-              <Row style={{marginTop:"20px"}}>
-                <Col md={2}>
-                <h6 style={{ marginLeft: "12px", paddingTop:"5px" ,textAlign: "center", font: "normal normal medium 14px/15px Roboto", letterSpacing: "0px", color: "#821CE8", opacity: "1", background: "#F1E7FC 0% 0% no-repeat padding-box", borderRadius: "0px 8px", width: "120px", height: "35px"}}>Teacher</h6>
-                </Col>
-                <Col md={3} style={{textAlign: "initial"}}>
-                    Julie
-                </Col>
-              </Row>
               <div className='ResourceSection'>
               {resourcesData?.content_data?.map((resource, indx) => {
                 return <Card className='dashboardRightPanelCard'>

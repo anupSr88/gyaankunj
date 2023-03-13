@@ -24,7 +24,7 @@ const Announcements = () => {
           }}
         >
             <Col md={7}>
-            <h4>Announcements</h4>
+            <h4>Notice</h4>
             </Col>
             <Col md={2} className="teacherRoutingDD">
             <span>
@@ -44,7 +44,7 @@ const Announcements = () => {
             <Col md={3} className='teacherRoutingDD'>
                 <Button variant="outline-primary"
                 onClick={handleShowModal}>
-                  + Add Announcement
+                  + Add Notice
                 </Button>{" "}
               </Col>
         </Row>

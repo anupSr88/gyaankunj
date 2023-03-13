@@ -104,28 +104,28 @@ const MasterRoutine = () => {
                   <td>8:00 - 8:30</td>
                 </tr>
                 <tr>
-                  <td>Hindi</td>
-                  <td>Hindi</td>
-                  <td>Hindi</td>
-                  <td>Hindi</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   
-                  <td>Hindi</td>
-                  <td>Hindi</td>
-                  <td>Hindi</td>
-                  <td>Hindi</td>
-                  <td>Hindi</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
                 <tr>
-                  <td>K.K. Singh</td>
-                  <td>K.K. Singh</td>
-                  <td>K.K. Singh</td>
-                  <td>K.K. Singh</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   
-                  <td>K.K. Singh</td>
-                  <td>K.K. Singh</td>
-                  <td>K.K. Singh</td>
-                  <td>K.K. Singh</td>
-                  <td>K.K. Singh</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
                 
               </tbody>

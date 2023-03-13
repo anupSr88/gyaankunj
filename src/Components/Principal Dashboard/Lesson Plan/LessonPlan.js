@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './LessonPlan.css'
+import LessonPlanPrinciView from './LessonPlanForPrincipal'
 
-const LessonPlan = () => {
+const TLessonPlan = () => {
+
+    const [showAddLessonPlan, setShowAddLessonPlan] = useState(false)
+
+    const handleShowPlanModal = () => {
+        setShowAddLessonPlan(true)
+    }
 
     return (
       <>
         <div className="routinemain">
           <div className="masterRoutineheader">
             <Row>
-              <Col md={6} style={{ textAlign: "left", paddingLeft: "50px" }}>
+              <Col md={10} style={{ textAlign: "left", paddingLeft: "50px" }}>
                 <h3>Lesson Plan</h3>
               </Col>
-              <Col md={2}>
+              {/* <Col md={2}>
                 <span>
                   <Dropdown>
                     <Dropdown.Toggle
@@ -65,13 +72,13 @@ const LessonPlan = () => {
                     </Dropdown.Menu>
                   </Dropdown>
                 </span>
-              </Col>
+              </Col> */}
               
             </Row>
           </div>
           <div className="routineSection">
-            <div className="dayHeader">
-              <h5>Class 1A lesson plan - Teacher's name</h5>
+            <div className='lessonPlanDetails'>
+              <LessonPlanPrinciView />
             </div>
           </div>
         </div>
@@ -79,4 +86,4 @@ const LessonPlan = () => {
     );
 }
 
-export default LessonPlan;
+export default TLessonPlan;

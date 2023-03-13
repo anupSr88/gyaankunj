@@ -46,6 +46,17 @@ const getResources= (grade, section, subject) => {
     return apiInstance.get(`/get_content?grade_id=${grade}&section_id=${section}&subject_id=${subject}`)
 }
 
+const getGradeDetails = () => {
+    return apiInstance.get(`/get_all_grade_details`)
+}
+
+const saveLessonPlan = (data) => {
+    return apiInstance.post(`/save_lesson_plan`, data)
+}
+
+const viewAttendanceReport = (grade, section, userType) => {
+    return apiInstance.get(`/view_attendance_report?grade_id=${grade}&section_id=${section}&year=2022&user_type=${userType}`)
+}
 
 
 
@@ -57,5 +68,8 @@ export {
     viewMasterRoutine,
     attendanceOverview,
     getReports,
-    getResources
+    getResources,
+    getGradeDetails,
+    saveLessonPlan,
+    viewAttendanceReport
 }

@@ -24,8 +24,9 @@ function HeaderComp(props) {
   }
 
   const logoutFunction = () => {
-    localStorage.clear();
     history.push('/')
+    window.localStorage.clear();
+    
   }
 
   const userDetails = JSON.parse(localStorage.getItem('UserData'))
@@ -54,7 +55,7 @@ function HeaderComp(props) {
         </Navbar.Collapse>
         {/* <img style={{height:"69px", width:"69px", borderRadius:"50%", position:"relative", right:"50px"}} src={ProfileLogo} /> */}
         {
-          (localStorage.getItem('UserData') ? (
+          (window.localStorage.getItem('UserData') ? (
             <Row className='loggedInUserDetails'>
               
                 <Col md={1} style={{padding : "0"}}>

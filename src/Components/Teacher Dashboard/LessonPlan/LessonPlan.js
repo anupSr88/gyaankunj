@@ -4,6 +4,7 @@ import './LessonPlan.css'
 import SamplePdf from '../../../Images/MSAK.pdf'
 import { Document,Page } from 'react-pdf/dist/esm/entry.webpack';
 import AddLessonPlan from './AddLessonPlan';
+import LessonPlanDetails from './LessonPlanDetails'
 
 const TLessonPlan = () => {
 
@@ -18,10 +19,10 @@ const TLessonPlan = () => {
         <div className="routinemain">
           <div className="masterRoutineheader">
             <Row>
-              <Col md={4} style={{ textAlign: "left", paddingLeft: "50px" }}>
+              <Col md={10} style={{ textAlign: "left", paddingLeft: "50px" }}>
                 <h3>Lesson Plan</h3>
               </Col>
-              <Col md={2}>
+              {/* <Col md={2}>
                 <span>
                   <Dropdown>
                     <Dropdown.Toggle
@@ -74,7 +75,7 @@ const TLessonPlan = () => {
                     </Dropdown.Menu>
                   </Dropdown>
                 </span>
-              </Col>
+              </Col> */}
               <Col md={2}>
                 <Button variant="outline-primary" onClick={handleShowPlanModal}>
                   + Add Lesson Plan
@@ -84,14 +85,8 @@ const TLessonPlan = () => {
             </Row>
           </div>
           <div className="routineSection">
-            <div className="dayHeader">
-              <h5>Class 1A lesson plan</h5>
-            </div>
-            <div className='pdfStyling'>
-            <img alt="SamplePdf" src = {SamplePdf} />
-            {/* <Document file={SamplePdf}>
-        <Page pageNumber={1} />
-      </Document> */}
+            <div className='lessonPlanDetails'>
+              <LessonPlanDetails />
             </div>
           </div>
         </div>

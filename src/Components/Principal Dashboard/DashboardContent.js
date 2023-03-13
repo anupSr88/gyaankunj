@@ -5,7 +5,7 @@ import TableComponent from '../Shared Components/TableComponent'
 import RoutineTableComponent from '../Shared Components/RoutineTable'
 import mockData from '../../Mock Data/mockdata.json'
 import routineData from '../../Mock Data/routineData.json'
-import {attendanceOverview} from '../../ApiClient'
+import { attendanceOverview, getGradeDetails } from '../../ApiClient'
 import Select from 'react-select'
 
 const DashboardContent = () => {
@@ -14,10 +14,12 @@ const DashboardContent = () => {
   const [tableData, setTableData] = useState([])
   const [overallAttendance, setOverallAttendance] = useState({})
   const [grade, setGrade] = useState('')
-  const [section, setSection] = useState('')
+  const [section, setSection] = useState('1')
+  const [gradeData, setGradeData] = useState([])
 
   useEffect(() => {
       getAttendanceOverview()
+      getAllGradeDetails()
   },[grade, section])
 
   const gradeOptions = [
@@ -82,6 +84,12 @@ const getAttendanceOverview = () => {
     const section_id = section
   attendanceOverview(grade_id, section_id)
   .then((res) => setOverallAttendance(res.data))
+  .then((err) => console.log(err))
+}
+
+const getAllGradeDetails = () => {
+  getGradeDetails()
+  .then((res) => console.log("grade Data - ",res.data))
   .then((err) => console.log(err))
 }
 

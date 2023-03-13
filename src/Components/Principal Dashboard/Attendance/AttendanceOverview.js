@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar } from "react-bootstrap";
 import { useState } from "react";
-import { attendanceOverview } from '../../../ApiClient'
+import { attendanceOverview, viewAttendanceReport } from '../../../ApiClient'
 import { useEffect } from 'react';
 import Select from 'react-select'
 
@@ -11,10 +11,12 @@ const AttendanceOverview = () => {
     const [tableData, setTableData] = useState([])
     const [overallAttendance, setOverallAttendance] = useState({})
     const [grade, setGrade] = useState('')
-    const [section, setSection] = useState('')
+    const [section, setSection] = useState('1')
+    const [totalAttendance, setTotalAttendance] = useState('')
 
     useEffect(() => {
       getAttendanceOverview()
+      getFullAttendanceData()
   },[grade, section])
 
   const gradeOptions = [
@@ -39,6 +41,11 @@ const AttendanceOverview = () => {
       { name: "D", value: "4" },
     ];
 
+    const attendanceRadios = [
+      { name: "Teacher", value: "userTypeTeacher" },
+      { name: "Student", value: "userTypeStudent" },
+    ];
+
 
     const handleGradeChange = (e) => {
       setGrade(e.value)
@@ -58,6 +65,20 @@ const AttendanceOverview = () => {
       .then((err) => console.log(err))
     }
 
+    const getFullAttendanceData = () => {
+      const grade_id = grade
+        const section_id = section
+        // const user_type = userType
+      viewAttendanceReport(grade_id, section_id)
+      .then((res) => {
+        // console.log('Attendance - ', res.data.student_report.attendance_data)
+        setTotalAttendance(res.data)
+      })
+      .then((err) => console.log(err))
+    }
+
+
+    console.log('totalAttendance - ', totalAttendance)
 
     return (
         <>
@@ -204,6 +225,17 @@ const AttendanceOverview = () => {
         </Row>
       </div>
 
+      <div>
+        <Row>
+          <Col md={6}>
+          <p>Teacher</p>
+          </Col>
+          <Col md={6}>
+          <p>Student</p>
+          </Col>
+        </Row>
+      </div>
+
       <div className="teacherAndStdAttendance">
       <Row
           style={{
@@ -251,13 +283,13 @@ const AttendanceOverview = () => {
             <span>
                   <Dropdown>
                     <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Select Attendance
+                    Select Year
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Weekly</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">Monthly </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">Yearly </Dropdown.Item>
+                    <Dropdown.Item href="#/action-1">2023</Dropdown.Item>
+                      <Dropdown.Item href="#/action-2">2022 </Dropdown.Item>
+                      <Dropdown.Item href="#/action-3">2021 </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </span>
@@ -281,18 +313,20 @@ const AttendanceOverview = () => {
                   <th style={{width:"230px"}}>Students Name</th>
                   <th style={{width:"205px"}}>No. of days present</th>
                   <th style={{width:"205px"}}>No. of days absent</th>
-                  <th>Attendance</th>
+                  <th>Attendance %</th>
                 </tr>
               </thead>
-              <tbody>
+              {totalAttendance?.student_report?.attendance_data.map((studentAttendance, indx) => {
+               return <tbody>
                 <tr>
-                <td>1</td>
-                  <td>Asha</td>
-                  <td>20</td>
-                  <td>0</td>
-                  <td><ProgressBar variant="progressBarColour" now={now} label={`${now} %`} /></td>                 
+                <td>{studentAttendance.roll_no}</td>
+                  <td>{studentAttendance.student_name}</td>
+                  <td>{studentAttendance.present_days}</td>
+                  <td>{studentAttendance.absence_count}</td>
+                  <td><ProgressBar variant="progressBarColour" now={studentAttendance.attendance_percentage} label={`${studentAttendance.attendance_percentage} %`} /></td>                 
                 </tr>
               </tbody>
+              })}
             </Table>
           </div>
         

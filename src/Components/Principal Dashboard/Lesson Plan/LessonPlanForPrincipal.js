@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
 import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
-import { FaAngleDown } from 'react-icons/fa';
+// import { FaAngleDown } from 'react-icons/fa';
 import { useState } from 'react';
 
 
@@ -39,7 +39,8 @@ function LessonPlanPrinciView() {
                 <p>Maths</p>
             </Col>
             <Col md={1}>
-                <FaAngleDown onClick={() => setExpandcard(!expandCard)} />
+                {/* <FaAngleDown onClick={() => setExpandcard(!expandCard)} /> */}
+                <Button onClick={() => setExpandcard(!expandCard)}>Show More</Button>
             </Col>
         </Row>
         {expandCard && <div>

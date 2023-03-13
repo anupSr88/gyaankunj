@@ -20,8 +20,6 @@ const AddLessonPlan = (props) => {
 
   const userDetails = JSON.parse(window.localStorage.getItem('UserData'))
 
-  console.log('subject - ', subject)
-
   const gradeOptions = [
     {value: "1", label: 1},
     {value: "2", label: 2},

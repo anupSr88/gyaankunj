@@ -58,6 +58,10 @@ const viewAttendanceReport = (grade, section, userType) => {
     return apiInstance.get(`/view_attendance_report?grade_id=${grade}&section_id=${section}&year=2022&user_type=${userType}`)
 }
 
+const getLessonPlan= (grade, section, subject) => {
+    return apiInstance.get(`/view_lesson_plan?grade_id=${grade}&section_id=${section}&subject_id=${subject}`)
+}
+
 
 
 export {
@@ -71,5 +75,6 @@ export {
     getResources,
     getGradeDetails,
     saveLessonPlan,
-    viewAttendanceReport
+    viewAttendanceReport,
+    getLessonPlan
 }

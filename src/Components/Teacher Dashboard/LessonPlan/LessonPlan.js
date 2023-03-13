@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './LessonPlan.css'
 import SamplePdf from '../../../Images/MSAK.pdf'
 import { Document,Page } from 'react-pdf/dist/esm/entry.webpack';
 import AddLessonPlan from './AddLessonPlan';
 import LessonPlanDetails from './LessonPlanDetails'
+import {getLessonPlan } from '../../../ApiClient'
 
 const TLessonPlan = () => {
 
     const [showAddLessonPlan, setShowAddLessonPlan] = useState(false)
+    const [lessonPlanData, setLessonPlanData] = useState(false)
+
+    useEffect(() => {
+      viewLessonPlan()
+    },[])
+
+    const viewLessonPlan = () => {
+      const grade_id = "1"
+      const section_id = "1"
+      const subject_id = 1
+      getLessonPlan(grade_id, section_id,subject_id)
+      .then((res) => setLessonPlanData(res.data))
+      .catch((err) => console.log(err))
+    }
 
     const handleShowPlanModal = () => {
         setShowAddLessonPlan(true)
+    }
+
+    const closeAndLoad = () => {
+      setShowAddLessonPlan(false)
+      viewLessonPlan()
     }
 
     return (
@@ -86,11 +106,11 @@ const TLessonPlan = () => {
           </div>
           <div className="routineSection">
             <div className='lessonPlanDetails'>
-              <LessonPlanDetails />
+              <LessonPlanDetails lessonPlanData={lessonPlanData} />
             </div>
           </div>
         </div>
-        {showAddLessonPlan && <AddLessonPlan show={showAddLessonPlan} onHide={() => setShowAddLessonPlan(false)} />}
+        {showAddLessonPlan && <AddLessonPlan show={showAddLessonPlan} onHide={closeAndLoad} />}
       </>
     );
 }

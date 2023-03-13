@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './LessonPlan.css'
 import LessonPlanPrinciView from './LessonPlanForPrincipal'
+import {getLessonPlan } from '../../../ApiClient'
 
 const TLessonPlan = () => {
 
     const [showAddLessonPlan, setShowAddLessonPlan] = useState(false)
+    const [lessonPlanData, setLessonPlanData] = useState(false)
+
+    useEffect(() => {
+      viewLessonPlan()
+    },[])
 
     const handleShowPlanModal = () => {
         setShowAddLessonPlan(true)
+    }
+
+    const viewLessonPlan = () => {
+      const grade_id = "1"
+      const section_id = "1"
+      const subject_id = 1
+      getLessonPlan(grade_id, section_id,subject_id )
+      .then((res) => setLessonPlanData(res.data))
+      .catch((err) => console.log(err))
     }
 
     return (
@@ -78,7 +93,7 @@ const TLessonPlan = () => {
           </div>
           <div className="routineSection">
             <div className='lessonPlanDetails'>
-              <LessonPlanPrinciView />
+              <LessonPlanPrinciView lessonPlanData={lessonPlanData} />
             </div>
           </div>
         </div>

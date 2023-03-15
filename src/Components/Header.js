@@ -10,12 +10,13 @@ import { Row, Col } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import downAngle from "../Images/downAngle.png";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import profilePic from '../Images/profilePic.jpg'
 
 
+
 function HeaderComp(props) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [showLogin, setShowLogin] = useState(false)
 
@@ -24,8 +25,8 @@ function HeaderComp(props) {
   }
 
   const logoutFunction = () => {
-    history.push('/')
-    window.localStorage.clear();
+    navigate('/')
+    localStorage.clear();
     
   }
 

@@ -13,14 +13,15 @@ export const routesConfig = {
 export const teacherRoutesConfig = {
     teacherdashboard : "/teacherDashboard/Dashboard",
     dashboard : "/teacherDashboard/Dashboard",
-    classes : "/teacherDashboard/Classes",
+    mySubjects : "/teacherDashboard/Subjects",
     logBook : "/teacherDashboard/LogBook",
     lessonPlan: "/teacherDashboard/LessonPlan",
     attendance: "/teacherDashboard/Attendance",
-    assignments: "/teacherDashboard/Assignments",
-    reports: "/teacherDashboard/Reports",
-    announcement: "/teacherDashboard/Announcement",
-    notifications: "/teacherDashboard/Notifications",
+    assignments: "/teacherDashboard/Assignment",
+    TeacherReport: "/teacherDashboard/Reports",
+    TeacherResources: "/teacherDashboard/Resources",
+    AnnouncementsForTeacher: "/teacherDashboard/Announcements",
+    NotificationsForTeacher: "/teacherDashboard/Notifications",
 }
 
 export const routesConfigName = {

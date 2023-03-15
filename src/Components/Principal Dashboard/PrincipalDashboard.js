@@ -1,7 +1,7 @@
 import React from 'react';
 import './PrincipalDashboard.css'
 import PrincipalSidebar from './PrincipalSidebar'
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Routes, Switch } from "react-router-dom";
 import Dashboard from './Dashboard'
 import MasterRoutine from './MasterRoutine/MasterRoutine';
 import AttendanceOverview from './Attendance/AttendanceOverview';
@@ -20,8 +20,9 @@ const PrincipalDashboard = () => {
             <PrincipalSidebar />
           </Col>
           <Col md={9} style={{width:"80%"}}>
-          <Switch>
-            <Route path="/principalDashboard/Dashboard" component={Dashboard} />
+          <Router>
+          
+            <Route path="/principalDashboard/Dashboard" Component={Dashboard} />
             <Route
               path="/principalDashboard/masterRoutine"
               component={MasterRoutine}
@@ -50,7 +51,8 @@ const PrincipalDashboard = () => {
               path="/principalDashboard/Notifications"
               component={Notifications}
             />
-          </Switch>
+            
+          </Router>
           </Col>
         </Row>
       </>

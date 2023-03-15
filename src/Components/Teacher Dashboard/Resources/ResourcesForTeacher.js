@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 import { Row, Col, ButtonGroup, Dropdown, Card, Button } from "react-bootstrap";
 import { useState } from "react";
-import AddResources from './AddResources'
+import AddResources from './AddResourceForTeacher'
 import {getResources} from '../../../ApiClient'
 import Select from 'react-select'
-import PrincipalSidebar from '../PrincipalSidebar';
 
-const Resources = () => {
+const ResourcesList = () => {
 
   const [showAddResource, setShowAddResource] = useState(false)
   const [grade, setGrade] = useState('1')
@@ -26,6 +25,10 @@ const Resources = () => {
     .then((res) => setResourcesData(res.data))
     .then((err) => err)
   } 
+
+  const handleShowAddResourceModal = () => {
+    setShowAddResource(true)
+  }
 
     const gradeOptions = [
     {value: "1", label: 1},
@@ -68,11 +71,6 @@ const Resources = () => {
 
     return (
         <>
-        <Row>
-            <Col md={3} style={{marginTop:"91px", width:"20%"}}>
-                <PrincipalSidebar />     
-            </Col>
-            <Col md={9} style={{width:"80%"}}>
         <div className='resourcesHeader'>
         <Row
           style={{
@@ -83,7 +81,7 @@ const Resources = () => {
             width: "100%",
           }}
         >
-            <Col md={4}>
+            <Col md={3}>
             <h4>Resources</h4>
             </Col>
             <Col md={2}>
@@ -99,14 +97,14 @@ const Resources = () => {
             <Select className='reportHeading' placeholder="Select Subject" options={SubjectOption} isSearchable={false} onChange={e => handleSubjectChange(e)} />                
             </Col>
             <Col md={2}>
-            <Button variant="outline-primary" style={{marginTop: "19px"}} onClick={getResourcesData}>Fetch Resources</Button>
+            <Button variant="outline-primary" style={{marginTop: "24px"}} onClick={getResourcesData}>Fetch Resources</Button>
             </Col>
-            {/* <Col md={1} className='teacherRoutingDD'>
+            <Col md={1} style={{marginTop: "24px"}}>
                 <Button variant="outline-primary"
-                onClick={handleShowModal}>
+                onClick={handleShowAddResourceModal}>
                   +
                 </Button>{" "}
-              </Col> */}
+              </Col>
         </Row>
         <Row>
 
@@ -114,7 +112,7 @@ const Resources = () => {
         <div>
               <div className='ResourceSection'>
               {resourcesData?.content_data?.map((resource, indx) => {
-                return <Card className='dashboardRightPanelCard'>
+                return <Card className='resourcesSection'>
                 <Row>
                     <Col md={10} className="resourceText">{resource.content_name}</Col>
                     <Col md={2} style={{paddingTop:"6px"}}><div>
@@ -126,11 +124,9 @@ const Resources = () => {
               </div>
             </div>
         </div>
-        </Col>
         {showAddResource && <AddResources show={showAddResource} onHide={() => {setShowAddResource(false)}} />}
-        </Row>
         </>
     )
 }
 
-export default Resources;
+export default ResourcesList;

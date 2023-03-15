@@ -52,7 +52,7 @@ const AddLessonPlan = (props) => {
       "grade_id": grade,
     "section_id": section,
     "subject_id": subject,
-    "teacher_id": userDetails.name,
+    "teacher_id": userDetails.userid,
     "start_date": startDate,
     "end_date": endDate,
     "chapter_id": chapterNo,

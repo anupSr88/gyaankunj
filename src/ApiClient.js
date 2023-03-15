@@ -54,8 +54,8 @@ const saveLessonPlan = (data) => {
     return apiInstance.post(`/save_lesson_plan`, data)
 }
 
-const viewAttendanceReport = (grade, section, userType) => {
-    return apiInstance.get(`/view_attendance_report?grade_id=${grade}&section_id=${section}&year=2022&user_type=${userType}`)
+const viewAttendanceReport = (grade, section, year, userType) => {
+    return apiInstance.get(`/view_attendance_report?grade_id=${grade}&section_id=${section}&year=${year}&user_type=${userType}`)
 }
 
 const getLessonPlan= (grade, section, subject) => {

@@ -1,7 +1,7 @@
 import './App.css';
 import HeaderComp from './Components/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DashboardSectionContent from './Components/Principal Dashboard/DashboardSectionContent'
+import DashboardSectionContent from './Components/DashboardSectionContent'
 import MasterRoutine from './Components/Principal Dashboard/MasterRoutine/MasterRoutine';
 import Footer from './Components/Footer'
 import PrincipalDashboard from './Components/Principal Dashboard/PrincipalDashboard';
@@ -13,38 +13,72 @@ import Announcements from './Components/Principal Dashboard/Announcement/Announc
 import Notifications from './Components/Principal Dashboard/Notifications/Notifications';
 import TeacherDashboard from './Components/Teacher Dashboard/TeacherDashboard'
 import TDashboard from './Components/Teacher Dashboard/Dashboard/Dashboard';
-import Classes from './Components/Teacher Dashboard/Classes/Classes';
+import MySubjects from './Components/Teacher Dashboard/My Subject/MySubjects';
 import TLessonPlan from './Components/Teacher Dashboard/LessonPlan/LessonPlan';
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Routes, Switch } from "react-router-dom";
 import LogBook from './Components/Teacher Dashboard/LogBook/LogBook';
 import { ProtectedWrapper } from './ProtectedRoute'
+import PDashboard from './Components/Principal Dashboard/Dashboard';
+import PrincipalSidebar from './Components/Principal Dashboard/PrincipalSidebar';
+import {Container} from 'react-bootstrap'
+import { Row, Col, Modal } from "react-bootstrap";
+import TeacherReport from './Components/Teacher Dashboard/Teacher Report/TeacherReport';
+import TeacherAttendance from './Components/Teacher Dashboard/TeacherAttendance/TeacherAttendance';
+import TeacherAssignment from './Components/Teacher Dashboard/Assignment/TeacherAssignment';
+import ResourcesForTeacher from './Components/Teacher Dashboard/ResourcesForTeacher/ResourcesForTeacher';
+import NoticeForTeacher from './Components/Teacher Dashboard/NoticeForTeacher/NoticeForTeacher';
+import NotificationsForTeacher from './Components/Teacher Dashboard/NotificationsForTeacher/NotificationsForTeacher';
 
 function App() {
   return (
     <>
-    <div className="App">
-      <HeaderComp />
-      <Switch>
+      {/* <div className="App">
+        <Container>
+          <Router>
+            <HeaderComp />
+            <div className="dflex">
+              <div>
+                <PrincipalSidebar />
+              </div>
+              <div className="menu">
+                <div className="contentContainer">
+                <Route exact path="/" Component={DashboardSectionContent} />
+                  <Route path="/principalDashboard/Dashboard" Component={<ProtectedWrapper Component = {Dashboard} />} />
+                </div>
+              </div>
+            </div>
+          </Router>
+        </Container>
+      </div> */}
 
-        <Route path="/principalDashboard/Dashboard" component={PrincipalDashboard} />
-        <Route path="/principalDashboard/masterRoutine" component={MasterRoutine} />
-        <Route path="/principalDashboard/LessonPlan" component={LessonPlan} />
-        <Route path="/principalDashboard/AttendanceOverview" component={AttendanceOverview} />
-        <Route path="/principalDashboard/Reports" component={ReportSection} />
-        <Route path="/principalDashboard/Resources" component={Resources} />
-        <Route path="/principalDashboard/Announcements" component={Announcements} />
-        <Route path="/principalDashboard/Notifications" component={Notifications} />
+      <div className="App">
+          <HeaderComp />
+          
+          <Routes>
 
-        <Route path="/teacherDashboard/Dashboard" component={TeacherDashboard} />
-        <Route path="/teacherDashboard/Classes"   component={Classes} />
-        <Route path="/teacherDashboard/LogBook" component={LogBook} />
-        <Route path="/teacherDashboard/LessonPlan" component={TLessonPlan} />
-        <Route path="/teacherDashboard/Reports" component={ReportSection} />
-        <Route path="/teacherDashboard/Resources" component={Resources} />
-        <Route path="/teacherDashboard/Announcements" component={Announcements} />
-        <Route path="/teacherDashboard/Notifications" component={Notifications} />
-        <Route exact path="/" component={DashboardSectionContent} />
-      </Switch>
+<Route path="/principalDashboard/Dashboard" element={<ProtectedWrapper Component = {PDashboard} />} />
+<Route path="/principalDashboard/masterRoutine" element={<ProtectedWrapper Component = {MasterRoutine} />} />
+<Route path="/principalDashboard/LessonPlan" Component={LessonPlan} />
+<Route path="/principalDashboard/AttendanceOverview" Component={AttendanceOverview} />
+<Route path="/principalDashboard/Reports" Component={ReportSection} />
+<Route path="/principalDashboard/Resources" Component={Resources} />
+<Route path="/principalDashboard/Announcements" Component={Announcements} />
+<Route path="/principalDashboard/Notifications" Component={Notifications} />
+
+<Route path="/teacherDashboard/Dashboard" Component={TDashboard} />
+<Route path="/teacherDashboard/Subjects"   Component={MySubjects} />
+<Route path="/teacherDashboard/LogBook" Component={LogBook} />
+<Route path="/teacherDashboard/LessonPlan" Component={TLessonPlan} />
+<Route path="/teacherDashboard/Reports" Component={TeacherReport} />
+<Route path="/teacherDashboard/Attendance" Component={TeacherAttendance} />
+<Route path="/teacherDashboard/Assignment" Component={TeacherAssignment} />
+<Route path="/teacherDashboard/Resources" Component={ResourcesForTeacher} />
+<Route path="/teacherDashboard/Announcements" Component={NoticeForTeacher} />
+<Route path="/teacherDashboard/Notifications" Component={NotificationsForTeacher} />
+<Route exact path="/" Component={DashboardSectionContent} />
+</Routes>
+      
+      
     </div>
     </>
   );

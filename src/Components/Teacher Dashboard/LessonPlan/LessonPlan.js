@@ -6,6 +6,7 @@ import { Document,Page } from 'react-pdf/dist/esm/entry.webpack';
 import AddLessonPlan from './AddLessonPlan';
 import LessonPlanDetails from './LessonPlanDetails'
 import {getLessonPlan } from '../../../ApiClient'
+import TeacherSidebar from '../TeacherSidebar';
 
 const TLessonPlan = () => {
 
@@ -17,9 +18,9 @@ const TLessonPlan = () => {
     },[])
 
     const viewLessonPlan = () => {
-      const grade_id = "1"
-      const section_id = "1"
-      const subject_id = 1
+      const grade_id = "6"
+      const section_id = "4"
+      const subject_id = "2"
       getLessonPlan(grade_id, section_id,subject_id)
       .then((res) => setLessonPlanData(res.data))
       .catch((err) => console.log(err))
@@ -36,6 +37,11 @@ const TLessonPlan = () => {
 
     return (
       <>
+      <Row>
+            <Col md={3} style={{marginTop:"91px", width:"20%"}}>
+                <TeacherSidebar />     
+            </Col>
+            <Col md={9} style={{width:"80%"}}>
         <div className="routinemain">
           <div className="masterRoutineheader">
             <Row>
@@ -110,7 +116,9 @@ const TLessonPlan = () => {
             </div>
           </div>
         </div>
+        </Col>
         {showAddLessonPlan && <AddLessonPlan show={showAddLessonPlan} onHide={closeAndLoad} />}
+        </Row>
       </>
     );
 }

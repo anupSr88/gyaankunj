@@ -1,9 +1,9 @@
 import React from 'react';
 import './TeacherDashboard.css'
 import TDashboard from '../Teacher Dashboard/Dashboard/Dashboard'
-import Classes from '../Teacher Dashboard/Classes/Classes'
+import MySubjects from './My Subject/MySubjects'
 import { Row, Col, Modal } from "react-bootstrap";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Routes } from "react-router-dom";
 import TeacherSidebar from './TeacherSidebar'
 import LogBook from './LogBook/LogBook'
 
@@ -15,34 +15,36 @@ const TeacherDashboard = () => {
             <TeacherSidebar />
           </Col>
           <Col md={9} style={{width:"80%"}}>
-          <Switch>
-            <Route path="/teacherDashboard/Dashboard" component={TDashboard} />
-            <Route path="/teacherDashboard/Classes"   component={Classes} />
+            {/* <TDashboard />
+            <MySubjects /> */}
+          <Routes>
+            <Route path="/teacherDashboard/Dashboard" Component={TDashboard} />
+            <Route path="/teacherDashboard/Subjects"   Component={MySubjects} />
             <Route
               path="/teacherDashboard/LogBook"
-              component={LogBook}
+              Component={LogBook}
             />
              {/* <Route
               path="/principalDashboard/AttendanceOverview"
-              component={AttendanceOverview}
+              Component={AttendanceOverview}
             />
             <Route
               path="/principalDashboard/Reports"
-              component={ReportSection}
+              Component={ReportSection}
             />
             <Route
               path="/principalDashboard/Resources"
-              component={Resources}
+              Component={Resources}
             />
             <Route
               path="/principalDashboard/Announcements"
-              component={Announcements}
+              Component={Announcements}
             />
             <Route
               path="/principalDashboard/Notifications"
-              component={Notifications}
+              Component={Notifications}
             /> */}
-          </Switch>
+          </Routes>
           </Col>
         </Row>
       </>

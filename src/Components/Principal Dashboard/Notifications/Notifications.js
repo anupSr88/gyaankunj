@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import { Row, Col, ButtonGroup, Dropdown, Card, Button } from "react-bootstrap";
+import PrincipalSidebar from '../PrincipalSidebar';
 
 const Notifications = () => {
 
 
     return(
         <>
+        <Row>
+            <Col md={3} style={{marginTop:"91px", width:"20%"}}>
+                <PrincipalSidebar />     
+            </Col>
+            <Col md={9} style={{width:"80%"}}>
         <div className='resourcesHeader'>
         <Row
           style={{
@@ -39,6 +45,8 @@ const Notifications = () => {
         
         
         </div>
+        </Col>
+        </Row>
         </>
     )
 }

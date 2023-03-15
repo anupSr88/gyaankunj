@@ -27,19 +27,20 @@ function LessonPlanDetails(props) {
       </Card.Body>
       </Card>
     {
-    props?.lesson_plan_data?.message ? <h6 style={{position:"relative", top:"20px"}}>No Lesson Plans Available!!</h6>
+    props?.lessonPlanData?.message ? <h6 style={{position:"relative", top:"20px"}}>No Lesson Plans Available!!</h6>
 
     : 
 
-    props?.lesson_plan_data?.map((lessons, indx) => {
-        <Card className={expandCard ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}>
+    props?.lessonPlanData?.lesson_plan_data?.map((lessons, indx) => {
+
+       return <Card className={expandCard ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}>
       <Card.Body>
         <Row style={{height :expandCard? '66px' : "", boxShadow: expandCard? '0px 3px 6px #B4B3B329' : ""}}>
             <Col md={4} className="lessonName">
                 <p>{lessons.subject_name}</p>
             </Col>
             <Col md={3} className="gradeName">
-                <p>{lessons.grade}</p>
+                {lessons.grade ? <p>{lessons.grade}</p> : "-"}
             </Col>
             <Col md={3} className="subjectName">
                 <p>{lessons.subject_name}</p>

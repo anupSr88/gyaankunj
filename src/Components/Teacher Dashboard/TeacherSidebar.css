@@ -48,4 +48,13 @@ height: 74px;
 .sidebarMenuInner img {
     position: relative;
     top: 11px;
+    height: 18px;
+    color: #0E2060;
 }
+
+.sidebarMenuInner a {
+    font: normal normal normal 18px/26px Roboto;
+    letter-spacing: 0px;
+    color: #0E2060;
+}
+

@@ -5,13 +5,13 @@ import "../Styles/LoginPage.css";
 import loginImage from "../Images/loginImage.png";
 import closeBtn from "../Images/closeBtn.png";
 import * as myConstant from './fileConstant'
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from '../ApiClient'
 import LoginError from './LoginError'
 
 const LoginPage = (props) => {
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState('')
   const [userName, setUserName] = useState('')
@@ -21,14 +21,6 @@ const LoginPage = (props) => {
   const closeLoginModal = () => {
     props.onHide()
   }
-
-  // const loginTeacher = () => {
-  //   props.onHide()
-  //   history.push({
-  //     pathname: `${myConstant.teacherRoutesConfig.teacherdashboard}`,
-  //     state: `${myConstant.teacherRoutesConfig.teacherdashboard}`
-  //   })
-  // }
 
   const loginMember = (e) => {
     let base64 = require("base-64");
@@ -53,13 +45,10 @@ const LoginPage = (props) => {
           let user = localStorage.setItem("UserData", JSON.stringify(data));
           props.onHide();
           if(data.role === 'admin' || data.role === 'principal') {
-            history.push({
-              pathname: `${myConstant.routesConfig.principaldashboard}`,
-              state: `${myConstant.routesConfig.principaldashboard}`,
-            });
+            navigate('/principalDashboard/Dashboard');
           }
           else if(data.role === 'teacher') {
-            history.push({
+            navigate({
               pathname: `${myConstant.teacherRoutesConfig.teacherdashboard}`,
               state: `${myConstant.teacherRoutesConfig.teacherdashboard}`,
             });

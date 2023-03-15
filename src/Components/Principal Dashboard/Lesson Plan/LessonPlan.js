@@ -3,6 +3,7 @@ import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './LessonPlan.css'
 import LessonPlanPrinciView from './LessonPlanForPrincipal'
 import {getLessonPlan } from '../../../ApiClient'
+import PrincipalSidebar from '../PrincipalSidebar';
 
 const TLessonPlan = () => {
 
@@ -28,6 +29,11 @@ const TLessonPlan = () => {
 
     return (
       <>
+      <Row>
+            <Col md={3} style={{marginTop:"91px", width:"20%"}}>
+                <PrincipalSidebar />     
+            </Col>
+            <Col md={9} style={{width:"80%"}}>
         <div className="routinemain">
           <div className="masterRoutineheader">
             <Row>
@@ -97,6 +103,8 @@ const TLessonPlan = () => {
             </div>
           </div>
         </div>
+        </Col>
+        </Row>
       </>
     );
 }

@@ -1,16 +1,20 @@
 import React from 'react';
-import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar, Button } from "react-bootstrap";
+import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar, Button, Form } from "react-bootstrap";
 import { useState } from "react";
 import AddLogBook from './AddLogbook'
 import { viewLogBook } from '../../../ApiClient'
 import Select from 'react-select'
 import { useEffect } from 'react';
+import TeacherSidebar from '../TeacherSidebar';
 
 const LogBook = () => {
 
   const [showAddLogbook, setShowAddLogbook] = useState(false)
   const [section, setSection] = useState('')
   const [classData, setClassData] = useState('')
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [logBookDetails, setLogBookDetails] = useState({})
 
   // useEffect(() => {
   //   showLogBookData()
@@ -49,22 +53,26 @@ const LogBook = () => {
   }
 
   const showLogBookData = () => {
-    // const postData = {
-    //   "date":'',
-    //   "grade_id": classData && classData,
-    //   "section_id": section && section
-    // }
-    viewLogBook('', classData, section)
-    .then((res) => console.log(res))
+      const date = startDate
+      const grade_id = classData
+      const section_id = section
+    viewLogBook(startDate, classData, section)
+    .then((res) => setLogBookDetails(res.data))
     .catch((err) => console.log(err))
   }
 
   console.log("classData - ", classData)
   console.log("section - ", section)
+  console.log("startDate - ", startDate)
 
 
     return (
         <>
+        <Row>
+            <Col md={3} style={{marginTop:"91px", width:"20%"}}>
+                <TeacherSidebar />     
+            </Col>
+            <Col md={9} style={{width:"80%"}}>
         <div className="reportSection">
       <Row
           style={{
@@ -73,9 +81,10 @@ const LogBook = () => {
             position: "relative",
             left: "12px",
             width: "100%",
+            marginBottom:"20px"
           }}
         >
-            <Col md={5}>
+            <Col md={3}>
             <h4>Log Book</h4>
             </Col>
             <Col md={2} className="teacherRoutingDD">
@@ -88,8 +97,17 @@ const LogBook = () => {
             <Select placeholder="Select Class" isSearchable={false} options={classOptions} onChange={e => handleClassChange(e)} />
                 </span>
             </Col>
+            <Col md={2} style={{marginTop:"17px"}}>
+                <Form.Control
+                  type="date"
+                  name="datepic"
+                  placeholder="DateRange"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+              </Col>
             <Col md={1} style={{paddingTop:"17px"}}>
-              <Button onClick={showLogBookData}>Search</Button>
+              <Button variant="outline-primary" onClick={showLogBookData}>Search</Button>
             </Col>
             <Col md={2} style={{paddingTop:"17px"}}>
                 <Button variant="outline-primary" onClick={handleShowLogBook}>
@@ -97,16 +115,25 @@ const LogBook = () => {
                 </Button>{" "}
               </Col>
         </Row>
+        <Row>
+          <Col md={3}>
+            <span style={{font: "normal normal bold 19px/34px Roboto"}}>Class Teacher's Name:</span> <span>{logBookDetails?.log_book_data?.class_teacher_name}</span>
+          </Col>
+          <Col md={1}>
+            
+          </Col>
+          <Col md={4}>
+          <span style={{font: "normal normal bold 19px/34px Roboto"}}>Day:</span> <span>{logBookDetails?.log_book_data?.day}</span>
+          </Col>
+          <Col md={1}>
+            
+          </Col>
+          <Col md={3}>
+          <span style={{font: "normal normal bold 19px/34px Roboto"}}>Date:</span> <span>{logBookDetails?.log_book_data?.date}</span>
+          </Col>
+        </Row>
         <div className="routineSection">
             <div>
-              <Row>
-                <Col md={2}>
-                <h6 style={{ marginLeft: "12px", paddingTop:"5px" ,textAlign: "center", font: "normal normal medium 14px/15px Roboto", letterSpacing: "0px", color: "#821CE8", opacity: "1", background: "#F1E7FC 0% 0% no-repeat padding-box", borderRadius: "0px 8px", width: "120px", height: "35px"}}>Teacher</h6>
-                </Col>
-                <Col md={3} style={{textAlign: "initial"}}>
-                    Julie
-                </Col>
-              </Row>
             </div>
             <Table striped hover>
               <thead>
@@ -116,26 +143,42 @@ const LogBook = () => {
                   <th>Subject</th>
                   <th>Content Taught</th>
                   <th>Homework</th>
-                  <th>Absentees</th>
-                  <th>Dress defaulters</th>
                 </tr>
               </thead>
-              <tbody>
+              {logBookDetails?.log_book_data?.log_record.map((logData, indx) => {
+                return <tbody>
                 <tr>
-                <td>1</td>
-                  <td>20</td>
-                  <td>Hindi</td>
-                  <td>Lorem Ipsum is a dummy text. Lorem Ipsum is a dummy text. Lorem Ipsum is a dummy text</td>
-                  <td>Lorem Ipsum is a dummy text. Lorem Ipsum is a dummy text. Lorem Ipsum is a dummy text</td>   
-                  <td>Lorem Ipsum is a dummy text. Lorem Ipsum is a dummy text. Lorem Ipsum is a dummy text</td>  
-                  <td>Lorem Ipsum is a dummy text. Lorem Ipsum is a dummy text. Lorem Ipsum is a dummy text</td>                
+                <td>{logData?.period}</td>
+                  <td>{logData?.students_present}</td>
+                  <td>{logData?.subject}</td>
+                  <td>{logData?.content_taught}</td>
+                  <td>{logData?.home_work}</td>                   
                 </tr>
               </tbody>
+              })}
             </Table>
+            <Row style={{padding: "10px"}}>
+              <Col md={3}>
+                <h6 style={{textAlign : "left"}}>Name of Absentees : </h6>
+              </Col>
+              <Col md={9} style={{textAlign : "left"}}>
+                <span>{logBookDetails?.log_book_data?.name_of_absentees}</span>
+              </Col>
+            </Row>
+            <Row style={{padding: "10px"}}>
+              <Col md={3}>
+                <h6 style={{textAlign : "left"}}>Number of Dress Defaulters : </h6>
+              </Col>
+              <Col md={9} style={{textAlign : "left"}}>
+              <span>{logBookDetails?.log_book_data?.name_of_dress_defaulters}</span>
+              </Col>
+            </Row>
           </div>
         
       </div>
+      </Col>
         {showAddLogbook && <AddLogBook show={showAddLogbook} onHide={() => setShowAddLogbook(false)} />}
+        </Row>
         </>
     )
 }

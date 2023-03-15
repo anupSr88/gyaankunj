@@ -1,73 +1,18 @@
-import React, { useEffect } from 'react';
-import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar, Button } from "react-bootstrap";
-import { useState } from "react";
-import {getReports} from '../../../ApiClient'
-import Select from 'react-select'
+import React from 'react'
+import TeacherSidebar from '../TeacherSidebar'
+import { Row, Col } from "react-bootstrap";
 import SadImg from '../../../Images/SadImg.png'
-import PrincipalSidebar from '../PrincipalSidebar';
 
-const ReportSection = () => {
-
-  // const [grade, setGrade] = useState('')
-  // const [section, setSection] = useState('')
-  // const [interval, setInterval] = useState('')
-
-  // useEffect(() => {
-  //   getReportsData()
-  // },[])
-
-  //   const now = "60";
-
-  // const getReportsData = () => {
-  //   const grade_id = grade
-  //   const section_id = section
-  //   getReports(grade_id, section_id)
-  //   .then((res) => console.log('Report Response - ', res.data))
-  //   .then((err) => console.log('Report Err - ', err))
-  // } 
-
-  // const gradeOptions = [
-  //   {value: "1", label: 1},
-  //   {value: "2", label: 2},
-  //   {value: "3", label: 3},
-  //   {value: "4", label: 4},
-  //   {value: "5", label: 5},
-  //   {value: "6", label: 6},
-  //   {value: "7", label: 7},
-  //   {value: "8", label: 8},
-  //   {value: "9", label: 9},
-  //   {value: "10", label: 10},
-  //  ]
-
-  //  const SectionOption = [
-  //   { label: "A", value: "1" },
-  //   { label: "B", value: "2" },
-  //   { label: "C", value: "3" },
-  //   { label: "D", value: "4" },
-  // ];
-
-  // const ReportOption = [
-  //   { label: "Weekly", value: "weekly" },
-  //   { label: "Monthly", value: "monthly" },
-  // ]
-
-  // const handleGradeChange = (e) => {
-  //   setGrade(e.value)
-  // }
-
-  // const handleSectionChange = (e) => {
-  //   setSection(e.value)
-  // }
-
-
+const TeacherReport = () => {
     return (
         <>
+
         <Row>
-            <Col md={3} style={{marginTop:"91px", width:"20%"}}>
-                <PrincipalSidebar />     
+            <Col md={3}  style={{marginTop:"91px", width:"20%"}}>
+                <TeacherSidebar />
             </Col>
             <Col md={9} style={{width:"80%"}}>
-        <div className="reportSection">
+            <div className="reportSection">
       <Row
           style={{
             height: "74px",
@@ -178,11 +123,11 @@ const ReportSection = () => {
           </Row>
         
       </div>
-      </Col>
-      </Row>
+            </Col>
+        </Row>
         
         </>
     )
 }
 
-export default ReportSection;
+export default TeacherReport

@@ -21,7 +21,7 @@ import Announcements from "../../Images/Announcements.png";
 import Notifications from "../../Images/Notifications.png";
 import SidebarBackground from "../../Images/SidebarBackground_1.png";
 import { Row, Col } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as myConstant from "../fileConstant";
 import { useEffect, useState } from "react";
 
@@ -39,16 +39,19 @@ const loadIndex = {
 const PrincipalSidebar = () => {
   const [activeTab, setActiveTab] = useState(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation()
 
   useEffect(() => {
-    const activeIndex = loadIndex[history.location.pathname];
+    const activeIndex = loadIndex[location];
     setActiveTab(activeIndex);
-  }, [history.location.pathname]);
+  }, [location]);
 
   function handleActive(indx) {
     setActiveTab(indx);
   }
+
+  console.log("activeTab - ", activeTab)
 
 
   return (
@@ -75,24 +78,26 @@ const PrincipalSidebar = () => {
                 </MenuItem>
               </Col>
             </Row>
-            <Row className="sidebarMenuInner">
+            <Row className="sidebarMenuInner" style={{backgroundColor : activeTab == 1 ? "#FFFFFF" : ""}}>
               <Col md={2}>
                 <img alt="close" src={masterRoutine} />
               </Col>
               <Col md={10} style={{ textAlign: "left" }}>
-                <MenuItem className="menuItemStyle">
+                <MenuItem active={activeTab == 0 ? true : false}
+                  onClick={() => handleActive(1)} className="menuItemStyle">
                   <Link to={myConstant.routesConfig.masterRoutine}>
                     Master Routine
                   </Link>
                 </MenuItem>
               </Col>
             </Row>
-            <Row className="sidebarMenuInner">
+            <Row className="sidebarMenuInner" style={{backgroundColor : activeTab == 2 ? "#FFFFFF" : ""}}>
               <Col md={2}>
                 <img alt="close" src={LessonPlan} />
               </Col>
               <Col md={10} style={{ textAlign: "left" }}>
-                <MenuItem className="menuItemStyle">
+                <MenuItem active={activeTab == 0 ? true : false}
+                  onClick={() => handleActive(2)} className="menuItemStyle">
                   <Link to={myConstant.routesConfig.lessonPlan}>
                     {" "}
                     Lesson Plan
@@ -100,12 +105,13 @@ const PrincipalSidebar = () => {
                 </MenuItem>
               </Col>
             </Row>
-            <Row className="sidebarMenuInner">
+            <Row className="sidebarMenuInner" style={{backgroundColor : activeTab == 3 ? "#FFFFFF" : ""}}>
               <Col md={2}>
                 <img alt="close" src={Attendance} />
               </Col>
               <Col md={10} style={{ textAlign: "left" }}>
-                <MenuItem className="menuItemStyle">
+                <MenuItem active={activeTab == 0 ? true : false}
+                  onClick={() => handleActive(3)} className="menuItemStyle">
                   <Link to={myConstant.routesConfig.attendanceOverview}>
                     {" "}
                     Attendance{" "}
@@ -113,32 +119,35 @@ const PrincipalSidebar = () => {
                 </MenuItem>
               </Col>
             </Row>
-            <Row className="sidebarMenuInner">
+            <Row className="sidebarMenuInner" style={{backgroundColor : activeTab == 4 ? "#FFFFFF" : ""}}>
               <Col md={2}>
                 <img alt="close" src={Reports} />
               </Col>
               <Col md={10} style={{ textAlign: "left" }}>
-                <MenuItem disabled className="menuItemStyle">
+                <MenuItem disabled active={activeTab == 0 ? true : false}
+                  onClick={() => handleActive(4)} className="menuItemStyle">
                   <Link to={myConstant.routesConfig.reports}> Report</Link>{" "}
                 </MenuItem>
               </Col>
             </Row>
-            <Row className="sidebarMenuInner">
+            <Row className="sidebarMenuInner" style={{backgroundColor : activeTab == 5 ? "#FFFFFF" : ""}}>
               <Col md={2}>
                 <img alt="close" src={Resources} />
               </Col>
               <Col md={10} style={{ textAlign: "left" }}>
-                <MenuItem className="menuItemStyle">
+                <MenuItem active={activeTab == 0 ? true : false}
+                  onClick={() => handleActive(5)} className="menuItemStyle">
                   <Link to={myConstant.routesConfig.resources}> Resources</Link>{" "}
                 </MenuItem>
               </Col>
             </Row>
-            <Row className="sidebarMenuInner">
+            <Row className="sidebarMenuInner" style={{backgroundColor : activeTab == 6 ? "#FFFFFF" : ""}}>
               <Col md={2}>
                 <img alt="close" src={Announcements} />
               </Col>
               <Col md={10} style={{ textAlign: "left" }}>
-                <MenuItem className="menuItemStyle">
+                <MenuItem active={activeTab == 0 ? true : false}
+                  onClick={() => handleActive(6)} className="menuItemStyle">
                   <Link to={myConstant.routesConfig.announcement}>
                     {" "}
                     Notice{" "}
@@ -146,12 +155,13 @@ const PrincipalSidebar = () => {
                 </MenuItem>
               </Col>
             </Row>
-            <Row className="sidebarMenuInner">
+            <Row className="sidebarMenuInner" style={{backgroundColor : activeTab == 7 ? "#FFFFFF" : ""}}>
               <Col md={2}>
                 <img alt="close" src={Notifications} />
               </Col>
               <Col md={10} style={{ textAlign: "left" }}>
-                <MenuItem className="menuItemStyle">
+                <MenuItem active={activeTab == 0 ? true : false}
+                  onClick={() => handleActive(7)} className="menuItemStyle">
                   <Link to={myConstant.routesConfig.notifications}>
                     {" "}
                     Notifications{" "}

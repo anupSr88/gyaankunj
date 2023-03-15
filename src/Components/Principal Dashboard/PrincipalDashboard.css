@@ -166,7 +166,7 @@ background: #F1E7FC 0% 0% no-repeat padding-box;
 }
 
 .dashboardRightPanelCard{
-    height: 48px;
+    height: 66px;
     margin-bottom: 2px;
     padding-right: 2px;
 }
@@ -309,7 +309,7 @@ font: normal normal medium 14px/19px Roboto;
 letter-spacing: 0px;
 color: #4D5A87;
 opacity: 1;
-padding: 6px 0px 0px 25px;
+padding: 14px 0px 0px 25px;
 }
 
 .readBtn {
@@ -320,4 +320,8 @@ opacity: 1;
 
 .reportHeading{
     margin-bottom: 10px;
+}
+
+.ResourceSection{
+    margin: 32px 0px;
 }

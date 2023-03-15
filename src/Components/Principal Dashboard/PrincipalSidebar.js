@@ -51,8 +51,6 @@ const PrincipalSidebar = () => {
     setActiveTab(indx);
   }
 
-  console.log("activeTab - ", activeTab)
-
 
   return (
     <div

@@ -1,6 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import {Navbar, Nav, NavDropdown} from 'react-bootstrap';
-import GyaanKunj from '../Images/GyaanKunjLogo.png'
+import Gyankoonj_logo from '../Images/Gyankoonj_logo.png'
 import ProfileLogo from '../Images/ProfileLogo.png'
 import LoginPage from './LoginPage'
 import '../Styles/HeaderStyle.css'
@@ -38,11 +38,11 @@ function HeaderComp(props) {
   return (
     <>
       <Navbar
-        style={{ paddingRight: "40px" }}
+        style={{ padding: "0px 40px" }}
         fixed="top"
         className="headerCss"
       >
-        <img src={GyaanKunj} alt="Logo" />
+        <img src={Gyankoonj_logo} alt="Logo" />
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

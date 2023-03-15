@@ -58,23 +58,23 @@ function App() {
 
 <Route path="/principalDashboard/Dashboard" element={<ProtectedWrapper Component = {PDashboard} />} />
 <Route path="/principalDashboard/masterRoutine" element={<ProtectedWrapper Component = {MasterRoutine} />} />
-<Route path="/principalDashboard/LessonPlan" Component={LessonPlan} />
-<Route path="/principalDashboard/AttendanceOverview" Component={AttendanceOverview} />
-<Route path="/principalDashboard/Reports" Component={ReportSection} />
-<Route path="/principalDashboard/Resources" Component={Resources} />
-<Route path="/principalDashboard/Announcements" Component={Announcements} />
-<Route path="/principalDashboard/Notifications" Component={Notifications} />
+<Route path="/principalDashboard/LessonPlan" element={<ProtectedWrapper Component = {LessonPlan} />} />
+<Route path="/principalDashboard/AttendanceOverview" element={<ProtectedWrapper Component = {AttendanceOverview} />} />
+<Route path="/principalDashboard/Reports" element={<ProtectedWrapper Component = {ReportSection} />} />
+<Route path="/principalDashboard/Resources" element={<ProtectedWrapper Component = {Resources} />} />
+<Route path="/principalDashboard/Announcements" element={<ProtectedWrapper Component = {Announcements} />} />
+<Route path="/principalDashboard/Notifications" element={<ProtectedWrapper Component = {Notifications} />} />
 
-<Route path="/teacherDashboard/Dashboard" Component={TDashboard} />
-<Route path="/teacherDashboard/Subjects"   Component={MySubjects} />
-<Route path="/teacherDashboard/LogBook" Component={LogBook} />
-<Route path="/teacherDashboard/LessonPlan" Component={TLessonPlan} />
-<Route path="/teacherDashboard/Reports" Component={TeacherReport} />
-<Route path="/teacherDashboard/Attendance" Component={TeacherAttendance} />
-<Route path="/teacherDashboard/Assignment" Component={TeacherAssignment} />
-<Route path="/teacherDashboard/Resources" Component={ResourcesForTeacher} />
-<Route path="/teacherDashboard/Announcements" Component={NoticeForTeacher} />
-<Route path="/teacherDashboard/Notifications" Component={NotificationsForTeacher} />
+<Route path="/teacherDashboard/Dashboard" element={<ProtectedWrapper Component = {TDashboard} />} />
+<Route path="/teacherDashboard/Subjects" element={<ProtectedWrapper Component = {MySubjects} />} />
+<Route path="/teacherDashboard/LogBook" element={<ProtectedWrapper Component = {LogBook} />} />
+<Route path="/teacherDashboard/LessonPlan" element={<ProtectedWrapper Component = {TLessonPlan} />} />
+<Route path="/teacherDashboard/Reports" element={<ProtectedWrapper Component = {TeacherReport} />} />
+<Route path="/teacherDashboard/Attendance" element={<ProtectedWrapper Component = {TeacherAttendance} />} />
+<Route path="/teacherDashboard/Assignment" element={<ProtectedWrapper Component = {TeacherAssignment} />} />
+<Route path="/teacherDashboard/Resources" element={<ProtectedWrapper Component = {ResourcesForTeacher} />} />
+<Route path="/teacherDashboard/Announcements" element={<ProtectedWrapper Component = {NoticeForTeacher} />} />
+<Route path="/teacherDashboard/Notifications" element={<ProtectedWrapper Component = {NotificationsForTeacher} />} />
 <Route exact path="/" Component={DashboardSectionContent} />
 </Routes>
       

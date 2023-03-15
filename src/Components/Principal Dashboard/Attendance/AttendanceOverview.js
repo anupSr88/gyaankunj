@@ -116,8 +116,6 @@ const AttendanceOverview = () => {
       setTeacherTabActive(false)
     }
 
-    console.log("teacherTabActive - ", teacherTabActive)
-
     
 
     return (

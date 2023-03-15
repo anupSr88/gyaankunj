@@ -45,7 +45,7 @@ const TLessonPlan = () => {
         <div className="routinemain">
           <div className="masterRoutineheader">
             <Row>
-              <Col md={10} style={{ textAlign: "left", paddingLeft: "50px" }}>
+              <Col md={9} style={{ textAlign: "left", paddingLeft: "50px" }}>
                 <h3>Lesson Plan</h3>
               </Col>
               {/* <Col md={2}>
@@ -102,7 +102,7 @@ const TLessonPlan = () => {
                   </Dropdown>
                 </span>
               </Col> */}
-              <Col md={2}>
+              <Col md={3}>
                 <Button variant="outline-primary" onClick={handleShowPlanModal}>
                   + Add Lesson Plan
                 </Button>{" "}

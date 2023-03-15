@@ -4,7 +4,7 @@ import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 // import { FaAngleDown } from 'react-icons/fa';
 import AddLessonPlan from './AddLessonPlan';
 import { useState } from 'react';
-
+import downArrow from '../../../Images/icon_chevron_see_all.svg'
 
 function LessonPlanDetails(props) {
     const [expandCard, setExpandcard] = useState(false)
@@ -14,14 +14,14 @@ function LessonPlanDetails(props) {
     <Card className='lessonPlanCardHeader'>
       <Card.Body>
         <Row>
-            <Col md={5} className="lessonHeading" style={{textAlign:"left"}}>
-                <h5>LESSON NAME</h5>
+            <Col md={6} className="lessonHeading" style={{textAlign:"left"}}>
+                <h6>LESSON NAME</h6>
+            </Col>
+            <Col md={2} className="lessonHeading">
+                <h6>GRADE</h6>
             </Col>
             <Col md={3} className="lessonHeading">
-                <h5>GRADE</h5>
-            </Col>
-            <Col md={3} className="lessonHeading">
-                <h5>SUBJECT NAME</h5>
+                <h6>SUBJECT NAME</h6>
             </Col>
         </Row>
       </Card.Body>
@@ -36,18 +36,19 @@ function LessonPlanDetails(props) {
        return <Card className={expandCard ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}>
       <Card.Body>
         <Row style={{height :expandCard? '66px' : "", boxShadow: expandCard? '0px 3px 6px #B4B3B329' : ""}}>
-            <Col md={4} className="lessonName">
+            <Col md={6} className="lessonName">
                 <p>{lessons.subject_name}</p>
             </Col>
-            <Col md={3} className="gradeName">
+            <Col md={2} className="gradeName">
                 {lessons.grade ? <p>{lessons.grade}</p> : "-"}
             </Col>
             <Col md={3} className="subjectName">
                 <p>{lessons.subject_name}</p>
             </Col>
-            <Col md={2}>
+            <Col md={1}>
                 {/* <FaAngleDown onClick={() => setExpandcard(!expandCard)} /> */}
-                <Button onClick={() => setExpandcard(!expandCard)}>Show More</Button>
+                {/* <Button onClick={() => setExpandcard(!expandCard)}>Show More</Button> */}
+                <img src={downArrow} alt="expand" onClick={() => setExpandcard(!expandCard)} />
             </Col>
         </Row>
         {expandCard && <div>

@@ -97,7 +97,7 @@ const ResourcesList = () => {
             <Select className='reportHeading' placeholder="Select Subject" options={SubjectOption} isSearchable={false} onChange={e => handleSubjectChange(e)} />                
             </Col>
             <Col md={2}>
-            <Button variant="outline-primary" style={{marginTop: "24px"}} onClick={getResourcesData}>Fetch Resources</Button>
+            <Button variant="outline-primary" style={{marginTop: "23px"}} onClick={getResourcesData}>Fetch Resources</Button>
             </Col>
             <Col md={1} style={{marginTop: "24px"}}>
                 <Button variant="outline-primary"

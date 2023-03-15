@@ -12,19 +12,6 @@ const AddRoutine = (props) => {
   const [section, setSection] = useState('')
   const [day, setDay] = useState('')
 
-  // const handleGrade = (e) => {
-  //   console.log("e - ", e)
-  // }
-
-  // setGradeData(props.masterRoutineData.time_table_data.grades)
-
-  // console.log('gradeData - ', gradeData)
-
-  //   const [show, setShow] = useState(false);
-
-  //   const handleClose = () => setShow(false);
-  //   const handleShow = () => setShow(true);
-
   const gradeOptions = [
    {value: "1", label: 1},
    {value: "2", label: 2},

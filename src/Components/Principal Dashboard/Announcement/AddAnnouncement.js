@@ -9,15 +9,6 @@ const AddAnnouncement = (props) => {
   const [period, setPeriod] = useState("");
   const [section, setSection] = useState("");
 
-  // const handleGrade = (e) => {
-  //   console.log("e - ", e)
-  // }
-
-  //   const [show, setShow] = useState(false);
-
-  //   const handleClose = () => setShow(false);
-  //   const handleShow = () => setShow(true);
-
   const gradeOptions = [{ value: "1", label: "1" }];
 
   const subjectOptions = [

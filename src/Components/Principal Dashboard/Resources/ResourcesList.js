@@ -99,7 +99,7 @@ const Resources = () => {
             <Select className='reportHeading' placeholder="Select Subject" options={SubjectOption} isSearchable={false} onChange={e => handleSubjectChange(e)} />                
             </Col>
             <Col md={2}>
-            <Button variant="outline-primary" style={{marginTop: "19px"}} onClick={getResourcesData}>Fetch Resources</Button>
+            <Button variant="outline-primary" style={{marginTop: "23px"}} onClick={getResourcesData}>Fetch Resources</Button>
             </Col>
             {/* <Col md={1} className='teacherRoutingDD'>
                 <Button variant="outline-primary"
@@ -117,7 +117,7 @@ const Resources = () => {
                 return <Card className='dashboardRightPanelCard'>
                 <Row>
                     <Col md={10} className="resourceText">{resource.content_name}</Col>
-                    <Col md={2} style={{paddingTop:"6px"}}><div>
+                    <Col md={2} style={{paddingTop:"14px"}}><div>
                         <Button className='readBtn'>Read</Button>
                         </div></Col>
                 </Row>

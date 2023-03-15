@@ -61,10 +61,6 @@ const LogBook = () => {
     .catch((err) => console.log(err))
   }
 
-  console.log("classData - ", classData)
-  console.log("section - ", section)
-  console.log("startDate - ", startDate)
-
 
     return (
         <>

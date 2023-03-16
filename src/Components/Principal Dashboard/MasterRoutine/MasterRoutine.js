@@ -6,11 +6,12 @@ import axios from 'axios'
 import { getMasterRoutineData, viewMasterRoutine } from '../../../ApiClient'
 import Select from 'react-select'
 import PrincipalSidebar from '../PrincipalSidebar';
+import mockData from '../../../Mock Data/masterRoutineMockData.json'
 
 const MasterRoutine = () => {
 
     const [showAddRoutine, setShowAddRoutine] = useState(false)
-    const [masterRoutineData, setMasterRoutineData] = useState([])
+    const [masterRoutineData, setMasterRoutineData] = useState({})
     const [fetchedRoutineData, setFetchedRoutineData] = useState([])
     const [section, setSection] = useState('')
     const [sectionName, setSectionName] = useState('')
@@ -27,16 +28,17 @@ const MasterRoutine = () => {
        setShowAddRoutine(true)
     }
 
-    const getMasterRoutine = () => {
-      getMasterRoutineData()
-      .then((res) => setMasterRoutineData(res.data))
-      .catch((err) => console.log("error", err))
-    }
+    // const getMasterRoutine = () => {
+    //   getMasterRoutineData()
+    //   .then((res) => setMasterRoutineData(res.data))
+    //   .catch((err) => console.log("error", err))
+    // }
 
     const viewMasterRoutineData = () => {
-      const day = "Monday"
-      viewMasterRoutine(day)
-      .then((res) => console.log("Res - ", res))
+      const day = "Thursday"
+      const grade_id = "1"
+      viewMasterRoutine(day, grade_id)
+      .then((res) => setMasterRoutineData(res.data))
       .then((err) => console.log("err - ", err))
     }
 
@@ -53,7 +55,20 @@ const MasterRoutine = () => {
       setWeekDay(e.value)
     }
 
-    console.log(grade, sectionName, weekDay)
+    
+
+    // const sectionA_data = masterRoutineData?.time_table?.grade_1?.section_A
+
+    // const sectionB_data = masterRoutineData?.time_table?.grade_1?.section_B
+
+    // console.log("sectionA_data - ", sectionA_data)
+    
+
+    // console.log("sectionB_data - ", sectionB_data)
+
+    console.log("mockData - ", mockData.time_table.grade_1)
+
+    
 
     const gradeOptions = [
       {value: "1", label: 1},
@@ -101,15 +116,15 @@ const MasterRoutine = () => {
               <Col md={5} style={{ textAlign: "left", paddingLeft: "50px" }}>
                 <h3>Master Routine</h3>
               </Col>
-              <Col md={2}>
+              <Col md={2} style={{ position: "relative", bottom: "22px" }}>
               <span>Grade</span>
             <Select className='reportHeading' placeholder="Select Grade" options={gradeOptions} onChange={e => handleGradeChange(e)} isSearchable={false} />
               </Col>
-              <Col md={3}>
+              <Col md={3} style={{ position: "relative", bottom: "22px" }}>
               <span>Section</span>
             <Select className='reportHeading' placeholder="Select Section" options={SectionOption} onChange={e => handleSectionChange(e)} isSearchable={false} />
               </Col>
-              <Col md={2}>
+              <Col md={2} style={{ position: "relative", bottom: "22px" }}>
                 <Button variant="outline-primary" onClick={handleShowModal} style={{marginTop:"22px"}}>
                   + Add Routine
                 </Button>{" "}
@@ -134,88 +149,94 @@ const MasterRoutine = () => {
                   <th>2nd</th>
                   <th>3rd</th>
                   <th>4th</th>
-                  <th style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></th>
+                  {/* <th style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} >BREAK</th> */}
                   <th>5th</th>
                   <th>6th</th>
                   <th>7th</th>
                   <th>8th</th>
-                  <th>Remedial</th>
+                  
                 </tr>
               </thead>
-              <tbody>
+             
+                {/* <tbody className='routineTable'>
                 <tr>
-                  <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="3">
+                  <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">
                     {`${grade} ${sectionName}`}
                   </td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">B<br></br> R<br></br> E<br></br> A<br></br> K</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                </tr>
-                <tr>
-                {/* <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td><Button onClick={handleEditState}>{editingState ? "Save" : "Edit"}</Button></td> */}
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
+                  </tr>
+                  <tr>      
+                  <td>{sectionA_data?.time_range[0]}</td>
+                  <td>{sectionA_data?.time_range[0]}</td>
+                  <td>{sectionA_data?.time_range[0]}</td>
+                  <td>{sectionA_data?.time_range[0]}</td>
+                  <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>
+                  <td>{sectionA_data?.time_range[0]}</td>
+                  <td>{sectionA_data?.time_range[0]}</td>
+                  <td>{sectionA_data?.time_range[0]}</td>
+                  <td>{sectionA_data?.time_range[0]}</td>
+                  </tr>
 
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                <td><Button onClick={handleEditState}>{editingState ? "Save" : "Edit"}</Button></td>
-                </tr>
-                <tr>
-                {/* <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
+                  <tr>      
+                  <td>{sectionA_data?.subject[0]}</td>
+                  <td>{sectionA_data?.subject[0]}</td>
+                  <td>{sectionA_data?.subject[0]}</td>
+                  <td>{sectionA_data?.subject[0]}</td>
+                  <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>
+                  <td>{sectionA_data?.subject[0]}</td>
+                  <td>{sectionA_data?.subject[0]}</td>
+                  <td>{sectionA_data?.subject[0]}</td>
+                  <td>{sectionA_data?.subject[0]}</td>
+                  </tr>
                   
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td style={{width:"0px"}}>{editingState ? <input style={{border:"none", width: "104px"}} type="text" /> : <input disabled style={{border:"none", width: "104px"}} type="text" />}</td>
-                  <td><Button onClick={handleEditState}>{editingState ? "Save" : "Edit"}</Button></td> */}
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                  <td>8:00 - 8:30</td>
-                <td><Button onClick={handleEditState}>{editingState ? "Save" : "Edit"}</Button></td>
-                </tr>
+                  <tr>      
+                  <td>{sectionA_data?.teacher[0]}</td>
+                  <td>{sectionA_data?.teacher[0]}</td>
+                  <td>{sectionA_data?.teacher[0]}</td>
+                  <td>{sectionA_data?.teacher[0]}</td>
+                  <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>
+                  <td>{sectionA_data?.teacher[0]}</td>
+                  <td>{sectionA_data?.teacher[0]}</td>
+                  <td>{sectionA_data?.teacher[0]}</td>
+                  <td>{sectionA_data?.teacher[0]}</td>
+                  </tr>
                 
-              </tbody>
+              </tbody> */}
+
+              {mockData?.time_table?.grade_1?.map((mock, indx) => {
+                console.log('mock - ', indx, mock)
+                return <tbody>
+                  <tr>
+                  <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">
+                    {`${indx + 1} ${sectionName}`}
+                  </td>
+                  </tr>
+                  <tr>
+                    {mock?.section_A?.time_range?.map((time, indx) => {
+                     return <td>
+                      {time}
+                    </td>
+                    })}
+                  </tr>
+                  <tr>
+                    {mock?.section_A?.subject?.map((subject, indx) => {
+                     return <td>
+                      {subject}
+                    </td>
+                    })}
+                  </tr>
+                  <tr>
+                    {mock?.section_A?.teacher?.map((teacher, indx) => {
+                     return <td>
+                      {teacher}
+                    </td>
+                    })}
+                  </tr>
+
+                </tbody>
+              })}
+              
               
             </Table>
-            <Row>
-              <Col md={10}></Col>
-          <Col md = {2}>
-          <Button variant="outline-primary">Create Routine</Button>
-          </Col>
-        </Row>
           </div>
         </div>
         </Col>

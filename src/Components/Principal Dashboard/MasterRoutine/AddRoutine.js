@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Modal, Row, Col } from "react-bootstrap";
+import { Button, Form, Modal, Row, Col, Table } from "react-bootstrap";
 import Select from 'react-select'
 import { createMasterRoutine, getMasterRoutineData } from '../../../ApiClient'
+import './MasterRoutine.css'
+import {v4 as uuid} from 'uuid';
+
 
 const AddRoutine = (props) => {
 
@@ -11,6 +14,7 @@ const AddRoutine = (props) => {
   const [period, setPeriod] = useState('')
   const [section, setSection] = useState('')
   const [day, setDay] = useState('')
+  const [dataToAddRoutine, setDataToAddRoutine] = useState([])
 
   const gradeOptions = [
    {value: "1", label: 1},
@@ -109,14 +113,38 @@ const AddRoutine = (props) => {
     createMasterRoutine(postData)
     .then((res) => {
       console.log("PostData - ",  res)
-      props.closeModal();
     })
     .catch((err) => console.log("PostData err - ",  err))
-
-
   }
+
   
 
+  const addRoutineDetails = (e) => {
+    e.preventDefault();
+
+    let ids = uuid()
+    const uniqueId = ids.slice(0,8)
+
+    let newMember = [...dataToAddRoutine]
+   let newData = {
+      formGrade :  grade,
+    formPeriod :  period,
+    formSubject :  subject,
+    formTeacher : teacherName,
+    formSection : section,
+    formDay : day
+    }
+
+    newMember = [...newMember, newData]
+
+    setDataToAddRoutine(newMember)
+    postRoutineData();
+  }
+
+  const closeAddModal = () => {
+    props.onHide();
+  }
+  
   return (
     <>
       <Modal
@@ -125,13 +153,14 @@ const AddRoutine = (props) => {
         size="xl"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        fullscreen
       >
         <Modal.Header closeButton>
           <Modal.Title>Add Routine</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Row style={{marginBottom: "42px"}}>
+            <Row style={{marginBottom: "10px"}}>
               <Col md={5}>
                 <span>Add Grade</span>
                 <Select options={gradeOptions} onChange={e => handleGradeChange(e)} />
@@ -143,7 +172,7 @@ const AddRoutine = (props) => {
                 <Select options={subjectOptions} onChange={e => handleSubjectChange(e)} />
               </Col>
             </Row>
-            <Row style={{marginBottom: "42px"}}>
+            <Row style={{marginBottom: "10px"}}>
               <Col md={5}>
                 <span>Teacher Name</span>
                 <Select options={teacherOptions} onChange={e => handleTeacherChange(e)} />
@@ -155,7 +184,7 @@ const AddRoutine = (props) => {
                 <Select options={periodOptions} onChange={e => handlePeriodChange(e)} />
               </Col>
             </Row>
-            <Row style={{marginBottom: "42px"}}>
+            <Row style={{marginBottom: "10px"}}>
               <Col md={5}>
                 <span>Add Section</span>
                 <Select options={sectionOptions} onChange={e => handleSectionChange(e)} />
@@ -166,11 +195,49 @@ const AddRoutine = (props) => {
                 <Select options={dayOption} onChange={e => handleDayChange(e)} />
               </Col>
             </Row>
+            <Row style={{marginBottom: "10px"}}>
+              <Col md={9}>
+
+              </Col>
+              <Col md={3}>
+                <Button variant="outline-success" type="submit" onClick={(e) => addRoutineDetails(e)}>Add to Master Routine</Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+              <Table striped bordered hover>
+      <thead>
+        <tr className="MRTableHeader">
+          <th>Grade</th>
+          <th>Section</th>
+          <th>Period</th>
+          <th>Teacher Name</th>
+          <th>Subject Name</th>
+          <th>Weekday</th>
+        </tr>
+      </thead>
+      {dataToAddRoutine?.map((data, indx) => {
+        console.log("data - ", data)
+        return <tbody>
+        <tr>
+          <td>{data.formGrade}</td>
+          <td>{data.formSection}</td>
+          <td>{data.formPeriod}</td>
+          <td>{data.formTeacher}</td>
+          <td>{data.formSubject}</td>
+          <td>{data.formDay}</td>
+          
+        </tr>
+      </tbody>
+      })}
+    </Table>
+              </Col>
+            </Row>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="outline-primary" style={{alignItems:"center"}}>Reset</Button>
-          <Button variant="outline-primary" onClick={postRoutineData}>Submit</Button>
+          <Button variant="outline-primary" onClick={closeAddModal}>Submit</Button>
         </Modal.Footer>
       </Modal>
     </>

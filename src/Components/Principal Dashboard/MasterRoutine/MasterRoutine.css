@@ -64,3 +64,11 @@ opacity: 1;
     color: #F3FAFF;
     opacity: 1;
 }
+
+/* .routineTable td{
+    font-size: 9px;
+} */
+
+.MRTableHeader th{
+    color: black;
+}

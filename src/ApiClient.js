@@ -30,8 +30,8 @@ const viewLogBook = (date, grade, section) => {
     return apiInstance.get(`/view_log_book?date=${date}&grade_id=${grade}&section_id=${section}`)
 }
 
-const viewMasterRoutine = (day) => {
-    return apiInstance.get(`/view_master_routine?day=${day}`)
+const viewMasterRoutine = (day, grade) => {
+    return apiInstance.get(`/view_master_routine?day=${day}&grade_id=${grade}`)
 }
 
 const attendanceOverview = (grade, section) => {
@@ -62,6 +62,14 @@ const getLessonPlan= (grade, section, subject) => {
     return apiInstance.get(`/view_lesson_plan?grade_id=${grade}&section_id=${section}&subject_id=${subject}`)
 }
 
+const fetchAllSubjects = () => {
+    return apiInstance.get(`/get_all_subjects`)
+}
+
+const getTeacherRoutine = (userId, day) => {
+    return apiInstance.get(`/view_teacher_routine?userid=${userId}&day=${day}`)
+}
+
 
 
 export {
@@ -76,5 +84,7 @@ export {
     getGradeDetails,
     saveLessonPlan,
     viewAttendanceReport,
-    getLessonPlan
+    getLessonPlan,
+    fetchAllSubjects,
+    getTeacherRoutine
 }

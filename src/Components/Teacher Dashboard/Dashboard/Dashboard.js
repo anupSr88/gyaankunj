@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 // import './PrincipalDashboard.css'
-import { Row, Col, Modal, Dropdown, Table, Form, Button } from "react-bootstrap";
+import { Row, Col, Modal, Dropdown, Table, Form, Button, Card } from "react-bootstrap";
 // import DashboardContent from './DashboardContent'
 // import DashboardRightPanel from './DashboardRightPanel'
-import {viewLogBook } from '../../../ApiClient'
+import {viewLogBook, getTeacherRoutine} from '../../../ApiClient'
 import '../TeacherDashboard.css'
 import TeacherSidebar from '../TeacherSidebar';
 import Select from 'react-select'
+import dashboardCardBg from '../../../Images/Rectangle_142062.svg'
 
 const TDashboard = () => {
     const [dateToFetchLog, setDateToFetchLog] = useState('')
@@ -14,10 +15,15 @@ const TDashboard = () => {
     const [sectionToFetchLog, setSectionToFetchLog] = useState('')
     const [startDate, setStartDate] = useState("");
     const [logBookDetails, setLogBookDetails] = useState('')
+    const [weekDayToFetch, setWeekDayToFetch] = useState('')
+    const [teacherRoutineData, setTeacherRoutineData] = useState({})
 
     useEffect(() => {
         getLogBook()
+        fetchTeacherRoutine()
     }, [])
+
+    const userDetails = JSON.parse(window.localStorage.getItem('UserData'))
 
     const getLogBook = () => {
         const date = dateToFetchLog
@@ -27,6 +33,18 @@ const TDashboard = () => {
         .then((res) => setLogBookDetails(res.data))
         .catch((err) => console.log(err))
     }
+
+    const fetchTeacherRoutine = () => {
+      // const userId = userDetails.userid
+      // const day = weekDayToFetch
+      const userId = "EMP2"
+      const day = "Wednesday"
+      getTeacherRoutine(userId, day)
+      .then((res) => setTeacherRoutineData(res.data))
+      .catch((err) => console.log(err, "errorTeacher"))
+    }
+
+    console.log("teacherRoutineData - ", teacherRoutineData)
 
     const classOptions = [
         {value: 1, label: 1},
@@ -48,6 +66,17 @@ const TDashboard = () => {
         { value: '4', label: 'D' }
       ]
 
+
+      const weekDayOption = [
+        {value: "Monday", label: "Monday"},
+        {value: "Tuesday", label: "Tuesday"},
+        {value: "Wednesday", label: "Wednesday"},
+        {value: "Thursday", label: "Thursday"},
+        {value: "Friday", label: "Friday"},
+      ]
+
+
+
       const handlesectionToFetchLog = (e) => {
         setSectionToFetchLog(e.value)
       }
@@ -56,6 +85,9 @@ const TDashboard = () => {
         setGradeToFetchLog(e.value)
       }
 
+      const handleWeekDayChange = (e) => {
+        setWeekDayToFetch(e.value)
+      }
 
     return (
       <>
@@ -238,14 +270,30 @@ const TDashboard = () => {
           <Col md={3} style={{ marginTop: "91px", width: "20%" }}>
             <Row>
               <Col md={6} className="teacherRightPanel">
-                <Row className='teacherRightPanel-header'>
-                    <Col md={6}>
-                        <h4>My Schedule</h4>
-                    </Col>
-                    <Col md={6}>
-                    
-                    </Col>
-                    
+                <Row className="teacherRightPanel-header">
+                  <Col md={6}>
+                    <h4>My Schedule</h4>
+                  </Col>
+                  <Col md={6}>
+                    <Select
+                      placeholder="Day"
+                      isSearchable={false}
+                      options={weekDayOption}
+                      onChange={(e) => handleWeekDayChange(e)}
+                      onClick={fetchTeacherRoutine}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={12}>
+                    {teacherRoutineData?.time_table?.map((routine, indx) => {
+                      return <Card style={{height:"81px", marginBottom:"5px", backgroundColor:"#0DCAF0" }}>
+                      <Card.Body>
+                        <span style={{ font: "normal normal normal 14px/21px Roboto", letterSpacing:" 0px", color:" #032394" }}>{routine.time_range}</span> -----<span style={{ font: "normal normal normal 14px/21px Roboto", letterSpacing:" 0px", color:" #5A5757" }}>{routine.subject_name}</span> -- <span style={{ font: "normal normal normal 14px/21px Roboto", letterSpacing:" 0px", color:" #5A5757" }}>{`${routine.grade}${routine.section_name}`}</span>
+                      </Card.Body>
+                    </Card>
+                    })}
+                  </Col>
                 </Row>
               </Col>
             </Row>

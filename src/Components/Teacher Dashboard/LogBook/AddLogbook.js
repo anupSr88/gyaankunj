@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
 import Select from "react-select";
-import { fetchAllSubjects } from "../../../ApiClient";
+import { createMasterRoutine, getMasterRoutineData } from "../../../ApiClient";
 
 const AddLogBook = (props) => {
   const [grade, setGrade] = useState("");
@@ -9,10 +9,6 @@ const AddLogBook = (props) => {
   const [teacherName, setTeacherName] = useState();
   const [period, setPeriod] = useState("");
   const [section, setSection] = useState("");
-
-  useEffect(() => {
-    getSubjects();
-  }, [])
 
   const gradeOptions = [{ value: "1", label: "1" }];
 
@@ -53,8 +49,8 @@ const AddLogBook = (props) => {
     { value: "D", label: "D" },
   ];
 
-  const getSubjects = () => {
-    fetchAllSubjects()
+  const getMasterroutineData = () => {
+    getMasterRoutineData()
       .then((data) => console.log(data, "data"))
       .catch((err) => console.log(err, "err"));
   };

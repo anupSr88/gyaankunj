@@ -88,6 +88,7 @@ const AttendanceOverview = () => {
 
     const handleClassChange = (e) => {
       setClassSelect(e.value)
+      setGrade(e.value)
     }
     
     const getAttendanceOverview = () => {
@@ -203,14 +204,14 @@ const AttendanceOverview = () => {
                     </h6>
                   </Col>
                   <Col md={3}>
-                    <span>
+                    {/* <span>
                       <Select
                         placeholder="Select Grade"
                         options={gradeOptions}
                         onChange={(e) => handleGradeChange(e)}
                         isSearchable={false}
                       />
-                    </span>
+                    </span> */}
                   </Col>
                 </Row>
 
@@ -408,7 +409,7 @@ const AttendanceOverview = () => {
                       </h6>
                     </Col>
                     <Col md={3} style={{ textAlign: "initial" }}>
-                      Julie
+                      {studentTotalAttendance.class_teacher_name}
                     </Col>
                   </Row>
                 </div>

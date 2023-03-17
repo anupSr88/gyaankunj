@@ -127,6 +127,7 @@ const AddRoutine = (props) => {
 
     let newMember = [...dataToAddRoutine]
    let newData = {
+    formId: uniqueId,
       formGrade :  grade,
     formPeriod :  period,
     formSubject :  subject,
@@ -156,7 +157,7 @@ const AddRoutine = (props) => {
         fullscreen
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Routine</Modal.Title>
+          <Modal.Title>Create Master Routine</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -214,6 +215,7 @@ const AddRoutine = (props) => {
           <th>Teacher Name</th>
           <th>Subject Name</th>
           <th>Weekday</th>
+          <th>Action</th>
         </tr>
       </thead>
       {dataToAddRoutine?.map((data, indx) => {
@@ -226,6 +228,7 @@ const AddRoutine = (props) => {
           <td>{data.formTeacher}</td>
           <td>{data.formSubject}</td>
           <td>{data.formDay}</td>
+          <td><Button variant="primary">Edit</Button><Button variant="danger" style={{position:"relative", left:"40px"}}>Delete</Button></td>
           
         </tr>
       </tbody>

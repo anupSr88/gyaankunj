@@ -18,10 +18,11 @@ const TLessonPlan = () => {
     },[])
 
     const viewLessonPlan = () => {
-      const grade_id = "6"
-      const section_id = "4"
-      const subject_id = "2"
-      getLessonPlan(grade_id, section_id,subject_id)
+      const grade_id = "2"
+      const section_id = "3"
+      const subject_id = "3"
+      const teacher_id = "TEACHER_2"
+      getLessonPlan(grade_id, section_id,subject_id, teacher_id )
       .then((res) => setLessonPlanData(res.data))
       .catch((err) => console.log(err))
     }
@@ -48,60 +49,6 @@ const TLessonPlan = () => {
               <Col md={9} style={{ textAlign: "left", paddingLeft: "50px" }}>
                 <h3>Lesson Plan</h3>
               </Col>
-              {/* <Col md={2}>
-                <span>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      className="dropdownHead"
-                      id="dropdown-basic"
-                    >
-                      Select Section
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
-              </Col>
-              <Col md={2}>
-                <span>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      className="dropdownHead"
-                      id="dropdown-basic"
-                    >
-                      Select Class
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
-              </Col>
-              <Col md={2}>
-                <span>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      className="dropdownHead"
-                      id="dropdown-basic"
-                    >
-                      Select Subject
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
-              </Col> */}
               <Col md={3}>
                 <Button variant="outline-primary" onClick={handleShowPlanModal}>
                   + Add Lesson Plan

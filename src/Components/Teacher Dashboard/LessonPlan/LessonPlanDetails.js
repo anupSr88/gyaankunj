@@ -9,6 +9,12 @@ import downArrow from '../../../Images/icon_chevron_see_all.svg'
 function LessonPlanDetails(props) {
     const [expandCard, setExpandcard] = useState(false)
 
+    const showLessonPlanDetails = (id) => {
+        setExpandcard(!expandCard)
+    }
+
+    console.log('props - ', props)
+
   return (
     <>
     <Card className='lessonPlanCardHeader'>
@@ -48,7 +54,7 @@ function LessonPlanDetails(props) {
             <Col md={1}>
                 {/* <FaAngleDown onClick={() => setExpandcard(!expandCard)} /> */}
                 {/* <Button onClick={() => setExpandcard(!expandCard)}>Show More</Button> */}
-                <img src={downArrow} alt="expand" onClick={() => setExpandcard(!expandCard)} />
+                <img src={downArrow} alt="expand" onClick={() => showLessonPlanDetails()} />
             </Col>
         </Row>
         {expandCard && <div>

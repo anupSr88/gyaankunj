@@ -15,6 +15,7 @@ const AddRoutine = (props) => {
   const [section, setSection] = useState('')
   const [day, setDay] = useState('')
   const [dataToAddRoutine, setDataToAddRoutine] = useState([])
+  const [enableSubmitButton, setEnableSubmitButton] = useState(false)
 
   const gradeOptions = [
    {value: "1", label: 1},
@@ -219,7 +220,6 @@ const AddRoutine = (props) => {
         </tr>
       </thead>
       {dataToAddRoutine?.map((data, indx) => {
-        console.log("data - ", data)
         return <tbody>
         <tr>
           <td>{data.formGrade}</td>

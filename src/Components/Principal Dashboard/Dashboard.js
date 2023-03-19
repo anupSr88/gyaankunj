@@ -164,7 +164,7 @@ getGradeDetails()
           </Col>
           <Col md={9} className="attendanceOverviewInner">
             <Row>
-              <Col md={7}>
+              <Col md={9}>
                 <h6
                   style={{
                     background: "#DEFABD 0% 0% no-repeat padding-box",
@@ -180,7 +180,7 @@ getGradeDetails()
                   Student
                 </h6>
               </Col>
-              <Col md={5} className="dflex">
+              <Col md={3} className="dflex">
                 <Select placeholder="Select Grade" options={gradeOptions} onChange={e => handleGradeChange(e)} isSearchable={false} />
               </Col>
             </Row>

@@ -58,8 +58,8 @@ const viewAttendanceReport = (grade, section, year, userType) => {
     return apiInstance.get(`/view_attendance_report?grade_id=${grade}&section_id=${section}&year=${year}&user_type=${userType}`)
 }
 
-const getLessonPlan= (grade, section, subject) => {
-    return apiInstance.get(`/view_lesson_plan?grade_id=${grade}&section_id=${section}&subject_id=${subject}`)
+const getLessonPlan= (grade, section, subject, teacher) => {
+    return apiInstance.get(`/view_lesson_plan?grade_id=${grade}&section_id=${section}&subject_id=${subject}&teacher_id=${teacher}`)
 }
 
 const fetchAllSubjects = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar, Button, Form } from "react-bootstrap";
 import { useState } from "react";
 import AddLogBook from './AddLogbook'
-import { viewLogBook } from '../../../ApiClient'
+import { viewLogBook, getGradeDetails } from '../../../ApiClient'
 import Select from 'react-select'
 import { useEffect } from 'react';
 import TeacherSidebar from '../TeacherSidebar';
@@ -15,9 +15,10 @@ const LogBook = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [logBookDetails, setLogBookDetails] = useState({})
+  const [gradeData, setGradeData] = useState([])
 
   // useEffect(() => {
-  //   showLogBookData()
+  //   getGradesData()
   // })
 
   const handleShowLogBook = () => {
@@ -61,6 +62,16 @@ const LogBook = () => {
     .catch((err) => console.log(err))
   }
 
+  const getGradesData = () => {
+    getGradeDetails()
+    .then((res) => setGradeData(res.data))
+      .catch((err) => console.log(err, "err"));
+  }
+
+  const closeAndLoad = () => {
+    setShowAddLogbook(false)
+    showLogBookData();
+  }
 
     return (
         <>
@@ -141,7 +152,15 @@ const LogBook = () => {
                   <th>Homework</th>
                 </tr>
               </thead>
-              {logBookDetails?.log_book_data?.log_record.map((logData, indx) => {
+              {logBookDetails?.status == "failure" ? 
+              <Row>
+                <Col md={12}>
+                <h6 className='failureMessage' style={{position:"relative", left:"300px"}}>{logBookDetails?.message}</h6>
+                </Col>
+              </Row>
+              
+              :
+               logBookDetails?.log_book_data?.log_record.map((logData, indx) => {
                 return <tbody>
                 <tr>
                 <td>{logData?.period}</td>
@@ -173,7 +192,7 @@ const LogBook = () => {
         
       </div>
       </Col>
-        {showAddLogbook && <AddLogBook show={showAddLogbook} onHide={() => setShowAddLogbook(false)} />}
+        {showAddLogbook && <AddLogBook show={showAddLogbook} onHide={() => setShowAddLogbook(false)} gradeData={gradeData} closeAndLoad={closeAndLoad} />}
         </Row>
         </>
     )

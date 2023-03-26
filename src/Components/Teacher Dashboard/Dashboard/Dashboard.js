@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import { Row, Col, Modal, Dropdown, Table, Form, Button, Card } from "react-bootstrap";
 // import DashboardContent from './DashboardContent'
 // import DashboardRightPanel from './DashboardRightPanel'
-import {viewLogBook, getTeacherRoutine} from '../../../ApiClient'
+import {viewLogBook, getTeacherRoutine, getAllStudentsData } from '../../../ApiClient'
 import '../TeacherDashboard.css'
 import TeacherSidebar from '../TeacherSidebar';
 import Select from 'react-select'
@@ -17,10 +17,12 @@ const TDashboard = () => {
     const [logBookDetails, setLogBookDetails] = useState('')
     const [weekDayToFetch, setWeekDayToFetch] = useState('')
     const [teacherRoutineData, setTeacherRoutineData] = useState({})
+    const [studentDetails, setStudentDetails] = useState({})
 
     useEffect(() => {
-        getLogBook()
-        fetchTeacherRoutine()
+        // getLogBook()
+        // fetchTeacherRoutine()
+        getAllStudents()
     }, [])
 
     const userDetails = JSON.parse(window.localStorage.getItem('UserData'))
@@ -35,16 +37,24 @@ const TDashboard = () => {
     }
 
     const fetchTeacherRoutine = () => {
-      // const userId = userDetails.userid
-      // const day = weekDayToFetch
-      const userId = "EMP2"
-      const day = "Wednesday"
+      const userId = userDetails.userid
+      const day = weekDayToFetch
+      // const userId = "EMP2"  
+      // const day = "Wednesday"
       getTeacherRoutine(userId, day)
       .then((res) => setTeacherRoutineData(res.data))
       .catch((err) => console.log(err, "errorTeacher"))
     }
 
-    console.log("teacherRoutineData - ", teacherRoutineData)
+    const getAllStudents = () => {
+      const grade = "1"
+        const section = "1"
+      getAllStudentsData(grade, section)
+      .then((res) => setStudentDetails(res.data))
+      .catch((err) => console.log(err))
+    }
+
+    console.log("studentDetails - ", studentDetails)
 
     const classOptions = [
         {value: 1, label: 1},
@@ -87,7 +97,10 @@ const TDashboard = () => {
 
       const handleWeekDayChange = (e) => {
         setWeekDayToFetch(e.value)
+        fetchTeacherRoutine()
       }
+
+      console.log('weekDayToFetch - ', weekDayToFetch)
 
     return (
       <>
@@ -107,7 +120,7 @@ const TDashboard = () => {
                 }}
               >
                 <Col md={4}>
-                  <h4>Teacher's LogBook</h4>
+                  <h4>LogBook</h4>
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
                   <span>
@@ -196,7 +209,7 @@ const TDashboard = () => {
                       <th>Homework</th>
                     </tr>
                   </thead>
-                  {logBookDetails?.log_book_data?.log_record.map(
+                  {logBookDetails?.log_book_data ? logBookDetails?.log_book_data?.log_record.map(
                     (logData, indx) => {
                       return (
                         <tbody>
@@ -210,12 +223,14 @@ const TDashboard = () => {
                         </tbody>
                       );
                     }
-                  )}
+                  )
+                :
+                <p style={{top:"43%", left: "42%", position: "absolute", font: "normal normal bold 20px/34px Roboto"}}>No Logbook Available!!</p>}
                 </Table>
               </div>
             </div>
 
-            <div className="dashboardLogbook">
+            <div className="teacherDashboardAttendance">
               <Row
                 style={{
                   height: "74px",
@@ -223,48 +238,346 @@ const TDashboard = () => {
                   position: "relative",
                   left: "12px",
                   width: "100%",
+                  
                 }}
               >
                 <Col md={8}>
                   <h4>Student's Attendance</h4>
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
-                  <span>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        className="dropdownHead"
-                        id="dropdown-basic"
-                      >
-                        Section
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                <span>
+                    <Select
+                      placeholder="Class"
+                      isSearchable={false}
+                      options={classOptions}
+                      onChange={(e) => handlegradeToFetchLog(e)}
+                    />
                   </span>
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
-                  <span>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        className="dropdownHead"
-                        id="dropdown-basic"
-                      >
-                        Class
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                <span>
+                    <Select
+                      placeholder="Section"
+                      isSearchable={false}
+                      options={classOptions}
+                      onChange={(e) => handlegradeToFetchLog(e)}
+                    />
                   </span>
                 </Col>
               </Row>
+
+          {/* ATTENDANCE BLOCK */}
+
+
+              {/* <div>
+              <Row style={{padding:"40px"}}>
+                <Col md={5} className="studentAttendanceBlock">
+                  <Row>
+                   <Col md={6}>
+                   </Col>
+                   <Col md={6}>
+                    <Row>
+                      <Col md={6}>
+                        <h6  style={{fontSize:"13px"}}>Present</h6>
+                      </Col>
+                      <Col md={6}>
+                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
+                      </Col>
+                    </Row>
+                    </Col> 
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={2}>
+                          1.
+                        </Col>
+                        <Col md={10}>
+                          Arjun
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                      </Row>
+                      
+                    </Col>
+                  </Row>
+                  
+                </Col>
+
+                <Col md={5} className="studentAttendanceBlock">
+                <Row>
+                   <Col md={6}>
+                   </Col>
+                   <Col md={6}>
+                    <Row>
+                      <Col md={6}>
+                        <h6 style={{fontSize:"13px"}}>Present</h6>
+                      </Col>
+                      <Col md={6}>
+                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
+                      </Col>
+                    </Row>
+                    </Col> 
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={2}>
+                          2.
+                        </Col>
+                        <Col md={10}>
+                          Ravi
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                      </Row>
+                      
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+              <Row style={{padding:"40px"}}>
+                <Col md={5} className="studentAttendanceBlock">
+                  <Row>
+                   <Col md={6}>
+                   </Col>
+                   <Col md={6}>
+                    <Row>
+                      <Col md={6}>
+                        <h6  style={{fontSize:"13px"}}>Present</h6>
+                      </Col>
+                      <Col md={6}>
+                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
+                      </Col>
+                    </Row>
+                    </Col> 
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={2}>
+                          3.
+                        </Col>
+                        <Col md={10}>
+                          Anup
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                      </Row>
+                      
+                    </Col>
+                  </Row>
+                  
+                </Col>
+
+                <Col md={5} className="studentAttendanceBlock">
+                <Row>
+                   <Col md={6}>
+                   </Col>
+                   <Col md={6}>
+                    <Row>
+                      <Col md={6}>
+                        <h6 style={{fontSize:"13px"}}>Present</h6>
+                      </Col>
+                      <Col md={6}>
+                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
+                      </Col>
+                    </Row>
+                    </Col> 
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={2}>
+                          4.
+                        </Col>
+                        <Col md={10}>
+                          Devanshu
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                      </Row>
+                      
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+              <Row style={{padding:"40px"}}>
+                <Col md={5} className="studentAttendanceBlock">
+                  <Row>
+                   <Col md={6}>
+                   </Col>
+                   <Col md={6}>
+                    <Row>
+                      <Col md={6}>
+                        <h6  style={{fontSize:"13px"}}>Present</h6>
+                      </Col>
+                      <Col md={6}>
+                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
+                      </Col>
+                    </Row>
+                    </Col> 
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={2}>
+                          5.
+                        </Col>
+                        <Col md={10}>
+                          Chanchal
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                      </Row>
+                      
+                    </Col>
+                  </Row>
+                  
+                </Col>
+
+                <Col md={5} className="studentAttendanceBlock">
+                <Row>
+                   <Col md={6}>
+                   </Col>
+                   <Col md={6}>
+                    <Row>
+                      <Col md={6}>
+                        <h6 style={{fontSize:"13px"}}>Present</h6>
+                      </Col>
+                      <Col md={6}>
+                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
+                      </Col>
+                    </Row>
+                    </Col> 
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={2}>
+                          6.
+                        </Col>
+                        <Col md={10}>
+                          Bhoot
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                        <Col md={6}>
+                        <input type="checkbox" />
+                        </Col>
+                      </Row>
+                      
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+              </div> */}
+              <div className="studentAttendance">
+                <Row style={{boxShadow: "rgba(180, 179, 179, 0.16) 0px 3px 6px", height: "54px"}}>
+                  <Col className="studentAttendanceHeader" md={2}>Roll Number</Col>
+                  <Col className="studentAttendanceHeader" md={6}>Name</Col>
+                  <Col className="studentAttendanceHeader" md={2}>Present</Col>
+                  <Col className="studentAttendanceHeader" md={2}>Dress Defaulter</Col>
+                </Row>
+                <div className='studentAttendanceInner'>
+                <Row style={{marginTop:"20px"}}>
+                  <Col className="studentAttendanceDetails" md={2}>11</Col>
+                  <Col className="studentAttendanceDetails" md={6}>Devanshu</Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                </Row>
+                <Row style={{marginTop:"20px"}}>
+                  <Col className="studentAttendanceDetails" md={2}>14</Col>
+                  <Col className="studentAttendanceDetails" md={6}>Chanchal</Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                </Row>
+                <Row style={{marginTop:"20px"}}>
+                  <Col className="studentAttendanceDetails" md={2}>15</Col>
+                  <Col className="studentAttendanceDetails" md={6}>Raj</Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                </Row>
+                <Row style={{marginTop:"20px"}}>
+                  <Col className="studentAttendanceDetails" md={2}>12</Col>
+                  <Col className="studentAttendanceDetails" md={6}>Anup</Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                </Row>
+                <Row style={{marginTop:"20px"}}>
+                  <Col className="studentAttendanceDetails" md={2}>11</Col>
+                  <Col className="studentAttendanceDetails" md={6}>Devanshu</Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                </Row>
+                <Row style={{marginTop:"20px"}}>
+                  <Col className="studentAttendanceDetails" md={2}>14</Col>
+                  <Col className="studentAttendanceDetails" md={6}>Chanchal</Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                </Row>
+                <Row style={{marginTop:"20px"}}>
+                  <Col className="studentAttendanceDetails" md={2}>15</Col>
+                  <Col className="studentAttendanceDetails" md={6}>Raj</Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                </Row>
+                <Row style={{marginTop:"20px"}}>
+                  <Col className="studentAttendanceDetails" md={2}>12</Col>
+                  <Col className="studentAttendanceDetails" md={6}>Anup</Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
+                </Row>
+                </div>
+              </div>
+              
+
+              
             </div>
           </Col>
           <Col md={3} style={{ marginTop: "91px", width: "20%" }}>
@@ -280,19 +593,33 @@ const TDashboard = () => {
                       isSearchable={false}
                       options={weekDayOption}
                       onChange={(e) => handleWeekDayChange(e)}
-                      onClick={fetchTeacherRoutine}
+                      // onClick={fetchTeacherRoutine}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col md={12}>
-                    {teacherRoutineData?.time_table?.map((routine, indx) => {
-                      return <Card style={{height:"81px", marginBottom:"5px", backgroundColor:"#0DCAF0" }}>
-                      <Card.Body>
-                        <span style={{ font: "normal normal normal 14px/21px Roboto", letterSpacing:" 0px", color:" #032394" }}>{routine.time_range}</span> -----<span style={{ font: "normal normal normal 14px/21px Roboto", letterSpacing:" 0px", color:" #5A5757" }}>{routine.subject_name}</span> -- <span style={{ font: "normal normal normal 14px/21px Roboto", letterSpacing:" 0px", color:" #5A5757" }}>{`${routine.grade}${routine.section_name}`}</span>
-                      </Card.Body>
-                    </Card>
-                    })}
+                    {teacherRoutineData?.time_table ? teacherRoutineData?.time_table?.map((routine, indx) => {
+                      return (
+                        <Card
+                          style={{
+                            height: "81px",
+                            marginBottom: "5px",
+                            backgroundColor: "#0DCAF0",
+                          }}
+                        >
+                          <Card.Body>
+                            <span style={{
+                                font: "normal normal normal 14px/21px Roboto",
+                                letterSpacing: " 0px",
+                                color: "white",
+                              }}>{`${routine.time_range} --- ${routine.subject_name}--${routine.grade}${routine.section_name}`}</span>
+                          </Card.Body>
+                        </Card>
+                      );
+                    })
+                  :
+                  <p>{teacherRoutineData?.message}</p>}
                   </Col>
                 </Row>
               </Col>

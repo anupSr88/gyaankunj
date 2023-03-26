@@ -58,8 +58,8 @@ const viewAttendanceReport = (grade, section, year, userType) => {
     return apiInstance.get(`/view_attendance_report?grade_id=${grade}&section_id=${section}&year=${year}&user_type=${userType}`)
 }
 
-const getLessonPlan= (grade, section, subject, teacher) => {
-    return apiInstance.get(`/view_lesson_plan?grade_id=${grade}&section_id=${section}&subject_id=${subject}&teacher_id=${teacher}`)
+const getLessonPlan= (teacher) => {
+    return apiInstance.get(`/view_teacher_lesson_plan?teacher_id=${teacher}`)
 }
 
 const fetchAllSubjects = () => {
@@ -68,6 +68,30 @@ const fetchAllSubjects = () => {
 
 const getTeacherRoutine = (userId, day) => {
     return apiInstance.get(`/view_teacher_routine?userid=${userId}&day=${day}`)
+}
+
+const viewStudentAttendance = (grade, section, month) => {
+    return apiInstance.get(`/get_student_attendance?grade_id=${grade}&section_id=${section}&month_id=${month}`)
+}
+
+const getAllStudentsData = (grade, section) => {
+    return apiInstance.get(`/get_all_students?grade_id=${grade}&section_id=${section}`)
+}
+
+const viewAllNotice = (userId) => {
+    return apiInstance.get(`/view_all_notices?user_id=${userId}`)
+}
+
+const saveNotice = (noticeData) => {
+    return apiInstance.post(`/save_notice`, noticeData)
+}
+
+const publishNotice = (noticeDataToPublish) => {
+    return apiInstance.post(`/publish_notice`, noticeDataToPublish)
+}
+
+const createLogBook = (data) => {
+    return apiInstance.post(`/save_log_book`, data)
 }
 
 
@@ -86,5 +110,11 @@ export {
     viewAttendanceReport,
     getLessonPlan,
     fetchAllSubjects,
-    getTeacherRoutine
+    getTeacherRoutine,
+    viewStudentAttendance,
+    getAllStudentsData,
+    viewAllNotice,
+    saveNotice,
+    publishNotice,
+    createLogBook
 }

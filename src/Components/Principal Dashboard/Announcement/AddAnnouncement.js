@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
 import Select from "react-select";
+import { saveNotice, publishNotice } from '../../../ApiClient';
 
 const AddAnnouncement = (props) => {
   const [grade, setGrade] = useState("");
@@ -8,45 +9,57 @@ const AddAnnouncement = (props) => {
   const [teacherName, setTeacherName] = useState();
   const [period, setPeriod] = useState("");
   const [section, setSection] = useState("");
+  const [noticeDescription, setNoticeDescription] = useState('')
+  const [noticeSubject, setNoticeSubject] = useState('')
+  const [showVisibility, setShowVisibility] = useState(false)
+  const [visibilityData, setVisibilityData] = useState('')
+  const [saveNoticeDetails, setSaveNoticeDetails] = useState({})
 
-  const gradeOptions = [{ value: "1", label: "1" }];
+  const userDetails = JSON.parse(localStorage.getItem('UserData'))
 
-  const subjectOptions = [
-    { value: "History", label: "History" },
-    { value: "Geography", label: "Geography" },
-    { value: "Hindi", label: "Hindi" },
-    { value: "English", label: "English" },
-  ];
+  // useEffect(() => {
+  //   saveNoticeData();
+  // })
 
-  const teacherOptions = [
-    { value: "Julie", label: "Julie" },
-    { value: "S.K. Tripathy", label: "S.K. Tripathy" },
-    { value: "Khan Sir", label: "Khan Sir" },
-  ];
 
-  const periodOptions = [
-    { value: "1st", label: "1st" },
-    { value: "2nd", label: "2nd" },
-    { value: "4th", label: "4th" },
-    { value: "5th", label: "5th" },
-    { value: "6th", label: "6th" },
-    { value: "7th", label: "7th" },
-    { value: "8th", label: "8th" },
-    { value: "9th", label: "9th" },
-    { value: "10th", label: "10th" },
-  ];
 
-  // const timingOptions = [
-  //   { value: '8:00 - 8:30', label: '8:00 - 8:30' },
-  //   { value: '8:30 - 9:00', label: '8:30 - 9:00' },
-  // ]
+  const visibilityOptions = [
+    { value: "teacher", label: "Teacher" },
+    { value: "student", label: "Student" },
+    { value: "teacher_and_student", label: "Teacher and Student" },
+    { value: "student_and_parent", label: "Student and Parent" },
+    { value: "teacher_and_parent", label: "Teacher and Parent" },
+    { value: "all", label: "Everyone" },
+  ]
 
-  const sectionOptions = [
-    { value: "A", label: "A" },
-    { value: "B", label: "B" },
-    { value: "C", label: "C" },
-    { value: "D", label: "D" },
-  ];
+  const saveNoticeData = () => {
+    const data = {
+      user_id: userDetails?.userid,
+      data: noticeDescription,
+      notice_subject : noticeSubject
+    }
+    saveNotice(data)
+    .then((res) => {setSaveNoticeDetails(res.data)
+    setShowVisibility(true)})
+    .catch((err) => console.log("Notice Err", err))
+  }
+
+  const publishNoticeData = () => {
+    const data = {
+      notice_id: saveNoticeDetails.notice_id,
+      visibility: visibilityData
+    }
+    publishNotice(data)
+    .then((res) => {console.log("Publish Notice Res", res.data)
+    closeModal();
+    })
+    .catch((err) => console.log("Notice Err", err))
+  }
+
+  const closeModal = () => {
+    props.closeAndLoad()
+  }
+
 
   return (
     <>
@@ -57,7 +70,7 @@ const AddAnnouncement = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Add Notice</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -69,7 +82,7 @@ const AddAnnouncement = (props) => {
                   controlId="exampleForm.ControlInput1"
                 >
                   <Form.Label>Notice Subject</Form.Label>
-                  <Form.Control type="text" placeholder="Notice Subject" />
+                  <Form.Control type="text" placeholder="Notice Subject" onChange={(e) => setNoticeSubject(e.target.value)} />
                 </Form.Group>
               </Col>
             </Row>
@@ -84,17 +97,25 @@ const AddAnnouncement = (props) => {
                     as="textarea"
                     rows={3}
                     placeholder="Add Description"
+                    onChange={(e) => setNoticeDescription(e.target.value)}
                   />
                 </Form.Group>
               </Col>
             </Row>
+            <Row>
+              {saveNoticeDetails?.notice_id && <Col md={12}>
+              <Select placeholder="Select Visibility" options={visibilityOptions} isSearchable={false} onChange={e => setVisibilityData(e.value)} />
+              </Col>}
+            </Row>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-primary" style={{ alignItems: "center" }}>
+          {/* <Button variant="outline-primary" style={{ alignItems: "center" }}>
             Reset
-          </Button>
-          <Button variant="outline-primary">Submit</Button>
+          </Button> */}
+          <Button disabled={saveNoticeDetails?.notice_id} variant="outline-primary" onClick={saveNoticeData}>Save</Button>
+          <Button disabled={!saveNoticeDetails?.notice_id} variant="outline-primary" onClick={publishNoticeData}>Publish</Button>
+          <Button variant="outline-primary" onClick={closeModal}>Close</Button>
         </Modal.Footer>
       </Modal>
     </>

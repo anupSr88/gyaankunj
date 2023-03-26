@@ -24,6 +24,16 @@ export const teacherRoutesConfig = {
     NotificationsForTeacher: "/teacherDashboard/Notifications",
 }
 
+export const studentRoutesConfig = {
+    studentdashboard : "/studentDashboard/Dashboard",
+    dashboard : "/studentDashboard/Dashboard",
+    assignments: "/studentDashboard/Assignment",
+    studentReport: "/studentDashboard/Reports",
+    studentResources: "/studentDashboard/Resources",
+    NoticeForStudent: "/studentDashboard/Notice",
+    NotificationsForStudent: "/studentDashboard/Notifications",
+}
+
 export const routesConfigName = {
     principaldashboard: "PrincipalDashboard",
     masterRoutine: "MasterRoutine",

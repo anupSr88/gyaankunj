@@ -29,6 +29,8 @@ import ResourcesForTeacher from './Components/Teacher Dashboard/ResourcesForTeac
 import NoticeForTeacher from './Components/Teacher Dashboard/NoticeForTeacher/NoticeForTeacher';
 import NotificationsForTeacher from './Components/Teacher Dashboard/NotificationsForTeacher/NotificationsForTeacher';
 
+import StudentDashboard from './Components/Student Dashboard/StudentDashboard';
+
 function App() {
   return (
     <>
@@ -75,6 +77,13 @@ function App() {
 <Route path="/teacherDashboard/Resources" element={<ProtectedWrapper Component = {ResourcesForTeacher} />} />
 <Route path="/teacherDashboard/Announcements" element={<ProtectedWrapper Component = {NoticeForTeacher} />} />
 <Route path="/teacherDashboard/Notifications" element={<ProtectedWrapper Component = {NotificationsForTeacher} />} />
+
+<Route path="/studentDashboard/Dashboard" element={<ProtectedWrapper Component = {StudentDashboard} />} />
+<Route path="/studentDashboard/Reports" element={<ProtectedWrapper Component = {TeacherReport} />} />
+<Route path="/studentDashboard/Assignment" element={<ProtectedWrapper Component = {TeacherAssignment} />} />
+<Route path="/studentDashboard/Resources" element={<ProtectedWrapper Component = {ResourcesForTeacher} />} />
+<Route path="/studentDashboard/Announcements" element={<ProtectedWrapper Component = {NoticeForTeacher} />} />
+<Route path="/studentDashboard/Notifications" element={<ProtectedWrapper Component = {NotificationsForTeacher} />} />
 <Route exact path="/" Component={DashboardSectionContent} />
 </Routes>
       

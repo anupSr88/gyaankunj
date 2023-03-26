@@ -59,12 +59,12 @@ function HeaderComp(props) {
           (window.localStorage.getItem('UserData') ? (
             <Row className='loggedInUserDetails'>
               
-                <Col md={1} style={{padding : "0"}}>
+                <Col md={2} style={{padding : "0"}}>
                   <div className='loggedInProfilePic'>
                     <img className='loggedInProfileP' src = {profilePic} alt="PP" />
                   </div>
                 </Col>
-                <Col md={9}>
+                <Col md={8}>
                   <span className='loggedInName'>{userDetails?.name}</span>
                 </Col>
                 <Col md={2}>

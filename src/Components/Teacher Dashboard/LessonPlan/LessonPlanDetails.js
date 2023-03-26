@@ -20,14 +20,16 @@ function LessonPlanDetails(props) {
     <Card className='lessonPlanCardHeader'>
       <Card.Body>
         <Row>
-            <Col md={6} className="lessonHeading" style={{textAlign:"left"}}>
-                <h6>LESSON NAME</h6>
-            </Col>
-            <Col md={2} className="lessonHeading">
+            
+        <Col md={2} className="lessonHeading">
                 <h6>GRADE</h6>
             </Col>
-            <Col md={3} className="lessonHeading">
+            <Col md={4} className="lessonHeading">
                 <h6>SUBJECT NAME</h6>
+            </Col>
+            
+            <Col md={4} className="lessonHeading" style={{textAlign:"left"}}>
+                <h6>LESSON NAME</h6>
             </Col>
         </Row>
       </Card.Body>
@@ -42,16 +44,19 @@ function LessonPlanDetails(props) {
        return <Card className={expandCard ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}>
       <Card.Body>
         <Row style={{height :expandCard? '66px' : "", boxShadow: expandCard? '0px 3px 6px #B4B3B329' : ""}}>
-            <Col md={6} className="lessonName">
-                <p>{lessons.subject_name}</p>
-            </Col>
-            <Col md={2} className="gradeName">
+        <Col md={2} className="gradeName">
                 {lessons.grade ? <p>{lessons.grade}</p> : "-"}
             </Col>
-            <Col md={3} className="subjectName">
+        <Col md={4} className="subjectName">
                 <p>{lessons.subject_name}</p>
             </Col>
-            <Col md={1}>
+            
+            <Col md={4} className="lessonName">
+                <p>{lessons.topic_name}</p>
+            </Col>
+            
+            
+            <Col md={2}>
                 {/* <FaAngleDown onClick={() => setExpandcard(!expandCard)} /> */}
                 {/* <Button onClick={() => setExpandcard(!expandCard)}>Show More</Button> */}
                 <img src={downArrow} alt="expand" onClick={() => showLessonPlanDetails()} />

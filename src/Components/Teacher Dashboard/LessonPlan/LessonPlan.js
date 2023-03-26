@@ -10,19 +10,22 @@ import TeacherSidebar from '../TeacherSidebar';
 
 const TLessonPlan = () => {
 
+  const userDetails = JSON.parse(localStorage.getItem('UserData'))
+
     const [showAddLessonPlan, setShowAddLessonPlan] = useState(false)
     const [lessonPlanData, setLessonPlanData] = useState(false)
+
 
     useEffect(() => {
       viewLessonPlan()
     },[])
 
     const viewLessonPlan = () => {
-      const grade_id = "2"
-      const section_id = "3"
-      const subject_id = "3"
-      const teacher_id = "TEACHER_2"
-      getLessonPlan(grade_id, section_id,subject_id, teacher_id )
+      // const grade_id = "2"
+      // const section_id = "3"
+      // const subject_id = "3"
+      const teacher_id = userDetails.userid
+      getLessonPlan(teacher_id )
       .then((res) => setLessonPlanData(res.data))
       .catch((err) => console.log(err))
     }

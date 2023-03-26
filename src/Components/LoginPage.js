@@ -53,6 +53,12 @@ const LoginPage = (props) => {
               state: `${myConstant.teacherRoutesConfig.teacherdashboard}`,
             });
           }
+          else if(data.role === 'student') {
+            navigate({
+              pathname: `${myConstant.studentRoutesConfig.studentdashboard}`,
+              state: `${myConstant.studentRoutesConfig.studentdashboard}`,
+            });
+          }
           
         } else {
           setErrorMessage(true);

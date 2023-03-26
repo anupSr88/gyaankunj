@@ -24,20 +24,14 @@ const AddLessonPlan = (props) => {
     {value: "1", label: 1},
     {value: "2", label: 2},
     {value: "3", label: 3},
-    {value: "4", label: 4},
-    {value: "5", label: 5},
-    {value: "6", label: 6},
-    {value: "7", label: 7},
-    {value: "8", label: 8},
-    {value: "9", label: 9},
-    {value: "10", label: 10},
+    {value: "4", label: 4}
    ]
 
   const subjectOptions = [
-    { value: 1, label: "History" },
-    { value: 2, label: "Geography" },
+    { value: 1, label: "Maths" },
+    { value: 2, label: "English" },
     { value: 3, label: "Hindi" },
-    { value: 4, label: "English" },
+    { value: 4, label: "Geography" },
   ];
 
   const sectionOptions = [
@@ -45,6 +39,7 @@ const AddLessonPlan = (props) => {
     { value: 2, label: "B" },
     { value: 3, label: "C" },
     { value: 4, label: "D" },
+    { value: 5, label: "E" },
   ];
 
   const createLessonPlan = () => {
@@ -67,6 +62,7 @@ const AddLessonPlan = (props) => {
       props.onHide()})
       .catch((err) => console.log(err, "err"));
   };
+  console.log("subject - ", subject)
 
   return (
     <>

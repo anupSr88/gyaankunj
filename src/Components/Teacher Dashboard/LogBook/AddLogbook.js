@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
 import Select from "react-select";
-import { createMasterRoutine, getMasterRoutineData } from "../../../ApiClient";
+import { createLogBook } from "../../../ApiClient";
 
 const AddLogBook = (props) => {
   const [grade, setGrade] = useState("");
@@ -9,8 +9,23 @@ const AddLogBook = (props) => {
   const [teacherName, setTeacherName] = useState();
   const [period, setPeriod] = useState("");
   const [section, setSection] = useState("");
+  const [contentTaught, setContentTaught] = useState('')
+  const [homework, setHomework] = useState('')
 
-  const gradeOptions = [{ value: "1", label: "1" }];
+  const userDetails = JSON.parse(localStorage.getItem('UserData'))
+
+  const gradeOptions = [
+    { value: "1", label: "1" },
+    { value: "2", label: "2" },
+    { value: "3", label: "3" },
+    { value: "4", label: "4" },
+    { value: "5", label: "5" },
+    { value: "6", label: "6" },
+    { value: "7", label: "7" },
+    { value: "8", label: "8" },
+    { value: "9", label: "9" },
+    { value: "10", label: "10" },
+  ];
 
   const subjectOptions = [
     { value: "History", label: "History" },
@@ -26,21 +41,14 @@ const AddLogBook = (props) => {
   ];
 
   const periodOptions = [
-    { value: "1st", label: "1st" },
-    { value: "2nd", label: "2nd" },
-    { value: "4th", label: "4th" },
-    { value: "5th", label: "5th" },
-    { value: "6th", label: "6th" },
-    { value: "7th", label: "7th" },
-    { value: "8th", label: "8th" },
-    { value: "9th", label: "9th" },
-    { value: "10th", label: "10th" },
+    { value: "1", label: "1" },
+    { value: "2", label: "2" },
+    { value: "4", label: "4" },
+    { value: "5", label: "5" },
+    { value: "6", label: "6" },
+    { value: "7", label: "7" },
+    { value: "8", label: "8" }
   ];
-
-  // const timingOptions = [
-  //   { value: '8:00 - 8:30', label: '8:00 - 8:30' },
-  //   { value: '8:30 - 9:00', label: '8:30 - 9:00' },
-  // ]
 
   const sectionOptions = [
     { value: "A", label: "A" },
@@ -49,11 +57,24 @@ const AddLogBook = (props) => {
     { value: "D", label: "D" },
   ];
 
-  const getMasterroutineData = () => {
-    getMasterRoutineData()
-      .then((data) => console.log(data, "data"))
-      .catch((err) => console.log(err, "err"));
-  };
+  const addLogBookData = () => {
+    const logbookDetails = {
+      "grade_id": grade,
+      "section_id": section,
+      "period": period,
+      "subject_id": subject,
+      "teacher_id": userDetails.userid,
+      "content_taught": contentTaught,
+      "home_work": homework,
+      "date": "2022-12-23",
+      "absentees":["STUD_1", "STUD_2"],
+      "dress_defaulters": ["STUD_3", "STUD_4"]
+    }
+    createLogBook(logbookDetails)
+    .then((res) => {console.log("Logbook added - ", res.data)
+    props.closeAndLoad()})
+    .catch((err) => console.log("Logbook Error - ", err))
+  }
 
   return (
     <>
@@ -74,8 +95,8 @@ const AddLogBook = (props) => {
                 <span>Add Grade</span>
                 <Select
                   options={gradeOptions}
-                  value={grade}
-                  onChange={(e) => setGrade(e.target.value)}
+                  
+                  onChange={(e) => setGrade(e.value)}
                 />
               </Col>
               <Col md={2}></Col>
@@ -89,23 +110,17 @@ const AddLogBook = (props) => {
                     as="textarea"
                     rows={2}
                     placeholder="Add Content Taught"
+                    
+                  onChange={(e) => setContentTaught(e.target.value)}
                   />
                 </Form.Group>
               </Col>
             </Row>
             <Row>
-              <Col md={5}>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlTextarea1"
-                >
-                  <Form.Label>Teacher Name</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={1}
-                    placeholder="Enter teachers' name"
-                  />
-                </Form.Group>
+            <Col md={5}>
+                <span>Add Period</span>
+                <Select options={periodOptions}
+                  onChange={(e) => setPeriod(e.value)} />
               </Col>
               <Col md={2}></Col>
               <Col md={5}>
@@ -118,57 +133,33 @@ const AddLogBook = (props) => {
                     as="textarea"
                     rows={2}
                     placeholder="Enter Homework given"
+                    // value={grade}
+                  onChange={(e) => setHomework(e.target.value)}
                   />
                 </Form.Group>
               </Col>
             </Row>
             <Row>
               <Col md={5}>
-                <span>Add Timings</span>
-                <Select options={sectionOptions} />
+                <span>Add Section</span>
+                <Select options={sectionOptions} onChange={(e) => setSection(e.value)}/>
               </Col>
-              <Col md={2}></Col>
-              <Col md={5}>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlTextarea1"
-                >
-                  <Form.Label>Add Absentees Name</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={1}
-                    placeholder="Enter absentees name"
-                  />
-                </Form.Group>
-              </Col>
+              
             </Row>
             <Row>
               <Col md={5}>
-                <span>Add Timings</span>
-                <Select options={sectionOptions} />
+                <span>Add Subject</span>
+                <Select options={subjectOptions} onChange={(e) => setSubject(e.value)} />
               </Col>
-              <Col md={2}></Col>
-              <Col md={5}>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlTextarea1"
-                >
-                  <Form.Label>Add Dress Defaulters Name</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={1}
-                    placeholder="Enter dress defaulters name"
-                  />
-                </Form.Group>
-              </Col>
+              
             </Row>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-primary" style={{ alignItems: "center" }}>
+          {/* <Button variant="outline-primary" style={{ alignItems: "center" }} onClick={resetData}>
             Reset
-          </Button>
-          <Button variant="outline-primary">Submit</Button>
+          </Button> */}
+          <Button variant="outline-primary" onClick={addLogBookData}>Submit</Button>
         </Modal.Footer>
       </Modal>
     </>

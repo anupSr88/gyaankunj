@@ -4,11 +4,6 @@ import Select from "react-select";
 import { saveNotice, publishNotice } from '../../../ApiClient';
 
 const AddAnnouncement = (props) => {
-  const [grade, setGrade] = useState("");
-  const [subject, setSubject] = useState("");
-  const [teacherName, setTeacherName] = useState();
-  const [period, setPeriod] = useState("");
-  const [section, setSection] = useState("");
   const [noticeDescription, setNoticeDescription] = useState('')
   const [noticeSubject, setNoticeSubject] = useState('')
   const [showVisibility, setShowVisibility] = useState(false)
@@ -18,7 +13,8 @@ const AddAnnouncement = (props) => {
   const userDetails = JSON.parse(localStorage.getItem('UserData'))
 
   // useEffect(() => {
-  //   saveNoticeData();
+  //   setNoticeSubject(props?.notice?.notice_subject)
+  //   setNoticeDescription(props?.notice?.notice_data)
   // })
 
 
@@ -60,6 +56,9 @@ const AddAnnouncement = (props) => {
     props.closeAndLoad()
   }
 
+  console.log("props - ", props)
+
+
 
   return (
     <>
@@ -82,7 +81,7 @@ const AddAnnouncement = (props) => {
                   controlId="exampleForm.ControlInput1"
                 >
                   <Form.Label>Notice Subject</Form.Label>
-                  <Form.Control type="text" placeholder="Notice Subject" onChange={(e) => setNoticeSubject(e.target.value)} />
+                  <Form.Control type="text" placeholder="Notice Subject" onChange={(e) => setNoticeSubject(e.target.value)} value={noticeSubject} />
                 </Form.Group>
               </Col>
             </Row>
@@ -97,13 +96,14 @@ const AddAnnouncement = (props) => {
                     as="textarea"
                     rows={3}
                     placeholder="Add Description"
+                    value={noticeDescription}
                     onChange={(e) => setNoticeDescription(e.target.value)}
                   />
                 </Form.Group>
               </Col>
             </Row>
             <Row>
-              {saveNoticeDetails?.notice_id && <Col md={12}>
+              {(saveNoticeDetails?.notice_id || props?.notice?.notice_id) && <Col md={12}>
               <Select placeholder="Select Visibility" options={visibilityOptions} isSearchable={false} onChange={e => setVisibilityData(e.value)} />
               </Col>}
             </Row>
@@ -113,8 +113,8 @@ const AddAnnouncement = (props) => {
           {/* <Button variant="outline-primary" style={{ alignItems: "center" }}>
             Reset
           </Button> */}
-          <Button disabled={saveNoticeDetails?.notice_id} variant="outline-primary" onClick={saveNoticeData}>Save</Button>
-          <Button disabled={!saveNoticeDetails?.notice_id} variant="outline-primary" onClick={publishNoticeData}>Publish</Button>
+          <Button disabled={(saveNoticeDetails?.notice_id  || props?.notice?.notice_id)} variant="outline-primary" onClick={saveNoticeData}>Save</Button>
+          <Button disabled={(!(saveNoticeDetails?.notice_id  || props?.notice?.notice_id))} variant="outline-primary" onClick={publishNoticeData}>Publish</Button>
           <Button variant="outline-primary" onClick={closeModal}>Close</Button>
         </Modal.Footer>
       </Modal>

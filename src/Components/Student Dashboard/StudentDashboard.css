@@ -89,7 +89,7 @@ overflow: hidden;
 overflow-y: auto;
 }
 
-.teacherRoutine h4{
+.subjectsInDashboard h4{
     padding: 20px;
     text-align: left;
 font: normal normal bold 22px/34px Roboto;
@@ -330,4 +330,53 @@ opacity: 1;
     letter-spacing: 0px;
     color: #2A2D2F;
     opacity: 1;
+}
+
+.subjectsInDashboard{
+    width: 901px;
+    height: 460px;
+    /* UI Properties */
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 4px #0000001A;
+    border: 1px solid #EFF1F4;
+    border-radius: 8px;
+    opacity: 1;
+    margin-bottom: 10px;
+}
+
+.subjectsDetails{
+    height: 100px;
+    width: 170px;
+    box-shadow: inset 0px 3px 6px #00000029, 0px 3px 6px #00000029;
+    border-radius: 3px;
+    background-color: #F6F1F1;
+    padding: 32px;
+}
+
+.subjectsDetails h6{
+    font: normal normal normal 22px/29px Roboto;
+letter-spacing: 0px;
+/* color: #FFFFFF; */
+opacity: 1;
+}
+
+.assignmentInDashboard{
+    width: 901px;
+    height: 460px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 4px #0000001A;
+    border: 1px solid #EFF1F4;
+    border-radius: 8px;
+    opacity: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.assignmentInDashboard h4{
+    padding: 20px;
+    text-align: left;
+font: normal normal bold 22px/34px Roboto;
+letter-spacing: 0px;
+color: #2A2D2F;
+opacity: 1;
 }

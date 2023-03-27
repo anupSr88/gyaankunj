@@ -75,7 +75,23 @@ import {
                       </Link>
                   </MenuItem>
                 </Col>
-              </Row>              
+              </Row>
+              <Row className="sidebarMenuInner" style={{backgroundColor : activeTab == 0 ? "#FFFFFF" : ""}}>
+                <Col md={2}>
+                  <img alt="close" src={dashboardImg} />
+                </Col>
+                
+                <Col md={10} style={{ textAlign: "left" }}>
+                  <MenuItem
+                    active={activeTab == 0 ? true : false}
+                    onClick={() => handleActive(0)}
+                    className="menuItemStyle"
+                  >
+                    <Link to={myConstant.routesConfig.assignments}>Assignment
+                      </Link>
+                  </MenuItem>
+                </Col>
+              </Row>               
               <Row className="sidebarMenuInner" style={{backgroundColor : activeTab == 4 ? "#FFFFFF" : ""}}>
                 <Col md={2}>
                   <img alt="close" src={Reports} />

@@ -75,7 +75,7 @@ const NoticeForTeacher = () => {
             </Col>
             <Col md={11} className="noticeContent">
               <h6 className="noticeHeader">{notice?.notice_data}</h6>
-              <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p>
+              {/* <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p> */}
             </Col>
           </Row>
           })

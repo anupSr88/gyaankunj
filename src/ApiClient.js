@@ -94,7 +94,13 @@ const createLogBook = (data) => {
     return apiInstance.post(`/save_log_book`, data)
 }
 
+const studentAssignmentList = (student) => {
+    return apiInstance.get(`/get_student_assignments_list?student_id=${student}`)
+}
 
+const studentRoutine = (grade, year) => {
+    return apiInstance.get(`/view_class_routine?grade_id=${grade}&year=${year}`)
+}
 
 export {
     // loginUser,
@@ -116,5 +122,7 @@ export {
     viewAllNotice,
     saveNotice,
     publishNotice,
-    createLogBook
+    createLogBook,
+    studentAssignmentList,
+    studentRoutine
 }

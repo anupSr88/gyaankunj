@@ -13,6 +13,7 @@ const Announcements = () => {
 
     const [showAddAnnouncement, setShowAddAnnouncement] = useState(false)
     const [allNotice, setAllNotice] = useState({})
+    const [indexedPublishNotice, setIndexedPublishNotice] = useState(null)
 
     const userDetails = JSON.parse(localStorage.getItem('UserData'))
 
@@ -34,6 +35,11 @@ const Announcements = () => {
   const closeAndLoad = () => {
     setShowAddAnnouncement(false)
     allNotices()
+  }
+
+  const showPublishModal = (key) => {
+    setIndexedPublishNotice(key)
+    setShowAddAnnouncement(true)
   }
 
 
@@ -93,11 +99,14 @@ const Announcements = () => {
             </Col>
             <Col md={11} className="noticeContent">
               {<h6 className="noticeHeader">{notice?.notice_data}</h6>}
-              {notice?.published_at ? <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p>
+              {/* {notice?.published_at ? <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p>
               :
-              <p className="notPubnoticeTime">Not yet published. <a style={{fontStyle:"italic", textDecoration:"underline", cursor:"pointer"}} onClick={(notice) => handleShowModal(notice)}>Click here</a> to publish.</p>}
+              <p className="notPubnoticeTime">Not yet published. <a style={{fontStyle:"italic", textDecoration:"underline", cursor:"pointer"}} onClick={() => showPublishModal(indx)}>Click here</a> to publish.</p>} */}
             </Col>
+            {showAddAnnouncement && (<AddAnnouncement show={showAddAnnouncement} onHide={() => {setShowAddAnnouncement(false)}} closeAndLoad = {closeAndLoad} notice={notice} />)}
+            
           </Row>
+          
           })
         )
         }
@@ -105,7 +114,7 @@ const Announcements = () => {
         
         </div>
         </Col>
-        {showAddAnnouncement && <AddAnnouncement show={showAddAnnouncement} onHide={() => {setShowAddAnnouncement(false)}} closeAndLoad = {closeAndLoad} />}
+        
         </Row>
         
         </>

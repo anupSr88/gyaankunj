@@ -52,7 +52,7 @@ const TeacherAttendance = () => {
             
             </Col>
             <Col md={3}>
-            <h4>Date: 01-01-2022</h4>
+            <h4>Month: January</h4>
             </Col>
         </Row>
         <div className="routineSection">

@@ -3,7 +3,7 @@ import { Row, Col, ButtonGroup, Dropdown, Card, Button } from "react-bootstrap";
 import TeacherSidebar from '../TeacherSidebar';
 import seeAll from "../../../Images/icon_chevron_see_all.svg";
 import { viewNotice } from '../../../ApiClient';
-import moment from 'moment'
+// import moment from 'moment'
 
 
 

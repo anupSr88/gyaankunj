@@ -5,7 +5,7 @@ import PrincipalSidebar from '../PrincipalSidebar';
 import './noticeCss.css'
 import seeAll from "../../../Images/icon_chevron_see_all.svg";
 import { viewAllNotice, saveNotice } from '../../../ApiClient';
-import moment from 'moment'
+// import moment from 'moment'
 
 
 

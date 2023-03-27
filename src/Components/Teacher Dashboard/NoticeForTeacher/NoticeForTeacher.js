@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col, ButtonGroup, Dropdown, Card, Button } from "react-bootstrap";
 import TeacherSidebar from '../TeacherSidebar';
 import seeAll from "../../../Images/icon_chevron_see_all.svg";
-import { viewAllNotice } from '../../../ApiClient';
+import { viewNotice } from '../../../ApiClient';
 import moment from 'moment'
 
 
@@ -18,8 +18,8 @@ const NoticeForTeacher = () => {
     }, [])
 
   const allNotices = () => {
-    const user_id = userDetails.userid
-    viewAllNotice(user_id)
+    const role = "teacher"
+    viewNotice(role)
     .then((res) => setAllNotice(res.data))
     .catch((err) => console.log("Notices err - ", err))
   }
@@ -74,7 +74,7 @@ const NoticeForTeacher = () => {
               <img src={seeAll} alt="seeAll" />
             </Col>
             <Col md={11} className="noticeContent">
-              <h6 className="noticeHeader">{notice?.notice_data}</h6>
+              <h6 className="noticeHeader">{notice}</h6>
               {/* <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p> */}
             </Col>
           </Row>

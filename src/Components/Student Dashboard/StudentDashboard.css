@@ -380,3 +380,23 @@ letter-spacing: 0px;
 color: #2A2D2F;
 opacity: 1;
 }
+
+.assignmentTabData{
+    height: 460px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 4px #0000001A;
+    border: 1px solid #EFF1F4;
+    border-radius: 8px;
+    opacity: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.assignmentTabData h4{
+    padding: 20px;
+    text-align: left;
+font: normal normal bold 22px/34px Roboto;
+letter-spacing: 0px;
+color: #2A2D2F;
+opacity: 1;
+}

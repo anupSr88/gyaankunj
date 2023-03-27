@@ -56,8 +56,6 @@ const AddAnnouncement = (props) => {
     props.closeAndLoad()
   }
 
-  console.log("props - ", props)
-
 
 
   return (
@@ -103,7 +101,7 @@ const AddAnnouncement = (props) => {
               </Col>
             </Row>
             <Row>
-              {(saveNoticeDetails?.notice_id || props?.notice?.notice_id) && <Col md={12}>
+              {(saveNoticeDetails?.notice_id) && <Col md={12}>
               <Select placeholder="Select Visibility" options={visibilityOptions} isSearchable={false} onChange={e => setVisibilityData(e.value)} />
               </Col>}
             </Row>
@@ -113,8 +111,8 @@ const AddAnnouncement = (props) => {
           {/* <Button variant="outline-primary" style={{ alignItems: "center" }}>
             Reset
           </Button> */}
-          <Button disabled={(saveNoticeDetails?.notice_id  || props?.notice?.notice_id)} variant="outline-primary" onClick={saveNoticeData}>Save</Button>
-          <Button disabled={(!(saveNoticeDetails?.notice_id  || props?.notice?.notice_id))} variant="outline-primary" onClick={publishNoticeData}>Publish</Button>
+          <Button disabled={(saveNoticeDetails?.notice_id)} variant="outline-primary" onClick={saveNoticeData}>Save</Button>
+          <Button disabled={(!(saveNoticeDetails?.notice_id))} variant="outline-primary" onClick={publishNoticeData}>Publish</Button>
           <Button variant="outline-primary" onClick={closeModal}>Close</Button>
         </Modal.Footer>
       </Modal>

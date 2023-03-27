@@ -82,6 +82,11 @@ const viewAllNotice = (userId) => {
     return apiInstance.get(`/view_all_notices?user_id=${userId}`)
 }
 
+const viewNotice = (role) => {
+    return apiInstance.get(`/view_notice?role=${role}`)
+}
+
+
 const saveNotice = (noticeData) => {
     return apiInstance.post(`/save_notice`, noticeData)
 }
@@ -124,5 +129,6 @@ export {
     publishNotice,
     createLogBook,
     studentAssignmentList,
-    studentRoutine
+    studentRoutine,
+    viewNotice
 }

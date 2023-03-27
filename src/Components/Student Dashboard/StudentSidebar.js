@@ -87,7 +87,7 @@ import {
                     onClick={() => handleActive(0)}
                     className="menuItemStyle"
                   >
-                    <Link to={myConstant.routesConfig.assignments}>Assignment
+                    <Link to={myConstant.studentRoutesConfig.assignments}>Assignment
                       </Link>
                   </MenuItem>
                 </Col>
@@ -99,7 +99,7 @@ import {
                 <Col md={10} style={{ textAlign: "left" }}>
                   <MenuItem disabled active={activeTab == 0 ? true : false}
                     onClick={() => handleActive(4)} className="menuItemStyle">
-                    <Link to={myConstant.routesConfig.reports}> Report</Link>{" "}
+                    <Link to={myConstant.studentRoutesConfig.studentReport}> Report</Link>{" "}
                   </MenuItem>
                 </Col>
               </Row>
@@ -110,7 +110,7 @@ import {
                 <Col md={10} style={{ textAlign: "left" }}>
                   <MenuItem active={activeTab == 0 ? true : false}
                     onClick={() => handleActive(5)} className="menuItemStyle">
-                    <Link to={myConstant.routesConfig.resources}> Resources</Link>{" "}
+                    <Link to={myConstant.studentRoutesConfig.studentResources}> Resources</Link>{" "}
                   </MenuItem>
                 </Col>
               </Row>
@@ -121,7 +121,7 @@ import {
                 <Col md={10} style={{ textAlign: "left" }}>
                   <MenuItem active={activeTab == 0 ? true : false}
                     onClick={() => handleActive(6)} className="menuItemStyle">
-                    <Link to={myConstant.routesConfig.announcement}>
+                    <Link to={myConstant.studentRoutesConfig.NoticeForStudent}>
                       {" "}
                       Notice{" "}
                     </Link>

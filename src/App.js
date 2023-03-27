@@ -28,8 +28,13 @@ import TeacherAssignment from './Components/Teacher Dashboard/Assignment/Teacher
 import ResourcesForTeacher from './Components/Teacher Dashboard/ResourcesForTeacher/ResourcesForTeacher';
 import NoticeForTeacher from './Components/Teacher Dashboard/NoticeForTeacher/NoticeForTeacher';
 import NotificationsForTeacher from './Components/Teacher Dashboard/NotificationsForTeacher/NotificationsForTeacher';
+import StudentAssigments from './Components/Student Dashboard/Assignments/Assignments';
 
 import StudentDashboard from './Components/Student Dashboard/StudentDashboard';
+import StudentReportSection from './Components/Student Dashboard/Report/Reports';
+import ResourcesForStudents from './Components/Student Dashboard/Resources/StudentResources';
+import NoticeForStudents from './Components/Student Dashboard/NoticeForStudents/NoticeForStudents';
+
 
 function App() {
   return (
@@ -79,10 +84,10 @@ function App() {
 <Route path="/teacherDashboard/Notifications" element={<ProtectedWrapper Component = {NotificationsForTeacher} />} />
 
 <Route path="/studentDashboard/Dashboard" element={<ProtectedWrapper Component = {StudentDashboard} />} />
-<Route path="/studentDashboard/Reports" element={<ProtectedWrapper Component = {TeacherReport} />} />
-<Route path="/studentDashboard/Assignment" element={<ProtectedWrapper Component = {TeacherAssignment} />} />
-<Route path="/studentDashboard/Resources" element={<ProtectedWrapper Component = {ResourcesForTeacher} />} />
-<Route path="/studentDashboard/Announcements" element={<ProtectedWrapper Component = {NoticeForTeacher} />} />
+<Route path="/studentDashboard/Reports" element={<ProtectedWrapper Component = {StudentReportSection} />} />
+<Route path="/studentDashboard/Assignment" element={<ProtectedWrapper Component = {StudentAssigments} />} />
+<Route path="/studentDashboard/Resources" element={<ProtectedWrapper Component = {ResourcesForStudents} />} />
+<Route path="/studentDashboard/Notice" element={<ProtectedWrapper Component = {NoticeForStudents} />} />
 <Route path="/studentDashboard/Notifications" element={<ProtectedWrapper Component = {NotificationsForTeacher} />} />
 <Route exact path="/" Component={DashboardSectionContent} />
 </Routes>

@@ -1,45 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Col, ButtonGroup, Dropdown, Card, Button } from "react-bootstrap";
-import AddAnnouncement from './AddAnnouncement';
-import PrincipalSidebar from '../PrincipalSidebar';
-import './noticeCss.css'
+import StudentSidebar from '../StudentSidebar';
 import seeAll from "../../../Images/icon_chevron_see_all.svg";
-import { viewAllNotice, saveNotice } from '../../../ApiClient';
+import { viewNotice } from '../../../ApiClient';
 import moment from 'moment'
 
 
 
-const Announcements = () => {
-
-    const [showAddAnnouncement, setShowAddAnnouncement] = useState(false)
-    const [allNotice, setAllNotice] = useState({})
-    const [indexedPublishNotice, setIndexedPublishNotice] = useState(null)
+const NoticeForStudents = () => {
 
     const userDetails = JSON.parse(localStorage.getItem('UserData'))
+
+    const [allNotice, setAllNotice] = useState({})
 
     useEffect(() => {
       allNotices();
     }, [])
 
-    const handleShowModal = () => {
-        setShowAddAnnouncement(true)
-  }
-
   const allNotices = () => {
-    const user_id = userDetails.userid
-    viewAllNotice(user_id)
+    const role = "student"
+    viewNotice(role)
     .then((res) => setAllNotice(res.data))
     .catch((err) => console.log("Notices err - ", err))
-  }
-
-  const closeAndLoad = () => {
-    setShowAddAnnouncement(false)
-    allNotices()
-  }
-
-  const showPublishModal = (key) => {
-    setIndexedPublishNotice(key)
-    setShowAddAnnouncement(true)
   }
 
 
@@ -47,7 +29,7 @@ const Announcements = () => {
         <>
         <Row>
             <Col md={3} style={{marginTop:"91px", width:"20%"}}>
-                <PrincipalSidebar />     
+                <StudentSidebar />     
             </Col>
             <Col md={9} style={{width:"80%"}}>
         <div className='resourcesHeader'>
@@ -78,12 +60,6 @@ const Announcements = () => {
                   </Dropdown>
                 </span> */}
             </Col>
-            <Col md={3} className='teacherRoutingDD'>
-                <Button variant="outline-primary"
-                onClick={handleShowModal}>
-                  + Add Notice
-                </Button>{" "}
-              </Col>
         </Row>
         {allNotice?.status == "failure" ? (<Row style={{height: "93px"}}>
           <Col md={12} style={{paddingTop: "30px"}}>
@@ -98,15 +74,10 @@ const Announcements = () => {
               <img src={seeAll} alt="seeAll" />
             </Col>
             <Col md={11} className="noticeContent">
-              {<h6 className="noticeHeader">{notice?.notice_data}</h6>}
-              {/* {notice?.published_at ? <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p>
-              :
-              <p className="notPubnoticeTime">Not yet published. <a style={{fontStyle:"italic", textDecoration:"underline", cursor:"pointer"}} onClick={() => showPublishModal(indx)}>Click here</a> to publish.</p>} */}
+              <h6 className="noticeHeader">{notice}</h6>
+              {/* <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p> */}
             </Col>
-            {showAddAnnouncement && (<AddAnnouncement show={showAddAnnouncement} onHide={() => {setShowAddAnnouncement(false)}} closeAndLoad = {closeAndLoad} />)}
-            
           </Row>
-          
           })
         )
         }
@@ -114,11 +85,10 @@ const Announcements = () => {
         
         </div>
         </Col>
-        
         </Row>
         
         </>
     )
 }
 
-export default Announcements;
+export default NoticeForStudents;

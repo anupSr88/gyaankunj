@@ -3,7 +3,7 @@ import { Row, Col, ButtonGroup, Dropdown, Card, Button } from "react-bootstrap";
 import StudentSidebar from '../StudentSidebar';
 import seeAll from "../../../Images/icon_chevron_see_all.svg";
 import { viewNotice } from '../../../ApiClient';
-// import moment from 'moment'
+import moment from 'moment'
 
 
 
@@ -75,7 +75,7 @@ const NoticeForStudents = () => {
             </Col>
             <Col md={11} className="noticeContent">
               <h6 className="noticeHeader">{notice}</h6>
-              {/* <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p> */}
+              <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p>
             </Col>
           </Row>
           })

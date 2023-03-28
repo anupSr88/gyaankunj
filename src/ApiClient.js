@@ -107,6 +107,10 @@ const studentRoutine = (grade, year) => {
     return apiInstance.get(`/view_class_routine?grade_id=${grade}&year=${year}`)
 }
 
+const saveAttendance = (attendanceData) => {
+    return apiInstance.post(`/save_attendance_data`, attendanceData)
+}
+
 export {
     // loginUser,
     createMasterRoutine,
@@ -130,5 +134,6 @@ export {
     createLogBook,
     studentAssignmentList,
     studentRoutine,
-    viewNotice
+    viewNotice,
+    saveAttendance
 }

@@ -71,7 +71,7 @@ import {
                     onClick={() => handleActive(0)}
                     className="menuItemStyle"
                   >
-                    <Link to={myConstant.routesConfig.dashboard}>Dashboard
+                    <Link to={myConstant.studentRoutesConfig.studentdashboard}>Dashboard
                       </Link>
                   </MenuItem>
                 </Col>
@@ -135,7 +135,7 @@ import {
                 <Col md={10} style={{ textAlign: "left" }}>
                   <MenuItem active={activeTab == 0 ? true : false}
                     onClick={() => handleActive(7)} className="menuItemStyle">
-                    <Link to={myConstant.routesConfig.notifications}>
+                    <Link to={myConstant.studentRoutesConfig.NotificationsForStudent}>
                       {" "}
                       Notifications{" "}
                     </Link>{" "}

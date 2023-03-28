@@ -3,11 +3,13 @@ import React, {useEffect, useState} from 'react';
 import { Row, Col, Modal, Dropdown, Table, Form, Button, Card } from "react-bootstrap";
 // import DashboardContent from './DashboardContent'
 // import DashboardRightPanel from './DashboardRightPanel'
-import {viewLogBook, getTeacherRoutine, getAllStudentsData } from '../../../ApiClient'
+import {viewLogBook, getTeacherRoutine, getAllStudentsData, saveAttendance } from '../../../ApiClient'
 import '../TeacherDashboard.css'
 import TeacherSidebar from '../TeacherSidebar';
 import Select from 'react-select'
-import dashboardCardBg from '../../../Images/Rectangle_142062.svg'
+import CheckAttendance from './AttendanceCheckModal';
+
+
 
 const TDashboard = () => {
     const [dateToFetchLog, setDateToFetchLog] = useState('')
@@ -15,13 +17,19 @@ const TDashboard = () => {
     const [sectionToFetchLog, setSectionToFetchLog] = useState('')
     const [startDate, setStartDate] = useState("");
     const [logBookDetails, setLogBookDetails] = useState('')
-    const [weekDayToFetch, setWeekDayToFetch] = useState('')
+    const [weekDayToFetch, setWeekDayToFetch] = useState('Monday')
     const [teacherRoutineData, setTeacherRoutineData] = useState({})
     const [studentDetails, setStudentDetails] = useState({})
+    const [absentCheckedValue, SetAbsentCheckedValue] = useState('')
+    const [dressCheckedValue, SetDressCheckedValue] = useState('')
+    const [absenteesList, setAbsenteesList] = useState([])
+    const [dressDList, setDressDList] = useState([])
+    const [showCheckAttendanceModal, setShowCheckAttendanceModal] = useState(false)
+    const [absenteesValue, setAbsenteesValue] = useState([])
+    const [dressDValue, setDressDValue] = useState([])
 
     useEffect(() => {
-        // getLogBook()
-        // fetchTeacherRoutine()
+        fetchTeacherRoutine()
         getAllStudents()
     }, [])
 
@@ -54,7 +62,52 @@ const TDashboard = () => {
       .catch((err) => console.log(err))
     }
 
-    console.log("studentDetails - ", studentDetails)
+    const addAbsentees = (e) => {
+      let newAbsenteesList = [...absenteesList, e.target.id]
+      let newAbsenteesValue = [...absenteesValue, e.target.value]
+      if(absenteesList.includes(e.target.id)) {
+        newAbsenteesList = newAbsenteesList.filter(absentees => absentees !== e.target.id)
+      }
+      setAbsenteesList(newAbsenteesList)
+
+      if(absenteesValue.includes(e.target.value)) {
+        newAbsenteesValue = newAbsenteesValue.filter(absentees => absentees !== e.target.value)
+      }
+      setAbsenteesValue(newAbsenteesValue)
+    }
+
+    const addDressDefaulterList = (e) => {
+      let newDressList = [...dressDList, e.target.id]
+      let newDressDValue = [...dressDValue, e.target.value]
+      if(dressDList.includes(e.target.id)) {
+        newDressList = newDressList.filter(dressD => dressD !== e.target.id)
+      }
+      setDressDList(newDressList)
+
+      if(dressDValue.includes(e.target.value)) {
+        newDressDValue = newDressDValue.filter(dressD => dressD !== e.target.value)
+      }
+      setDressDValue(newDressDValue)
+
+    }
+
+    // const takeAttendance = () => {
+    //   const today = new Date()
+    //   const dd = String(today.getDate()).padStart(2, '0');
+    //   const mm = String(today.getMonth() + 1).padStart(2, '0');
+    //   const yyyy = today.getFullYear();
+    //   const newData = `${yyyy}-${mm}-${dd}`
+    //   console.log("newData - ", newData)
+    //   const attendanceData = {
+    //     "absentees": absenteesList,
+    //     "dress_defaulters": dressDList,
+    //     "date": newData
+    //   }
+    //   saveAttendance(attendanceData)
+    //   .then((res) => console.log('Attendance - ', res.data))
+    //   .catch((err) => console.log('Attendance err - ', err))
+    // }
+
 
     const classOptions = [
         {value: 1, label: 1},
@@ -85,8 +138,6 @@ const TDashboard = () => {
         {value: "Friday", label: "Friday"},
       ]
 
-
-
       const handlesectionToFetchLog = (e) => {
         setSectionToFetchLog(e.value)
       }
@@ -97,10 +148,15 @@ const TDashboard = () => {
 
       const handleWeekDayChange = (e) => {
         setWeekDayToFetch(e.value)
-        fetchTeacherRoutine()
+        console.log("weekDayToFetch - ", weekDayToFetch)
+        fetchTeacherRoutine(weekDayToFetch)
       }
 
-      console.log('weekDayToFetch - ', weekDayToFetch)
+    const closeAndLoad = () => {
+      setShowCheckAttendanceModal(false)
+      getAllStudents()
+    }
+
 
     return (
       <>
@@ -209,23 +265,34 @@ const TDashboard = () => {
                       <th>Homework</th>
                     </tr>
                   </thead>
-                  {logBookDetails?.log_book_data ? logBookDetails?.log_book_data?.log_record.map(
-                    (logData, indx) => {
-                      return (
-                        <tbody>
-                          <tr>
-                            <td>{logData?.period}</td>
-                            <td>{logData?.students_present}</td>
-                            <td>{logData?.subject}</td>
-                            <td>{logData?.content_taught}</td>
-                            <td>{logData?.home_work}</td>
-                          </tr>
-                        </tbody>
-                      );
-                    }
-                  )
-                :
-                <p style={{top:"43%", left: "42%", position: "absolute", font: "normal normal bold 20px/34px Roboto"}}>No Logbook Available!!</p>}
+                  {logBookDetails?.log_book_data ? (
+                    logBookDetails?.log_book_data?.log_record.map(
+                      (logData, indx) => {
+                        return (
+                          <tbody>
+                            <tr>
+                              <td>{logData?.period}</td>
+                              <td>{logData?.students_present}</td>
+                              <td>{logData?.subject}</td>
+                              <td>{logData?.content_taught}</td>
+                              <td>{logData?.home_work}</td>
+                            </tr>
+                          </tbody>
+                        );
+                      }
+                    )
+                  ) : (
+                    <p
+                      style={{
+                        top: "43%",
+                        left: "42%",
+                        position: "absolute",
+                        font: "normal normal bold 20px/34px Roboto",
+                      }}
+                    >
+                      No Logbook Available!!
+                    </p>
+                  )}
                 </Table>
               </div>
             </div>
@@ -238,14 +305,13 @@ const TDashboard = () => {
                   position: "relative",
                   left: "12px",
                   width: "100%",
-                  
                 }}
               >
-                <Col md={8}>
+                <Col md={6}>
                   <h4>Student's Attendance</h4>
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
-                <span>
+                  <span>
                     <Select
                       placeholder="Class"
                       isSearchable={false}
@@ -255,7 +321,7 @@ const TDashboard = () => {
                   </span>
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
-                <span>
+                  <span>
                     <Select
                       placeholder="Section"
                       isSearchable={false}
@@ -264,10 +330,18 @@ const TDashboard = () => {
                     />
                   </span>
                 </Col>
+                <Col md={2} style={{ paddingTop: "17px" }}>
+                  <Button
+                    variant="primary"
+                    onClick={() => setShowCheckAttendanceModal(true)}
+                    // onClick={takeAttendance}
+                  >
+                    Submit
+                  </Button>
+                </Col>
               </Row>
 
-          {/* ATTENDANCE BLOCK */}
-
+              {/* ATTENDANCE BLOCK */}
 
               {/* <div>
               <Row style={{padding:"40px"}}>
@@ -518,66 +592,56 @@ const TDashboard = () => {
               </Row>
               </div> */}
               <div className="studentAttendance">
-                <Row style={{boxShadow: "rgba(180, 179, 179, 0.16) 0px 3px 6px", height: "54px"}}>
-                  <Col className="studentAttendanceHeader" md={2}>Roll Number</Col>
-                  <Col className="studentAttendanceHeader" md={6}>Name</Col>
-                  <Col className="studentAttendanceHeader" md={2}>Present</Col>
-                  <Col className="studentAttendanceHeader" md={2}>Dress Defaulter</Col>
+                <Row
+                  style={{
+                    boxShadow: "rgba(180, 179, 179, 0.16) 0px 3px 6px",
+                    height: "54px",
+                  }}
+                >
+                  <Col className="studentAttendanceHeader" md={2}>
+                    Roll Number
+                  </Col>
+                  <Col className="studentAttendanceHeader" md={6}>
+                    Name
+                  </Col>
+                  <Col className="studentAttendanceHeader" md={2}>
+                    Absent
+                  </Col>
+                  <Col className="studentAttendanceHeader" md={2}>
+                    Dress Defaulter
+                  </Col>
                 </Row>
-                <div className='studentAttendanceInner'>
-                <Row style={{marginTop:"20px"}}>
-                  <Col className="studentAttendanceDetails" md={2}>11</Col>
-                  <Col className="studentAttendanceDetails" md={6}>Devanshu</Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                </Row>
-                <Row style={{marginTop:"20px"}}>
-                  <Col className="studentAttendanceDetails" md={2}>14</Col>
-                  <Col className="studentAttendanceDetails" md={6}>Chanchal</Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                </Row>
-                <Row style={{marginTop:"20px"}}>
-                  <Col className="studentAttendanceDetails" md={2}>15</Col>
-                  <Col className="studentAttendanceDetails" md={6}>Raj</Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                </Row>
-                <Row style={{marginTop:"20px"}}>
-                  <Col className="studentAttendanceDetails" md={2}>12</Col>
-                  <Col className="studentAttendanceDetails" md={6}>Anup</Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                </Row>
-                <Row style={{marginTop:"20px"}}>
-                  <Col className="studentAttendanceDetails" md={2}>11</Col>
-                  <Col className="studentAttendanceDetails" md={6}>Devanshu</Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                </Row>
-                <Row style={{marginTop:"20px"}}>
-                  <Col className="studentAttendanceDetails" md={2}>14</Col>
-                  <Col className="studentAttendanceDetails" md={6}>Chanchal</Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                </Row>
-                <Row style={{marginTop:"20px"}}>
-                  <Col className="studentAttendanceDetails" md={2}>15</Col>
-                  <Col className="studentAttendanceDetails" md={6}>Raj</Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                </Row>
-                <Row style={{marginTop:"20px"}}>
-                  <Col className="studentAttendanceDetails" md={2}>12</Col>
-                  <Col className="studentAttendanceDetails" md={6}>Anup</Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                  <Col className="studentAttendanceDetails" md={2}><input type="checkbox" /></Col>
-                </Row>
+                <div className="studentAttendanceInner">
+                  {studentDetails?.student_details?.map((student, indx) => {
+                    return (
+                      <Row style={{ marginTop: "20px" }}>
+                        <Col className="studentAttendanceDetails" md={2}>
+                          {indx + 1}
+                        </Col>
+                        <Col className="studentAttendanceDetails" md={6}>
+                          {student?.student_name}
+                        </Col>
+                        <Col className="studentAttendanceDetails" md={2}>
+                          <input
+                            id={student?.student_id}
+                            value={student?.student_name}
+                            type="checkbox"
+                            onChange={(e) => addAbsentees(e)}
+                          />
+                        </Col>
+                        <Col className="studentAttendanceDetails" md={2}>
+                          <input
+                            id={student?.student_id}
+                            value={student?.student_name}
+                            type="checkbox"
+                            onChange={(e) => addDressDefaulterList(e)}
+                          />
+                        </Col>
+                      </Row>
+                    );
+                  })}
                 </div>
               </div>
-              
-
-              
             </div>
           </Col>
           <Col md={3} style={{ marginTop: "91px", width: "20%" }}>
@@ -599,33 +663,48 @@ const TDashboard = () => {
                 </Row>
                 <Row>
                   <Col md={12}>
-                    {teacherRoutineData?.time_table ? teacherRoutineData?.time_table?.map((routine, indx) => {
-                      return (
-                        <Card
-                          style={{
-                            height: "81px",
-                            marginBottom: "5px",
-                            backgroundColor: "#0DCAF0",
-                          }}
-                        >
-                          <Card.Body>
-                            <span style={{
-                                font: "normal normal normal 14px/21px Roboto",
-                                letterSpacing: " 0px",
-                                color: "white",
-                              }}>{`${routine.time_range} --- ${routine.subject_name}--${routine.grade}${routine.section_name}`}</span>
-                          </Card.Body>
-                        </Card>
-                      );
-                    })
-                  :
-                  <p>{teacherRoutineData?.message}</p>}
+                    {teacherRoutineData ? (
+                      teacherRoutineData?.time_table?.map((routine, indx) => {
+                        return (
+                          <Card
+                            style={{
+                              height: "81px",
+                              marginBottom: "5px",
+                              backgroundColor: "#0DCAF0",
+                            }}
+                          >
+                            <Card.Body>
+                              <span
+                                style={{
+                                  font: "normal normal normal 14px/21px Roboto",
+                                  letterSpacing: " 0px",
+                                  color: "white",
+                                }}
+                              >{`${routine.time_range} --- ${routine.subject_name}--${routine.grade}${routine.section_name}`}</span>
+                            </Card.Body>
+                          </Card>
+                        );
+                      })
+                    ) : (
+                      <p>No Schedule Available</p>
+                    )}
                   </Col>
                 </Row>
               </Col>
             </Row>
           </Col>
         </Row>
+        {showCheckAttendanceModal && (
+          <CheckAttendance
+            show={showCheckAttendanceModal}
+            onHide={() => setShowCheckAttendanceModal(false)}
+            absenteesValue={absenteesValue}
+            dressDValue={dressDValue}
+            absenteesList={absenteesList}
+            dressDList={dressDList}
+            closeAndLoad={closeAndLoad}
+          />
+        )}
       </>
     );
 }

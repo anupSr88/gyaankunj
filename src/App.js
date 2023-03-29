@@ -88,7 +88,7 @@ function App() {
 <Route path="/studentDashboard/Assignment" element={<ProtectedWrapper Component = {StudentAssigments} />} />
 <Route path="/studentDashboard/Resources" element={<ProtectedWrapper Component = {ResourcesForStudents} />} />
 <Route path="/studentDashboard/Notice" element={<ProtectedWrapper Component = {NoticeForStudents} />} />
-<Route path="/studentDashboard/Notifications" element={<ProtectedWrapper Component = {NotificationsForTeacher} />} />
+<Route path="/studentDashboard/Notifications" element={<ProtectedWrapper Component = {StudentDashboard} />} />
 <Route exact path="/" Component={DashboardSectionContent} />
 </Routes>
       

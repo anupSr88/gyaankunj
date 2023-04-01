@@ -7,7 +7,7 @@ const AddLogBook = (props) => {
   const [grade, setGrade] = useState("");
   const [subject, setSubject] = useState("");
   const [teacherName, setTeacherName] = useState();
-  const [period, setPeriod] = useState("");
+  const [periodData, setPeriodData] = useState('')
   const [section, setSection] = useState("");
   const [contentTaught, setContentTaught] = useState('')
   const [homework, setHomework] = useState('')
@@ -57,18 +57,39 @@ const AddLogBook = (props) => {
     { value: "D", label: "D" },
   ];
 
+  const handleGradeChange = (e) => {
+    setGrade(e.target.value)
+  }
+
+  const handleSubjectChange = (e) => {
+    setSubject(e.target.value)
+  }
+
+  const handlePeriodChange = (e) => {
+    setPeriodData(e.target.value)
+  }
+
+  const handleSectionChange = (e) => {
+    setSection(e.target.value)
+  }
+
   const addLogBookData = () => {
+    const today = new Date()
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy = today.getFullYear();
+        const newData = `${yyyy}-${mm}-${dd}`
     const logbookDetails = {
       "grade_id": grade,
       "section_id": section,
-      "period": period,
+      "period": periodData,
       "subject_id": subject,
       "teacher_id": userDetails.userid,
       "content_taught": contentTaught,
       "home_work": homework,
-      "date": "2022-12-23",
+      "date": newData,
       "absentees":["STUD_1", "STUD_2"],
-      "dress_defaulters": ["STUD_3", "STUD_4"]
+      "dress_defaulters": ["STUD_5"]
     }
     createLogBook(logbookDetails)
     .then((res) => {console.log("Logbook added - ", res.data)
@@ -86,18 +107,19 @@ const AddLogBook = (props) => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add LogBook</Modal.Title>
+          <Modal.Title style={{font: 'normal normal bold 22px/34px Roboto'}}>Add LogBook</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Row>
               <Col md={5}>
-                <span>Add Grade</span>
-                <Select
-                  options={gradeOptions}
-                  
-                  onChange={(e) => setGrade(e.value)}
-                />
+              <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Grade</h6>
+                <select className="addLogBookBlock" name="grade" id="grade" onChange = {(e) => handleGradeChange(e)}>
+                <option value="">--Grade--</option>
+                  {gradeOptions?.map((grade) => {
+                    return <option value={grade?.value}>{grade?.label}</option>
+                  })}
+                </select>
               </Col>
               <Col md={2}></Col>
               <Col md={5}>
@@ -105,7 +127,7 @@ const AddLogBook = (props) => {
                   className="mb-3"
                   controlId="exampleForm.ControlTextarea1"
                 >
-                  <Form.Label>Content Taught</Form.Label>
+                  <Form.Label><h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Content Taught</h6></Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={2}
@@ -118,9 +140,13 @@ const AddLogBook = (props) => {
             </Row>
             <Row>
             <Col md={5}>
-                <span>Add Period</span>
-                <Select options={periodOptions}
-                  onChange={(e) => setPeriod(e.value)} />
+            <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Period</h6>
+                <select className="addLogBookBlock" name="period" id="period" onChange = {(e) => handlePeriodChange(e)}>
+                <option value="">--Period--</option>
+                  {periodOptions?.map((period) => {
+                    return <option value={period.value}>{period.label}</option>
+                  })}
+                </select>
               </Col>
               <Col md={2}></Col>
               <Col md={5}>
@@ -128,7 +154,7 @@ const AddLogBook = (props) => {
                   className="mb-3"
                   controlId="exampleForm.ControlTextarea1"
                 >
-                  <Form.Label>Add Homework</Form.Label>
+                  <Form.Label><h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Homework</h6></Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={2}
@@ -141,15 +167,29 @@ const AddLogBook = (props) => {
             </Row>
             <Row>
               <Col md={5}>
-                <span>Add Section</span>
-                <Select options={sectionOptions} onChange={(e) => setSection(e.value)}/>
+              <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Section</h6>
+                {/* <Select
+                  options={sectionOptions}
+                  onChange={(e) => handleSectionChange(e)}
+                /> */}
+                <select className="addLogBookBlock" name="section" id="section" onChange = {(e) => handleSectionChange(e)}>
+                <option value="">--Section--</option>
+                  {sectionOptions?.map((section) => {
+                    return <option value={section.value}>{section.label}</option>
+                  })}
+                </select>
               </Col>
               
             </Row>
-            <Row>
+            <Row style={{marginTop: "32px"}}>
               <Col md={5}>
-                <span>Add Subject</span>
-                <Select options={subjectOptions} onChange={(e) => setSubject(e.value)} />
+              <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Subject</h6>
+                <select className="addLogBookBlock" name="subject" id="subject" onChange = {(e) => handleSubjectChange(e)}>
+                <option value="">--Subject--</option>
+                  {subjectOptions?.map((subject) => {
+                    return <option value={subject?.value}>{subject?.label}</option>
+                  })}
+                </select>
               </Col>
               
             </Row>

@@ -62,6 +62,10 @@ const getLessonPlan= (teacher) => {
     return apiInstance.get(`/view_teacher_lesson_plan?teacher_id=${teacher}`)
 }
 
+const getLessonPlanMetadata= (grade, section) => {
+    return apiInstance.get(`/get_lesson_plan_metadata?grade_id=${grade}&section_id=${section}`)
+}
+
 const fetchAllSubjects = () => {
     return apiInstance.get(`/get_all_subjects`)
 }
@@ -111,6 +115,10 @@ const saveAttendance = (attendanceData) => {
     return apiInstance.post(`/save_attendance_data`, attendanceData)
 }
 
+const getTeachersData = () => {
+    return apiInstance.get(`/get_all_teachers`)
+}
+
 export {
     // loginUser,
     createMasterRoutine,
@@ -135,5 +143,7 @@ export {
     studentAssignmentList,
     studentRoutine,
     viewNotice,
-    saveAttendance
+    saveAttendance,
+    getLessonPlanMetadata,
+    getTeachersData
 }

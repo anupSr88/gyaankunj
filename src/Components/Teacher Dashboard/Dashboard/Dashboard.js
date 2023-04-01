@@ -27,10 +27,12 @@ const TDashboard = () => {
     const [showCheckAttendanceModal, setShowCheckAttendanceModal] = useState(false)
     const [absenteesValue, setAbsenteesValue] = useState([])
     const [dressDValue, setDressDValue] = useState([])
+    const [sectionToFetchAtt, setSectionToFetchAtt] = useState('')
+    const [gradeToFetchAtt, setGradeToFetchAtt] = useState('')
+
 
     useEffect(() => {
         fetchTeacherRoutine()
-        getAllStudents()
     }, [])
 
     const userDetails = JSON.parse(window.localStorage.getItem('UserData'))
@@ -55,8 +57,8 @@ const TDashboard = () => {
     }
 
     const getAllStudents = () => {
-      const grade = "1"
-        const section = "1"
+      const grade = gradeToFetchAtt
+        const section = sectionToFetchAtt
       getAllStudentsData(grade, section)
       .then((res) => setStudentDetails(res.data))
       .catch((err) => console.log(err))
@@ -146,9 +148,16 @@ const TDashboard = () => {
         setGradeToFetchLog(e.value)
       }
 
+      const handlesectionToFetchAtt = (e) => {
+        setSectionToFetchAtt(e.value)
+      }
+    
+      const handlegradeToFetchAtt = (e) => {
+        setGradeToFetchAtt(e.value)
+      }
+
       const handleWeekDayChange = (e) => {
         setWeekDayToFetch(e.value)
-        console.log("weekDayToFetch - ", weekDayToFetch)
         fetchTeacherRoutine(weekDayToFetch)
       }
 
@@ -208,7 +217,7 @@ const TDashboard = () => {
                   />
                 </Col>
                 <Col md={1} style={{ paddingTop: "17px" }}>
-                  <Button variant="outline-primary" onClick={getLogBook}>
+                  <Button disabled={!(gradeToFetchLog && sectionToFetchLog, dateToFetchLog)} variant="primary" onClick={getLogBook}>
                     Search
                   </Button>
                 </Col>
@@ -265,9 +274,10 @@ const TDashboard = () => {
                       <th>Homework</th>
                     </tr>
                   </thead>
-                  {logBookDetails?.log_book_data ? (
-                    logBookDetails?.log_book_data?.log_record.map(
+                  {
+                    logBookDetails?.log_book_data?.length > 0 ? logBookDetails?.log_book_data?.log_record.map(
                       (logData, indx) => {
+                        console.log("logData - ", logData)
                         return (
                           <tbody>
                             <tr>
@@ -278,21 +288,16 @@ const TDashboard = () => {
                               <td>{logData?.home_work}</td>
                             </tr>
                           </tbody>
-                        );
+                        )
+                        
                       }
                     )
-                  ) : (
-                    <p
-                      style={{
-                        top: "43%",
-                        left: "42%",
-                        position: "absolute",
-                        font: "normal normal bold 20px/34px Roboto",
-                      }}
-                    >
-                      No Logbook Available!!
-                    </p>
-                  )}
+                    :
+                    logBookDetails?.status == "failure" ? 
+                    <td colSpan={5} style={{height: "100px", paddingTop: "50px", font: "normal normal normal 21px/21px Roboto"}}>{logBookDetails?.message}</td>
+                    :
+                    <td colSpan={5} style={{height: "100px", paddingTop: "50px", font: "normal normal normal 21px/21px Roboto"}}>Select Grade, Section and Date to view Logbook</td>
+                  }
                 </Table>
               </div>
             </div>
@@ -316,7 +321,7 @@ const TDashboard = () => {
                       placeholder="Class"
                       isSearchable={false}
                       options={classOptions}
-                      onChange={(e) => handlegradeToFetchLog(e)}
+                      onChange={(e) => handlegradeToFetchAtt(e)}
                     />
                   </span>
                 </Col>
@@ -325,16 +330,16 @@ const TDashboard = () => {
                     <Select
                       placeholder="Section"
                       isSearchable={false}
-                      options={classOptions}
-                      onChange={(e) => handlegradeToFetchLog(e)}
+                      options={sectionOptions}
+                      onChange={(e) => handlesectionToFetchAtt(e)}
                     />
                   </span>
                 </Col>
                 <Col md={2} style={{ paddingTop: "17px" }}>
                   <Button
                     variant="primary"
-                    onClick={() => setShowCheckAttendanceModal(true)}
-                    // onClick={takeAttendance}
+                    onClick={getAllStudents}
+                    disabled={!(gradeToFetchAtt && sectionToFetchAtt)}
                   >
                     Submit
                   </Button>
@@ -612,11 +617,11 @@ const TDashboard = () => {
                   </Col>
                 </Row>
                 <div className="studentAttendanceInner">
-                  {studentDetails?.student_details?.map((student, indx) => {
+                  {studentDetails?.student_details?.length > 0 ? studentDetails?.student_details?.map((student, indx) => {
                     return (
                       <Row style={{ marginTop: "20px" }}>
                         <Col className="studentAttendanceDetails" md={2}>
-                          {indx + 1}
+                          {student?.roll_no}
                         </Col>
                         <Col className="studentAttendanceDetails" md={6}>
                           {student?.student_name}
@@ -639,7 +644,12 @@ const TDashboard = () => {
                         </Col>
                       </Row>
                     );
-                  })}
+                  })
+                  :
+                    studentDetails?.status == "failure" ? 
+                    <Col md={12} style={{height: "134px", paddingTop: "62px", font: "normal normal normal 21px/21px Roboto"}}>No Data Available!!</Col>
+                :
+                <Col md={12} style={{height: "134px", paddingTop: "62px", font: "normal normal normal 21px/21px Roboto"}}>Select Grade and Section to view Attendance Register</Col>}
                 </div>
               </div>
             </div>

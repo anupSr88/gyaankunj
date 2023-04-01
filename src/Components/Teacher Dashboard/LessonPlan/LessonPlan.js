@@ -5,7 +5,7 @@ import SamplePdf from '../../../Images/MSAK.pdf'
 import { Document,Page } from 'react-pdf/dist/esm/entry.webpack';
 import AddLessonPlan from './AddLessonPlan';
 import LessonPlanDetails from './LessonPlanDetails'
-import {getLessonPlan } from '../../../ApiClient'
+import {getLessonPlan, getLessonPlanMetadata } from '../../../ApiClient'
 import TeacherSidebar from '../TeacherSidebar';
 
 const TLessonPlan = () => {
@@ -17,15 +17,21 @@ const TLessonPlan = () => {
 
 
     useEffect(() => {
-      viewLessonPlan()
+      lessonPlans()
     },[])
 
-    const viewLessonPlan = () => {
-      // const grade_id = "2"
-      // const section_id = "3"
-      // const subject_id = "3"
-      const teacher_id = userDetails.userid
-      getLessonPlan(teacher_id )
+    // const viewLessonPlan = () => {
+    //   const teacher_id = userDetails.userid
+    //   getLessonPlan(teacher_id )
+    //   .then((res) => setLessonPlanData(res.data))
+    //   .catch((err) => console.log(err))
+    // }
+
+    
+    const lessonPlans = () => {
+      const grade = "1"
+      const section = "1"
+      getLessonPlanMetadata(grade, section)
       .then((res) => setLessonPlanData(res.data))
       .catch((err) => console.log(err))
     }
@@ -36,7 +42,7 @@ const TLessonPlan = () => {
 
     const closeAndLoad = () => {
       setShowAddLessonPlan(false)
-      viewLessonPlan()
+      // viewLessonPlan()
     }
 
     return (

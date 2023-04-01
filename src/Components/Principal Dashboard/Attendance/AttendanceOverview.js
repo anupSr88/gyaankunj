@@ -76,19 +76,21 @@ const AttendanceOverview = () => {
       setSectionSelect(e.value)
     }
 
+    const handleClassChange = (e) => {
+      setClassSelect(e.value)
+      setGrade(e.value)
+    }
+
     const handleYearChange = (e) => {
       setYear(e.value)
     }
+
+    console.log("year - ", yearData)
     
     const handleSectionChange = (e) => {
       console.log("e -", e)
       setSection(e.target.defaultValue)
       setRadioValue(e.currentTarget.value)
-    }
-
-    const handleClassChange = (e) => {
-      setClassSelect(e.value)
-      setGrade(e.value)
     }
     
     const getAttendanceOverview = () => {
@@ -305,8 +307,8 @@ const AttendanceOverview = () => {
               <Col
                 md={6}
                 style={{
-                  borderBottom: teacherTabActive ? "7px solid green" : "",
-                  borderTop: teacherTabActive ? "7px solid limegreen" : "",
+                  borderBottom: teacherTabActive ? "7px solid #1E79B6" : "",
+                  // borderTop: teacherTabActive ? "7px solid limegreen" : "",
                   borderRadius: teacherTabActive ? "10px" : "",
                   cursor: "pointer",
                 }}
@@ -329,9 +331,9 @@ const AttendanceOverview = () => {
                 md={6}
                 style={{
                   borderBottom: !teacherTabActive
-                    ? "7px solid cornflowerblue"
+                    ? "7px solid #1E79B6"
                     : "",
-                  borderTop: !teacherTabActive ? "7px solid blueviolet" : "",
+                  // borderTop: !teacherTabActive ? "7px solid blueviolet" : "",
                   borderRadius: !teacherTabActive ? "10px" : "",
                   cursor: "pointer",
                 }}

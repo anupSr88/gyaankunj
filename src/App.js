@@ -34,6 +34,7 @@ import StudentDashboard from './Components/Student Dashboard/StudentDashboard';
 import StudentReportSection from './Components/Student Dashboard/Report/Reports';
 import ResourcesForStudents from './Components/Student Dashboard/Resources/StudentResources';
 import NoticeForStudents from './Components/Student Dashboard/NoticeForStudents/NoticeForStudents';
+import NotificationsForStudent from './Components/Student Dashboard/Notification/StudentNotification';
 
 
 function App() {
@@ -88,7 +89,7 @@ function App() {
 <Route path="/studentDashboard/Assignment" element={<ProtectedWrapper Component = {StudentAssigments} />} />
 <Route path="/studentDashboard/Resources" element={<ProtectedWrapper Component = {ResourcesForStudents} />} />
 <Route path="/studentDashboard/Notice" element={<ProtectedWrapper Component = {NoticeForStudents} />} />
-<Route path="/studentDashboard/Notifications" element={<ProtectedWrapper Component = {StudentDashboard} />} />
+<Route path="/studentDashboard/Notifications" element={<ProtectedWrapper Component = {NotificationsForStudent} />} />
 <Route exact path="/" Component={DashboardSectionContent} />
 </Routes>
       

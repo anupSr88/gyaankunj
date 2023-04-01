@@ -8,22 +8,21 @@ import { useState } from 'react';
 function LessonPlanPrinciView(props) {
     const [expandCard, setExpandcard] = useState(false)
 
-    console.log("Props - ", props)
+    console.log("Princi Props - ", props)
 
   return (
     <>
     <Card className='lessonPlanCardHeader'>
       <Card.Body>
         <Row>
-            <Col md={5} className="lessonHeading" style={{textAlign:"left"}}>
-                <h5>LESSON NAME</h5>
-            </Col>
-            <Col md={3} className="lessonHeading">
-                <h5>GRADE</h5>
-            </Col>
-            <Col md={3} className="lessonHeading">
+            <Col md={4} className="lessonHeading" style={{textAlign:"left"}}>
                 <h5>SUBJECT NAME</h5>
             </Col>
+            
+            <Col md={3} className="lessonHeading">
+                <h5>CHAPTER NAME</h5>
+            </Col>
+            <Col md={3}></Col>
         </Row>
       </Card.Body>
       </Card>
@@ -32,7 +31,7 @@ function LessonPlanPrinciView(props) {
 
     : 
 
-    props?.lessonPlanData?.lesson_plan_data?.map((lessons, indx) => {
+    props?.lessonPlanData?.metadata?.map((lessons, indx) => {
 
        return <Card className={expandCard ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}>
       <Card.Body>
@@ -40,12 +39,11 @@ function LessonPlanPrinciView(props) {
             <Col md={4} className="lessonName">
                 <p>{lessons.subject_name}</p>
             </Col>
-            <Col md={3} className="gradeName">
-                {lessons.grade ? <p>{lessons.grade}</p> : "-"}
-            </Col>
+            
             <Col md={3} className="subjectName">
-                <p>{lessons.subject_name}</p>
+                <p>{lessons.chapter_name}</p>
             </Col>
+            <Col md={3}></Col>
             <Col md={2}>
                 {/* <FaAngleDown onClick={() => setExpandcard(!expandCard)} /> */}
                 <Button onClick={() => setExpandcard(!expandCard)}>Show More</Button>

@@ -1,21 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import TeacherSidebar from '../TeacherSidebar'
-import { Row, Col, Table } from "react-bootstrap";
-import SadImg from '../../../Images/SadImg.png'
+import { Row, Col, Table, Button } from "react-bootstrap";
 import { viewStudentAttendance } from '../../../ApiClient'
+import Select from 'react-select'
 
 const TeacherAttendance = () => {
 
-    const [studentAttendance, setStudentAttendance] = useState({})
+    const [studentAttendance, setStudentAttendance] = useState([])
+    const [sectionSelect, setSectionSelect] = useState('')
+    const [gradeData, setGrade] = useState('')
+    const [monthData, setMonth] = useState('')
 
-    useEffect(() => {
-        fetchStudentAttendance()
-    },[])
+    const gradeOptions = [
+      {value: "1", label: 1},
+      {value: "2", label: 2},
+      {value: "3", label: 3},
+      {value: "4", label: 4},
+      {value: "5", label: 5},
+      {value: "6", label: 6},
+      {value: "7", label: 7},
+      {value: "8", label: 8},
+      {value: "9", label: 9},
+      {value: "10", label: 10},
+     ]
+
+     const monthOptions = [
+      {value: "1", label: "January"},
+      {value: "2", label: "February"},
+      {value: "3", label: "March"},
+      {value: "4", label: "April"},
+      {value: "5", label: "May"},
+      {value: "6", label: "June"},
+      {value: "7", label: "July"},
+      {value: "8", label: "August"},
+      {value: "9", label: "September"},
+      {value: "10", label: "October"},
+      {value: "11", label: "November"},
+      {value: "12", label: "December"}
+     ]
+   
+     const sectionOptions = [
+       { value: '1', label: 'A' },
+       { value: '2', label: 'B' },
+       { value: '3', label: 'C' },
+       { value: '4', label: 'D' }
+     ]
 
     const fetchStudentAttendance = () => {
-        const grade = "1"
-        const section = "1"
-        const month = "1"
+        const grade = gradeData
+        const section = sectionSelect
+        const month = monthData
         viewStudentAttendance(grade, section, month)
         .then((res) => {
             setStudentAttendance(res.data)
@@ -24,6 +58,18 @@ const TeacherAttendance = () => {
         .catch((err) => {
             console.log('Attendance Error - ', err)
         })
+    }
+
+    const handleSectionSelectChange = (e) => {
+      setSectionSelect(e.value)
+    }
+
+    const handleMonthChange = (e) => {
+      setMonth(e.value)
+    }
+
+    const handleClassChange = (e) => {
+      setGrade(e.value)
     }
 
 
@@ -48,12 +94,26 @@ const TeacherAttendance = () => {
             <Col md={4}>
             <h4>Attendance</h4>
             </Col>
-            <Col md={5}>
-            
-            </Col>
-            <Col md={3}>
-            <h4>Month: January</h4>
-            </Col>
+            <Col md={2} className="teacherRoutingDD">
+                  <span>
+                    <Select placeholder="Select Section" isSearchable={false} options={sectionOptions} onChange={e => handleSectionSelectChange(e)} />
+                  </span>
+                </Col>
+                <Col md={2} className="teacherRoutingDD">
+                  <span>
+                  <Select placeholder="Select Class" isSearchable={false} options={gradeOptions} onChange={e => handleClassChange(e)} />
+                  </span>
+                </Col>
+                <Col md={2} className="teacherRoutingDD">
+                  <span>
+                  <Select placeholder="Select Month" isSearchable={false} options={monthOptions} onChange={e => handleMonthChange(e)} />
+                  </span>
+                </Col>
+                <Col md={2} className="teacherRoutingDD">
+                  <span>
+                  <Button disabled = {!(gradeData && sectionSelect && monthData)} variant="primary" onClick={fetchStudentAttendance}>Submit</Button>
+                  </span>
+                </Col>
         </Row>
         <div className="routineSection">
                 <div>
@@ -132,22 +192,25 @@ const TeacherAttendance = () => {
                     (studentAttendance, indx) => {
                       return ( */}
                         <tbody>
-                          {studentAttendance?.student_attendance?.map((attendance, indx) => {
+                          {studentAttendance?.student_attendance?.length > 0 ? studentAttendance?.student_attendance?.map((attendance, indx) => {
                             return (
                                 <tr>
                             <td>{attendance.roll_no}</td>
                             <td>{attendance.name}</td>
-                            <td>{attendance.roll_no}</td>
+                            <td>{attendance.attendance_percentage}</td>
                             
                             {Object.entries(attendance?.attendance)?.map(([key, value]) => {
                               return (
-                                <td><div className= {value.toString() == 'Present' ? 'present' : 'absent'}></div></td>
+                                <td><div className= {value.toString() === 'Present' ? 'present' : 'absent'}></div></td>
                               )
                             })}
                             {/* <td>{attendance?.attendance.value}</td> */}
                           </tr>
                             )
-                          })}
+                          })
+                        :
+                        <td style={{height: "134px", paddingTop: "62px", font: "normal normal normal 21px/21px Roboto"}} colSpan={34}>Select Grade, Section and Month to view Student's attendance</td>
+                        }
                         </tbody>
                       {/* );
                     }

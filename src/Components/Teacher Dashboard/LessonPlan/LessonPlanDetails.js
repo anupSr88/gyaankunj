@@ -7,13 +7,34 @@ import { useState } from 'react';
 import downArrow from '../../../Images/icon_chevron_see_all.svg'
 
 function LessonPlanDetails(props) {
-    const [expandCard, setExpandcard] = useState(false)
+    const [hideResponse, setHideResponse] = useState([])
+    const [sectionExpanded, setSectionExpanded] = useState(false)
 
-    const showLessonPlanDetails = (id) => {
-        setExpandcard(!expandCard)
+    // const showLessonPlanDetails = (id) => {
+    //     setExpandcard(!expandCard)
+    // }
+
+    console.log('Teacher props - ', props)
+
+    const showResponseHandler = (id) => {
+        console.log("Show Data", id)
+        let openHandler = [...hideResponse];
+        openHandler.push(id);
+        setHideResponse([...openHandler]);
+        setSectionExpanded(true);
     }
 
-    console.log('props - ', props)
+    const hideResponseHandler = (id) => {
+        console.log("Hide Data", id)
+        let openHandler = [...hideResponse];
+        let findindex = openHandler.indexOf(id);
+        setSectionExpanded(false);
+
+        if(findindex > -1){
+            openHandler.splice(findindex, 1);
+            setHideResponse([...openHandler])
+        }
+    };
 
   return (
     <>
@@ -39,11 +60,16 @@ function LessonPlanDetails(props) {
 
     : 
 
-    props?.lessonPlanData?.lesson_plan_data?.map((lessons, indx) => {
+    props?.lessonPlanData?.metadata?.map((lessons, indx) => {
+        console.log("lessons - ", lessons)
 
-       return <Card className={expandCard ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}>
+       return <Card 
+    //    className={expandCard ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}
+       >
       <Card.Body>
-        <Row style={{height :expandCard? '66px' : "", boxShadow: expandCard? '0px 3px 6px #B4B3B329' : ""}}>
+        <Row 
+        // style={{height :expandCard? '66px' : "", boxShadow: expandCard? '0px 3px 6px #B4B3B329' : ""}}
+        >
         <Col md={2} className="gradeName">
                 {lessons.grade ? <p>{lessons.grade}</p> : "-"}
             </Col>
@@ -57,12 +83,18 @@ function LessonPlanDetails(props) {
             
             
             <Col md={2}>
+                <span>
                 {/* <FaAngleDown onClick={() => setExpandcard(!expandCard)} /> */}
                 {/* <Button onClick={() => setExpandcard(!expandCard)}>Show More</Button> */}
-                <img src={downArrow} alt="expand" onClick={() => showLessonPlanDetails()} />
+                {hideResponse?.includes(lessons?.chapter_id) ? <img src={downArrow} alt="expand" onClick={() => hideResponseHandler(lessons?.chapter_id)} />
+                :
+                <img src={downArrow} alt="expand" onClick={() => showResponseHandler(lessons?.chapter_id)} />}
+                </span>
             </Col>
         </Row>
-        {expandCard && <div>
+        {
+        // expandCard && 
+        <div>
         <Row className="lessonData">
             <Col md={4} style={{textAlign: "left"}}>
                 Topic Name:

@@ -72,3 +72,13 @@ opacity: 1;
 .MRTableHeader th{
     color: black;
 }
+
+.teacherBlock {
+    height: 44px;
+    width: 257px;
+}
+
+.addLogBookBlock {
+    height: 44px;
+    width: 440px;
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './LessonPlan.css'
 import LessonPlanPrinciView from './LessonPlanForPrincipal'
-import {getLessonPlan } from '../../../ApiClient'
+import {getLessonPlan, getLessonPlanMetadata } from '../../../ApiClient'
 import PrincipalSidebar from '../PrincipalSidebar';
 
 const TLessonPlan = () => {
@@ -11,18 +11,24 @@ const TLessonPlan = () => {
     const [lessonPlanData, setLessonPlanData] = useState(false)
 
     useEffect(() => {
-      viewLessonPlan()
+      lessonPlans()
     },[])
 
     const handleShowPlanModal = () => {
         setShowAddLessonPlan(true)
     }
 
-    const viewLessonPlan = () => {
-      const grade_id = "1"
-      const section_id = "1"
-      const subject_id = 1
-      getLessonPlan(grade_id, section_id,subject_id )
+    // const viewLessonPlan = () => {
+    //   const teacher = "TEACHER_2"
+    //   getLessonPlan(teacher)
+    //   .then((res) => setLessonPlanData(res.data))
+    //   .catch((err) => console.log(err))
+    // }
+
+    const lessonPlans = () => {
+      const grade = "1"
+      const section = "1"
+      getLessonPlanMetadata(grade, section)
       .then((res) => setLessonPlanData(res.data))
       .catch((err) => console.log(err))
     }

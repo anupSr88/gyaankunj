@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import './PrincipalDashboard.css'
 import PrincipalSidebar from './PrincipalSidebar';
-import { Row, Col, ButtonGroup, ToggleButton, Button, Table, Form } from "react-bootstrap";
+import { Row, Col, ButtonGroup, ToggleButton, Button, Table, Form, Card } from "react-bootstrap";
 // import DashboardContent from './DashboardContent'
 // import DashboardRightPanel from './DashboardRightPanel'
 import {attendanceOverview, getGradeDetails, getTeachersData, getTeacherRoutine, viewLogBook } from '../../ApiClient'
 import Select from 'react-select'
 // import mockData from '../../Mock Data/mockdata.json'
 import PrincipalLogBook from "./PrincipalLogbook";
+import { FaCheckSquare } from "react-icons/fa";
 
 
 const PDashboard = () => {
@@ -25,6 +26,8 @@ const PDashboard = () => {
     const [dateToFetchLog, setDateToFetchLog] = useState("");
     const [gradeToFetchLog, setGradeToFetchLog] = useState("");
     const [sectionToFetchLog, setSectionToFetchLog] = useState("");
+    const [princiViewLogBook, setPrinciViewLogBook] = useState([])
+    const [weekDayToFetch, setWeekDayToFetch] = useState('')
 
 useEffect(() => {
     getAttendanceOverview()
@@ -94,6 +97,14 @@ const dayOption = [
   {value: "Friday", label: "Friday"},
 ]
 
+const weekDayOption = [
+  {value: "Monday", label: "Monday"},
+  {value: "Tuesday", label: "Tuesday"},
+  {value: "Wednesday", label: "Wednesday"},
+  {value: "Thursday", label: "Thursday"},
+  {value: "Friday", label: "Friday"},
+]
+
 const handleGradeChange = (e) => {
 setGrade(e.value)
 }
@@ -120,18 +131,17 @@ const handleTeacherChange = (e) => {
   setTeacherName(e.target.value)
 }
 
+const handleWeekDayChange = (e) => {
+  setWeekDayToFetch(e.target.value)
+  // fetchTeacherRoutine(weekDayToFetch)
+}
+
 const getAttendanceOverview = () => {
 const grade_id = grade
   const section_id = section
 attendanceOverview(grade_id, section_id)
 .then((res) => setOverallAttendance(res.data))
 .then((err) => console.log(err))
-}
-
-const fetchTeacherRoutine = () => {
-  getTeacherRoutine()
-  .then((res) => setTeacherRoutineData(res.data))
-  .catch((err) => console.log("Routine err - ", err))
 }
 
 const getAllGradeDetails = () => {
@@ -155,21 +165,31 @@ const fetchTeachersLogBook = () => {
   const grade = gradeToFetchLog
   const section = sectionToFetchLog
   viewLogBook(date, grade, section)
-  .then((res) => console.log("Logbook Data - ",res.data))
+  .then((res) => setPrinciViewLogBook(res.data))
   .catch((err) => console.log(err))
 }
+
+const fetchTeacherRoutine = () => {
+  const userId = teacherName
+  const day = weekDayToFetch
+  getTeacherRoutine(userId, day)
+  .then((res) => setTeacherRoutineData(res.data))
+  .catch((err) => console.log(err, "errorTeacher"))
+}
+
+console.log("weekDayToFetch - ", weekDayToFetch)
 
 
     return (
       <>
         <Row>
-          <Col md={3} style={{ marginTop: "91px", width: "20%" }}>
+          <Col md={3} style={{ marginTop: "91px", width: "20%"}}>
             <PrincipalSidebar />
           </Col>
-          <Col md={9} style={{ width: "80%" }}>
+          <Col md={5} style={{ width: "55%"}}>
             <div className="dashboardMain">
               <div>
-                <div className="attendanceOverview">
+                <div className="PrinciAttendanceOverview">
                   <Row
                     style={{
                       height: "74px",
@@ -358,7 +378,7 @@ const fetchTeachersLogBook = () => {
                   </Row>
                 </div>
 
-                <div className="teacherRoutineforPrinci">
+                {/* <div className="teacherRoutineforPrinci">
                   <Row
                     style={{
                       height: "74px",
@@ -434,9 +454,9 @@ const fetchTeachersLogBook = () => {
               
             </Table>
                   </Row>
-                </div>
+                </div> */}
 
-                <div className="dashboardLogbook">
+                <div className="princiDashboardLogbook">
                   <Row
                     style={{
                       height: "74px",
@@ -450,7 +470,7 @@ const fetchTeachersLogBook = () => {
                       <h4>Log Book</h4>
                     </Col>
                     <Col md={2} className="teacherRoutingDD">
-                    <select className="teacherRoutineBlock" name="grade" id="grade" onChange = {(e) => handleGradeChangeToFetchLog(e)}>
+                    <select className="teacherRoutineBlock" style={{width: "100px"}} name="grade" id="grade" onChange = {(e) => handleGradeChangeToFetchLog(e)}>
                 <option value="">--Grade--</option>
                   {gradeOptions?.map((grade) => {
                     return <option value={grade.value}>{grade.label}</option>
@@ -458,14 +478,14 @@ const fetchTeachersLogBook = () => {
                 </select>
                     </Col>
                     <Col md={2} className="teacherRoutingDD">
-                    <select className="teacherRoutineBlock" name="section" id="section" onChange = {(e) => handleSectionChangeToFetchLog(e)}>
+                    <select className="teacherRoutineBlock" style={{width: "100px"}} name="section" id="section" onChange = {(e) => handleSectionChangeToFetchLog(e)}>
                 <option value="">--Section--</option>
                   {sectionOptions?.map((section) => {
                     return <option value={section.value}>{section.label}</option>
                   })}
                 </select>
                     </Col>
-                    <Col md={2} style={{ marginTop: "17px" }}>
+                    <Col md={2} style={{ marginTop: "20px"}}>
                   <Form.Control
                     type="date"
                     name="datepic"
@@ -486,20 +506,20 @@ const fetchTeachersLogBook = () => {
                   </Row>
                   
                   <Row>
-          <Col md={3}>
-            <span style={{font: "normal normal bold 19px/34px Roboto"}}>Class Teacher's Name:</span> <span>Anjana</span>
+          <Col md={3} style={{paddingTop: "14px"}}>
+            <p style={{font: "normal normal bold 19px/27px Roboto", position: "relative", top: "13px"}}>Class Teacher:</p> <p style={{fontStyle:"italic", color:"blue"}}>{princiViewLogBook?.log_book_data?.class_teacher_name}</p>
           </Col>
           <Col md={1}>
             
           </Col>
-          <Col md={4}>
-          <span style={{font: "normal normal bold 19px/34px Roboto"}}>Day:</span> <span>Monday</span>
+          <Col md={4} style={{paddingTop: "14px"}}>
+          <p style={{font: "normal normal bold 19px/27px Roboto", position: "relative", top: "13px"}}>Day:</p> <p style={{fontStyle:"italic", color:"blue"}}>{princiViewLogBook?.log_book_data?.day}</p>
           </Col>
           <Col md={1}>
             
           </Col>
-          <Col md={3}>
-          <span style={{font: "normal normal bold 19px/34px Roboto"}}>Date:</span> <span>1-1-2022</span>
+          <Col md={3} style={{paddingTop: "14px"}}>
+          <p style={{font: "normal normal bold 19px/27px Roboto", position: "relative", top: "13px"}}>Date:</p> <p style={{fontStyle:"italic", color:"blue"}}>{princiViewLogBook?.log_book_data?.date}</p>
           </Col>
         </Row>
         <div className="routineSection">
@@ -515,38 +535,40 @@ const fetchTeachersLogBook = () => {
                   <th>Homework</th>
                 </tr>
               </thead>
-              {/* {logBookDetails?.log_book_data?.log_record.map((logData, indx) => {
-                return  */}
-                <tbody>
-                <tr>
-                {/* <td>{logData?.period}</td>
-                  <td>{logData?.students_present}</td>
-                  <td>{logData?.subject}</td>
-                  <td>{logData?.content_taught}</td>
-                  <td>{logData?.home_work}</td>                    */}
-                  <td>1</td>
-                  <td>20</td>
-                  <td>Maths</td>
-                  <td>Geometry</td>
-                  <td>Calculas</td>  
-                </tr>
-              </tbody>
-              {/* })} */}
+              {
+                princiViewLogBook?.log_book_data?.log_record.map((logData, indx) => {
+                  return (
+                    <tbody>
+                      <tr>
+                      <td>{logData?.period}</td>
+                      <td>{logData?.students_present}</td>
+                      <td>{logData?.subject_name}</td>
+                      <td>{logData?.content_taught}</td>
+                      <td>{logData?.home_work}</td>
+                      </tr>
+                    </tbody>
+                  )
+                })
+              }
             </Table>
             <Row style={{padding: "10px"}}>
               <Col md={3}>
                 <h6 style={{textAlign : "left"}}>Name of Absentees : </h6>
               </Col>
-              <Col md={9} style={{textAlign : "left"}}>
-                <span>20</span>
-              </Col>
+              {<Col md={9} style={{textAlign : "left"}}>
+                {princiViewLogBook?.log_book_data?.name_of_absentees?.map((absentees, indx) => {
+                 return  <span>{`${absentees}, `}</span>
+                })}
+              </Col>}
             </Row>
             <Row style={{padding: "10px"}}>
               <Col md={3}>
-                <h6 style={{textAlign : "left"}}>Number of Dress Defaulters : </h6>
+                <h6 style={{textAlign : "left"}}>Dress Defaulters : </h6>
               </Col>
               <Col md={9} style={{textAlign : "left"}}>
-              <span>20</span>
+              {princiViewLogBook?.log_book_data?.name_of_dress_defaulters?.map((dressDefaulter, indx) => {
+                 return  <span>{`${dressDefaulter}, `}</span>
+                })}
               </Col>
             </Row>
           </div>
@@ -568,6 +590,71 @@ const fetchTeachersLogBook = () => {
             </Col>
         </Row> */}
             </div>
+          </Col>
+          <Col md={4} style={{width: "25%", marginTop: "91px"}}>
+          <Row>
+              <Col md={6} className="princiRightPanel">
+                <Row className="princiRightPanel-header">
+                  <Col md={12}>
+                    <h4>Teacher's Schedule</h4>
+                  </Col>
+                </Row>
+                <Row>
+                <Col md={5}>
+                    
+                    <select className="teacherScheduleBlock" name="weekDay" id="weekDay" onChange = {(e) => handleWeekDayChange(e)}>
+                <option value="">--Week Day--</option>
+                  {weekDayOption?.map((weekDay) => {
+                    return <option value={weekDay?.value}>{weekDay?.label}</option>
+                  })}
+                </select>
+                  </Col>
+                  <Col md={5}>
+                  <select className="teacherScheduleBlock" name="teacher" id="teacher" onChange = {(e) => handleTeacherChange(e)}>
+                <option value="">--Teacher--</option>
+                  {teacherData?.teachers?.map((teacher) => {
+                    return <option value={teacher.teacher_id}>{teacher.teacher_name}</option>
+                  })}
+                </select>
+                  </Col>
+                  <Col md={1}>
+                  </Col>
+                  <Col md={1}>
+                  
+                  <img src={FaCheckSquare} onClick={fetchTeacherRoutine}></img>
+                  </Col>
+                </Row>
+                <Row style={{marginTop: "20px"}}>
+                  <Col md={12}>
+                    {teacherRoutineData ? (
+                      teacherRoutineData?.time_table?.map((routine, indx) => {
+                        return (
+                          <Card
+                            style={{
+                              height: "81px",
+                              marginBottom: "5px",
+                              backgroundColor: "#0DCAF0",
+                            }}
+                          >
+                            <Card.Body>
+                              <span
+                                style={{
+                                  font: "normal normal normal 14px/21px Roboto",
+                                  letterSpacing: " 0px",
+                                  color: "white",
+                                }}
+                              >{`${routine.time_range} --- ${routine.subject_name}--${routine.grade}${routine.section_name}`}</span>
+                            </Card.Body>
+                          </Card>
+                        );
+                      })
+                    ) : (
+                      <p>No Schedule Available</p>
+                    )}
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </>

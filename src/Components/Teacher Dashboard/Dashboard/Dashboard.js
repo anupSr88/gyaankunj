@@ -17,7 +17,7 @@ const TDashboard = () => {
     const [sectionToFetchLog, setSectionToFetchLog] = useState('')
     const [startDate, setStartDate] = useState("");
     const [logBookDetails, setLogBookDetails] = useState('')
-    const [weekDayToFetch, setWeekDayToFetch] = useState('Monday')
+    const [weekDayToFetch, setWeekDayToFetch] = useState('')
     const [teacherRoutineData, setTeacherRoutineData] = useState({})
     const [studentDetails, setStudentDetails] = useState({})
     const [absentCheckedValue, SetAbsentCheckedValue] = useState('')
@@ -158,7 +158,7 @@ const TDashboard = () => {
 
       const handleWeekDayChange = (e) => {
         setWeekDayToFetch(e.value)
-        fetchTeacherRoutine(weekDayToFetch)
+        // fetchTeacherRoutine(weekDayToFetch)
       }
 
     const closeAndLoad = () => {

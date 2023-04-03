@@ -307,7 +307,8 @@ const AttendanceOverview = () => {
               <Col
                 md={6}
                 style={{
-                  borderBottom: teacherTabActive ? "7px solid #1E79B6" : "",
+                  // borderBottom: teacherTabActive ? "7px solid #1E79B6" : "",
+                  backgroundColor: teacherTabActive ? "cornflowerblue" : "",
                   // borderTop: teacherTabActive ? "7px solid limegreen" : "",
                   borderRadius: teacherTabActive ? "10px" : "",
                   cursor: "pointer",
@@ -318,7 +319,7 @@ const AttendanceOverview = () => {
                   style={{
                     font: "normal normal bold 19px/34px Roboto",
                     letterSpacing: "0px",
-                    color: "#2A2D2F",
+                    color: !teacherTabActive ? "#2A2D2F" : "white",
                     opacity: "1",
                     position: "relative",
                     top: "7px",
@@ -330,9 +331,10 @@ const AttendanceOverview = () => {
               <Col
                 md={6}
                 style={{
-                  borderBottom: !teacherTabActive
-                    ? "7px solid #1E79B6"
-                    : "",
+                  // borderBottom: !teacherTabActive
+                  //   ? "7px solid #1E79B6"
+                  //   : "",
+                  backgroundColor: !teacherTabActive ? "cornflowerblue" : "",
                   // borderTop: !teacherTabActive ? "7px solid blueviolet" : "",
                   borderRadius: !teacherTabActive ? "10px" : "",
                   cursor: "pointer",
@@ -343,7 +345,7 @@ const AttendanceOverview = () => {
                   style={{
                     font: "normal normal bold 19px/34px Roboto",
                     letterSpacing: "0px",
-                    color: "#2A2D2F",
+                    color: !teacherTabActive ? "white" : "#2A2D2F",
                     opacity: "1",
                     position: "relative",
                     top: "7px",

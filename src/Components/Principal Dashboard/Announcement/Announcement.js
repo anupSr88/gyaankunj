@@ -103,13 +103,13 @@ const Announcements = () => {
               :
               <p className="notPubnoticeTime">Not yet published. <a style={{fontStyle:"italic", textDecoration:"underline", cursor:"pointer"}} onClick={() => showPublishModal(indx)}>Click here</a> to publish.</p>}
             </Col>
-            {showAddAnnouncement && (<AddAnnouncement show={showAddAnnouncement} onHide={() => {setShowAddAnnouncement(false)}} closeAndLoad = {closeAndLoad} />)}
             
           </Row>
           
           })
         )
         }
+        {showAddAnnouncement && (<AddAnnouncement show={showAddAnnouncement} onHide={() => {setShowAddAnnouncement(false)}} closeAndLoad = {closeAndLoad} />)}
         
         
         </div>

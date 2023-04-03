@@ -312,7 +312,7 @@ const TDashboard = () => {
                   width: "100%",
                 }}
               >
-                <Col md={6}>
+                <Col md={4}>
                   <h4>Student's Attendance</h4>
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
@@ -335,11 +335,14 @@ const TDashboard = () => {
                     />
                   </span>
                 </Col>
+                <Col md={2} style={{ paddingTop: "16px", paddingRight: "100px" }}>
+                {(gradeToFetchAtt && sectionToFetchAtt) && <FaCheckSquare onClick={getAllStudents} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />}  
+                </Col>
                 <Col md={2} style={{ paddingTop: "17px" }}>
-                  <Button
+                <Button
                     variant="primary"
-                    onClick={getAllStudents}
-                    disabled={!(gradeToFetchAtt && sectionToFetchAtt)}
+                    onClick={() => setShowCheckAttendanceModal(true)}
+                    disabled={!(absenteesList?.length || dressDList?.length)}
                   >
                     Submit
                   </Button>
@@ -348,254 +351,6 @@ const TDashboard = () => {
 
               {/* ATTENDANCE BLOCK */}
 
-              {/* <div>
-              <Row style={{padding:"40px"}}>
-                <Col md={5} className="studentAttendanceBlock">
-                  <Row>
-                   <Col md={6}>
-                   </Col>
-                   <Col md={6}>
-                    <Row>
-                      <Col md={6}>
-                        <h6  style={{fontSize:"13px"}}>Present</h6>
-                      </Col>
-                      <Col md={6}>
-                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
-                      </Col>
-                    </Row>
-                    </Col> 
-                  </Row>
-                  <Row>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={2}>
-                          1.
-                        </Col>
-                        <Col md={10}>
-                          Arjun
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                      </Row>
-                      
-                    </Col>
-                  </Row>
-                  
-                </Col>
-
-                <Col md={5} className="studentAttendanceBlock">
-                <Row>
-                   <Col md={6}>
-                   </Col>
-                   <Col md={6}>
-                    <Row>
-                      <Col md={6}>
-                        <h6 style={{fontSize:"13px"}}>Present</h6>
-                      </Col>
-                      <Col md={6}>
-                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
-                      </Col>
-                    </Row>
-                    </Col> 
-                  </Row>
-                  <Row>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={2}>
-                          2.
-                        </Col>
-                        <Col md={10}>
-                          Ravi
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                      </Row>
-                      
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-              <Row style={{padding:"40px"}}>
-                <Col md={5} className="studentAttendanceBlock">
-                  <Row>
-                   <Col md={6}>
-                   </Col>
-                   <Col md={6}>
-                    <Row>
-                      <Col md={6}>
-                        <h6  style={{fontSize:"13px"}}>Present</h6>
-                      </Col>
-                      <Col md={6}>
-                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
-                      </Col>
-                    </Row>
-                    </Col> 
-                  </Row>
-                  <Row>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={2}>
-                          3.
-                        </Col>
-                        <Col md={10}>
-                          Anup
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                      </Row>
-                      
-                    </Col>
-                  </Row>
-                  
-                </Col>
-
-                <Col md={5} className="studentAttendanceBlock">
-                <Row>
-                   <Col md={6}>
-                   </Col>
-                   <Col md={6}>
-                    <Row>
-                      <Col md={6}>
-                        <h6 style={{fontSize:"13px"}}>Present</h6>
-                      </Col>
-                      <Col md={6}>
-                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
-                      </Col>
-                    </Row>
-                    </Col> 
-                  </Row>
-                  <Row>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={2}>
-                          4.
-                        </Col>
-                        <Col md={10}>
-                          Devanshu
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                      </Row>
-                      
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-              <Row style={{padding:"40px"}}>
-                <Col md={5} className="studentAttendanceBlock">
-                  <Row>
-                   <Col md={6}>
-                   </Col>
-                   <Col md={6}>
-                    <Row>
-                      <Col md={6}>
-                        <h6  style={{fontSize:"13px"}}>Present</h6>
-                      </Col>
-                      <Col md={6}>
-                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
-                      </Col>
-                    </Row>
-                    </Col> 
-                  </Row>
-                  <Row>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={2}>
-                          5.
-                        </Col>
-                        <Col md={10}>
-                          Chanchal
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                      </Row>
-                      
-                    </Col>
-                  </Row>
-                  
-                </Col>
-
-                <Col md={5} className="studentAttendanceBlock">
-                <Row>
-                   <Col md={6}>
-                   </Col>
-                   <Col md={6}>
-                    <Row>
-                      <Col md={6}>
-                        <h6 style={{fontSize:"13px"}}>Present</h6>
-                      </Col>
-                      <Col md={6}>
-                      <h6  style={{fontSize:"13px"}}>Dress Defaulter</h6>
-                      </Col>
-                    </Row>
-                    </Col> 
-                  </Row>
-                  <Row>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={2}>
-                          6.
-                        </Col>
-                        <Col md={10}>
-                          Bhoot
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                        <Col md={6}>
-                        <input type="checkbox" />
-                        </Col>
-                      </Row>
-                      
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-              </div> */}
               <div className="studentAttendance">
                 <Row
                   style={{

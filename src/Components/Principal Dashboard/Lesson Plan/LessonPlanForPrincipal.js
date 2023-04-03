@@ -25,8 +25,6 @@ function LessonPlanPrinciView(props) {
       .catch((err) => console.log("Lesson err - ", err));
   };
 
-  console.log("Teacher props - ", props?.lessonPlanData);
-
   const showResponseHandler = (id) => {
     showLessonPlanAllDetails(id);
     let openHandler = [...hideResponse];
@@ -50,7 +48,7 @@ function LessonPlanPrinciView(props) {
 
   const approveLessonPlan = (lessonId) => {
     const dataToVerify = {
-       " lesson_id": lessonId.lesson_id,
+       "lesson_id": lessonId.lesson_id,
         "verified": true
     }
     verifyLessonPlan(dataToVerify)

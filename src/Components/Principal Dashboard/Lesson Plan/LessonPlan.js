@@ -2,20 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './LessonPlan.css'
 import LessonPlanPrinciView from './LessonPlanForPrincipal'
-import {getLessonPlan, getLessonPlanMetadata } from '../../../ApiClient'
+import {getLessonPlan, getLessonPlanMetadata, getTeachersData } from '../../../ApiClient'
 import PrincipalSidebar from '../PrincipalSidebar';
+import { FaCheckSquare } from "react-icons/fa";
 
 const TLessonPlan = () => {
 
     const [showAddLessonPlan, setShowAddLessonPlan] = useState(false)
     const [lessonPlanData, setLessonPlanData] = useState(false)
+    const [teacherData, setTeacherData] = useState([])
+    const [teacherName, setTeacherName] = useState('')
 
     useEffect(() => {
-      lessonPlans()
+      getAllTeachersData()
     },[])
 
     const handleShowPlanModal = () => {
         setShowAddLessonPlan(true)
+    }
+
+    const getAllTeachersData = () => {
+      getTeachersData()
+      .then((res) => {
+        setTeacherData(res.data)
+        // const teacherData = res.data
+        // return teacherData;
+      })
+      // .catch((err) => console.log("Teachers err - ",  err))
     }
 
     // const viewLessonPlan = () => {
@@ -25,13 +38,18 @@ const TLessonPlan = () => {
     //   .catch((err) => console.log(err))
     // }
 
+    const handleTeacherChange = (e) => {
+      setTeacherName(e.target.value)
+    }
+
     const lessonPlans = () => {
-      const grade = "1"
-      const section = "1"
-      getLessonPlanMetadata(grade, section)
+      const teacher_id = teacherName
+      getLessonPlan(teacher_id)
       .then((res) => setLessonPlanData(res.data))
       .catch((err) => console.log(err))
     }
+
+    console.log("teacherName - ", teacherName)
 
     return (
       <>
@@ -43,64 +61,20 @@ const TLessonPlan = () => {
         <div className="routinemain">
           <div className="masterRoutineheader">
             <Row>
-              <Col md={10} style={{ textAlign: "left", paddingLeft: "50px" }}>
+              <Col md={8} style={{ textAlign: "left", paddingLeft: "50px" }}>
                 <h3>Lesson Plan</h3>
               </Col>
-              {/* <Col md={2}>
-                <span>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      className="dropdownHead"
-                      id="dropdown-basic"
-                    >
-                      Select Section
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
+              <Col md={3} style={{paddingLeft: "119px"}}>
+              <select className="teacherScheduleBlock" name="teacher" id="teacher" onChange = {(e) => handleTeacherChange(e)}>
+                <option value="">--Teacher--</option>
+                  {teacherData?.teachers?.map((teacher) => {
+                    return <option value={teacher.teacher_id}>{teacher.teacher_name}</option>
+                  })}
+                </select>
               </Col>
-              <Col md={2}>
-                <span>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      className="dropdownHead"
-                      id="dropdown-basic"
-                    >
-                      Select Class
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
-              </Col>
-              <Col md={2}>
-                <span>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      className="dropdownHead"
-                      id="dropdown-basic"
-                    >
-                      Select Subject
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
-              </Col> */}
-              
+              <Col md={1}>
+                  {teacherName !== '' && <FaCheckSquare onClick={lessonPlans} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />}
+                  </Col>
             </Row>
           </div>
           <div className="routineSection">

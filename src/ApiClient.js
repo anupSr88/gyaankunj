@@ -119,6 +119,14 @@ const getTeachersData = () => {
     return apiInstance.get(`/get_all_teachers`)
 }
 
+const lessonPlanAllDetails = (lessonId) => {
+    return apiInstance.get(`/view_teacher_lesson_plan_details?lesson_id=${lessonId}`)
+}
+
+const verifyLessonPlan = (dataToVerify) => {
+    return apiInstance.put(`/verify_lesson_plan`, dataToVerify)
+}
+
 export {
     // loginUser,
     createMasterRoutine,
@@ -145,5 +153,7 @@ export {
     viewNotice,
     saveAttendance,
     getLessonPlanMetadata,
-    getTeachersData
+    getTeachersData,
+    lessonPlanAllDetails,
+    verifyLessonPlan
 }

@@ -177,8 +177,6 @@ const fetchTeacherRoutine = () => {
   .catch((err) => console.log(err, "errorTeacher"))
 }
 
-console.log("weekDayToFetch - ", weekDayToFetch)
-
 
     return (
       <>
@@ -255,7 +253,7 @@ console.log("weekDayToFetch - ", weekDayToFetch)
                     </Col>
                     <Col md={9} className="attendanceOverviewInner">
                       <Row>
-                        <Col md={9}>
+                        <Col md={7}>
                           <h6
                             style={{
                               background: "#DEFABD 0% 0% no-repeat padding-box",
@@ -271,7 +269,7 @@ console.log("weekDayToFetch - ", weekDayToFetch)
                             Student
                           </h6>
                         </Col>
-                        <Col md={3} className="dflex">
+                        <Col md={5} className="dflex">
                           <Select
                             placeholder="Select Grade"
                             options={gradeOptions}
@@ -599,7 +597,7 @@ console.log("weekDayToFetch - ", weekDayToFetch)
                     <h4>Teacher's Schedule</h4>
                   </Col>
                 </Row>
-                <Row>
+                <Row style={{marginTop: "14px"}}>
                 <Col md={5}>
                     
                     <select className="teacherScheduleBlock" name="weekDay" id="weekDay" onChange = {(e) => handleWeekDayChange(e)}>
@@ -617,11 +615,10 @@ console.log("weekDayToFetch - ", weekDayToFetch)
                   })}
                 </select>
                   </Col>
-                  <Col md={1}>
-                  </Col>
-                  <Col md={1}>
                   
-                  <img src={FaCheckSquare} onClick={fetchTeacherRoutine}></img>
+                  <Col md={2} style={{paddingRight:"25px"}}>
+                  
+                  {(teacherName && weekDayToFetch) !== '' && <FaCheckSquare onClick={fetchTeacherRoutine} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />}
                   </Col>
                 </Row>
                 <Row style={{marginTop: "20px"}}>

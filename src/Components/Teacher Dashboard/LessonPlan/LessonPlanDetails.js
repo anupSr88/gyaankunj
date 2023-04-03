@@ -5,19 +5,29 @@ import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import AddLessonPlan from './AddLessonPlan';
 import { useState } from 'react';
 import downArrow from '../../../Images/icon_chevron_see_all.svg'
+import {FaAngleDown} from 'react-icons/fa';
+import {FaAngleUp} from 'react-icons/fa';
+import {lessonPlanAllDetails } from '../../../ApiClient'
+
 
 function LessonPlanDetails(props) {
     const [hideResponse, setHideResponse] = useState([])
     const [sectionExpanded, setSectionExpanded] = useState(false)
+    const [lessonAllDetails, setLessonAllDetails] = useState([])
 
     // const showLessonPlanDetails = (id) => {
     //     setExpandcard(!expandCard)
     // }
 
-    console.log('Teacher props - ', props)
+    const showLessonPlanAllDetails = (id) => {
+        const lessonId = id
+        lessonPlanAllDetails(lessonId)
+        .then((res) => setLessonAllDetails(res.data))
+        .catch((err) => console.log("Lesson err - ", err))
+    }
 
     const showResponseHandler = (id) => {
-        console.log("Show Data", id)
+        showLessonPlanAllDetails(id)
         let openHandler = [...hideResponse];
         openHandler.push(id);
         setHideResponse([...openHandler]);
@@ -25,7 +35,7 @@ function LessonPlanDetails(props) {
     }
 
     const hideResponseHandler = (id) => {
-        console.log("Hide Data", id)
+
         let openHandler = [...hideResponse];
         let findindex = openHandler.indexOf(id);
         setSectionExpanded(false);
@@ -60,11 +70,11 @@ function LessonPlanDetails(props) {
 
     : 
 
-    props?.lessonPlanData?.metadata?.map((lessons, indx) => {
+    props?.lessonPlanData?.lesson_plan_data?.map((lessons, indx) => {
         console.log("lessons - ", lessons)
 
        return <Card 
-    //    className={expandCard ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}
+       className={hideResponse?.includes(lessons?.lesson_id) ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}
        >
       <Card.Body>
         <Row 
@@ -83,58 +93,63 @@ function LessonPlanDetails(props) {
             
             
             <Col md={2}>
-                <span>
+                
                 {/* <FaAngleDown onClick={() => setExpandcard(!expandCard)} /> */}
                 {/* <Button onClick={() => setExpandcard(!expandCard)}>Show More</Button> */}
-                {hideResponse?.includes(lessons?.chapter_id) ? <img src={downArrow} alt="expand" onClick={() => hideResponseHandler(lessons?.chapter_id)} />
+                {hideResponse?.includes(lessons?.lesson_id) ? <FaAngleUp style={{height:"25px", width:"25px"}} onClick={() => hideResponseHandler(lessons?.lesson_id)} />
                 :
-                <img src={downArrow} alt="expand" onClick={() => showResponseHandler(lessons?.chapter_id)} />}
-                </span>
+                <FaAngleDown style={{height:"25px", width:"25px"}} onClick={() => showResponseHandler(lessons?.lesson_id)} />}
+                
             </Col>
         </Row>
         {
         // expandCard && 
         <div>
-        <Row className="lessonData">
-            <Col md={4} style={{textAlign: "left"}}>
+            {hideResponse?.includes(lessons?.lesson_id) && lessonAllDetails?.lesson_plan_data?.map((lessonDetail, indx) => {
+                return <fieldset>
+                <Row className="lessonData">
+            <Col md={3} style={{textAlign: "left"}}>
                 Topic Name:
             </Col>
-            <Col md={6} style={{textAlign: "left"}}>
-            {lessons.topic_name}
+            <Col md={9} style={{textAlign: "left"}}>
+            {lessonDetail.topic_name}
             </Col>
         </Row>
         <Row className="lessonData">
-            <Col md={4} style={{textAlign: "left"}}>
+            <Col md={3} style={{textAlign: "left"}}>
                 Learning Objective:
             </Col>
-            <Col md={6} style={{textAlign: "left"}}>
-            {lessons.learning_objectives}
+            <Col md={9} style={{textAlign: "left"}}>
+            {lessonDetail.learning_objectives}
             </Col>
         </Row>
         <Row className="lessonData">
-            <Col md={4} style={{textAlign: "left"}}>
+            <Col md={3} style={{textAlign: "left"}}>
                 Teaching Methods:
             </Col>
-            <Col md={6} style={{textAlign: "left"}}>
-            {lessons.teaching_methods}
+            <Col md={9} style={{textAlign: "left"}}>
+            {lessonDetail.teaching_methods}
             </Col>
         </Row>
         <Row className="lessonData">
-            <Col md={4} style={{textAlign: "left"}}>
+            <Col md={3} style={{textAlign: "left"}}>
                 Learning Outcome:
             </Col>
-            <Col md={6} style={{textAlign: "left"}}>
-            {lessons.learning_outcome}
+            <Col md={9} style={{textAlign: "left"}}>
+            {lessonDetail.learning_outcome}
             </Col>
         </Row>
         <Row className="lessonData">
-            <Col md={4} style={{textAlign: "left"}}>
+            <Col md={3} style={{textAlign: "left"}}>
                 Teaching Aids:
             </Col>
-            <Col md={6} style={{textAlign: "left"}}>
-            {lessons.teaching_aid_references}
+            <Col md={9} style={{textAlign: "left"}}>
+            {lessonDetail.teaching_aid_references}
             </Col>
         </Row>
+            </fieldset>
+            }) }
+        
         </div>}
       </Card.Body>
       </Card>

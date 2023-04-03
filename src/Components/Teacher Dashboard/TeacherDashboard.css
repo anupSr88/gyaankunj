@@ -318,7 +318,7 @@ overflow-y: auto; */
 
 .teacherRightPanel {
     width: 287px;
-    height: 463px;
+    height: auto;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #B4B3B329;
     border-radius: 8px 8px 8px 8px;

@@ -36,6 +36,7 @@ opacity: 1;
 
 .lessonPlanCard{
     margin-bottom: 10px;
+    height: 70px;
 }
 
 .lessonPlanCardHeader{
@@ -52,8 +53,9 @@ color: #2A2D2F;
 
 .lessonPlanCardExpanded{
     margin-bottom: 10px; 
-    height: fit-content;
-    padding: 30px;
+    height: auto;
+    max-height: 500px;
+    /* padding: 30px; */
 }
 
 .lessonName{

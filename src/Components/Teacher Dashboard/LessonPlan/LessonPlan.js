@@ -5,7 +5,7 @@ import SamplePdf from '../../../Images/MSAK.pdf'
 import { Document,Page } from 'react-pdf/dist/esm/entry.webpack';
 import AddLessonPlan from './AddLessonPlan';
 import LessonPlanDetails from './LessonPlanDetails'
-import {getLessonPlan, getLessonPlanMetadata } from '../../../ApiClient'
+import {getLessonPlan } from '../../../ApiClient'
 import TeacherSidebar from '../TeacherSidebar';
 
 const TLessonPlan = () => {
@@ -20,18 +20,10 @@ const TLessonPlan = () => {
       lessonPlans()
     },[])
 
-    // const viewLessonPlan = () => {
-    //   const teacher_id = userDetails.userid
-    //   getLessonPlan(teacher_id )
-    //   .then((res) => setLessonPlanData(res.data))
-    //   .catch((err) => console.log(err))
-    // }
-
     
     const lessonPlans = () => {
-      const grade = "1"
-      const section = "1"
-      getLessonPlanMetadata(grade, section)
+      const teacher_id = userDetails?.userid
+      getLessonPlan(teacher_id)
       .then((res) => setLessonPlanData(res.data))
       .catch((err) => console.log(err))
     }
@@ -42,7 +34,7 @@ const TLessonPlan = () => {
 
     const closeAndLoad = () => {
       setShowAddLessonPlan(false)
-      // viewLessonPlan()
+      lessonPlans()
     }
 
     return (

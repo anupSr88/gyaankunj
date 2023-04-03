@@ -8,6 +8,7 @@ import '../TeacherDashboard.css'
 import TeacherSidebar from '../TeacherSidebar';
 import Select from 'react-select'
 import CheckAttendance from './AttendanceCheckModal';
+import { FaCheckSquare } from "react-icons/fa";
 
 
 
@@ -31,9 +32,9 @@ const TDashboard = () => {
     const [gradeToFetchAtt, setGradeToFetchAtt] = useState('')
 
 
-    useEffect(() => {
-        fetchTeacherRoutine()
-    }, [])
+    // useEffect(() => {
+    //     fetchTeacherRoutine()
+    // }, [])
 
     const userDetails = JSON.parse(window.localStorage.getItem('UserData'))
 
@@ -158,7 +159,6 @@ const TDashboard = () => {
 
       const handleWeekDayChange = (e) => {
         setWeekDayToFetch(e.value)
-        // fetchTeacherRoutine(weekDayToFetch)
       }
 
     const closeAndLoad = () => {
@@ -658,10 +658,12 @@ const TDashboard = () => {
             <Row>
               <Col md={6} className="teacherRightPanel">
                 <Row className="teacherRightPanel-header">
-                  <Col md={6}>
+                  <Col md={12}>
                     <h4>My Schedule</h4>
                   </Col>
-                  <Col md={6}>
+                  </Row>
+                  <Row style={{marginTop: "14px"}}>
+                  <Col md={10}>
                     <Select
                       placeholder="Day"
                       isSearchable={false}
@@ -670,8 +672,14 @@ const TDashboard = () => {
                       // onClick={fetchTeacherRoutine}
                     />
                   </Col>
+                  
+                  <Col md={2}>
+                  {weekDayToFetch !== '' && <FaCheckSquare onClick={fetchTeacherRoutine} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />}
+                  </Col>
+                  
+
                 </Row>
-                <Row>
+                <Row style={{marginTop: "20px"}}>
                   <Col md={12}>
                     {teacherRoutineData ? (
                       teacherRoutineData?.time_table?.map((routine, indx) => {

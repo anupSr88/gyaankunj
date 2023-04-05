@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
 import Select from "react-select";
-import { createLogBook } from "../../../ApiClient";
+import { createLogBook, fetchAllSubjects } from "../../../ApiClient";
 
 const AddLogBook = (props) => {
   const [grade, setGrade] = useState("");
@@ -11,6 +11,11 @@ const AddLogBook = (props) => {
   const [section, setSection] = useState("");
   const [contentTaught, setContentTaught] = useState('')
   const [homework, setHomework] = useState('')
+  const [allSubjectDetails, setAllSubjectDetails] = useState([])
+
+  useEffect(() => {
+    getAllSubjectsData()
+  },[])
 
   const userDetails = JSON.parse(localStorage.getItem('UserData'))
 
@@ -28,10 +33,10 @@ const AddLogBook = (props) => {
   ];
 
   const subjectOptions = [
-    { value: "History", label: "History" },
-    { value: "Geography", label: "Geography" },
-    { value: "Hindi", label: "Hindi" },
-    { value: "English", label: "English" },
+    { value: "1", label: "History" },
+    { value: "2", label: "Geography" },
+    { value: "3", label: "Hindi" },
+    { value: "4", label: "English" },
   ];
 
   const teacherOptions = [
@@ -51,10 +56,10 @@ const AddLogBook = (props) => {
   ];
 
   const sectionOptions = [
-    { value: "A", label: "A" },
-    { value: "B", label: "B" },
-    { value: "C", label: "C" },
-    { value: "D", label: "D" },
+    { value: "1", label: "A" },
+    { value: "2", label: "B" },
+    { value: "3", label: "C" },
+    { value: "4", label: "D" },
   ];
 
   const handleGradeChange = (e) => {
@@ -73,6 +78,13 @@ const AddLogBook = (props) => {
     setSection(e.target.value)
   }
 
+  const getAllSubjectsData = () => {
+    fetchAllSubjects()
+    .then((res) => {
+      setAllSubjectDetails(res.data)
+    })
+  }
+
   const addLogBookData = () => {
     const today = new Date()
         const dd = String(today.getDate()).padStart(2, '0');
@@ -87,9 +99,7 @@ const AddLogBook = (props) => {
       "teacher_id": userDetails.userid,
       "content_taught": contentTaught,
       "home_work": homework,
-      "date": newData,
-      "absentees":["STUD_1", "STUD_2"],
-      "dress_defaulters": ["STUD_5"]
+      "date": newData
     }
     createLogBook(logbookDetails)
     .then((res) => {console.log("Logbook added - ", res.data)
@@ -183,11 +193,11 @@ const AddLogBook = (props) => {
             </Row>
             <Row style={{marginTop: "32px"}}>
               <Col md={5}>
-              <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Subject</h6>
-                <select className="addLogBookBlock" name="subject" id="subject" onChange = {(e) => handleSubjectChange(e)}>
+              <h6>Add Subject</h6>
+                <select className="teacherBlock" name="subject" id="subject" onChange = {(e) => handleSubjectChange(e)}>
                 <option value="">--Subject--</option>
-                  {subjectOptions?.map((subject) => {
-                    return <option value={subject?.value}>{subject?.label}</option>
+                  {allSubjectDetails?.subjects?.map((subject) => {
+                    return <option value={subject?.subject_id}>{subject?.subject_name}</option>
                   })}
                 </select>
               </Col>

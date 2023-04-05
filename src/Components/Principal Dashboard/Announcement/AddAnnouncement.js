@@ -56,8 +56,6 @@ const AddAnnouncement = (props) => {
     props.closeAndLoad()
   }
 
-
-
   return (
     <>
       <Modal

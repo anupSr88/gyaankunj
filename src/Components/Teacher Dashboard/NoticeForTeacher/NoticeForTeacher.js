@@ -69,12 +69,13 @@ const NoticeForTeacher = () => {
         :
         (
           allNotice?.notices?.map((notice, indx) => {
+            console.log("notice - ", notice)
             return <Row style={{height: "93px"}}>
             <Col md={1} style={{paddingTop: "30px"}}>
               <img src={seeAll} alt="seeAll" />
             </Col>
             <Col md={11} className="noticeContent">
-              <h6 className="noticeHeader">{notice}</h6>
+              <h6 className="noticeHeader">{notice?.notice_subject}</h6>
               <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p>
             </Col>
           </Row>

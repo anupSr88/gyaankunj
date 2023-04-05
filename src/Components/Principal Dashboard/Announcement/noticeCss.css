@@ -22,3 +22,13 @@ letter-spacing: 0px;
 color: #4786E8;
 opacity: 1;
 }
+
+.noticeStyleExpanded {
+    height: 500px;
+    background-color: yellow;
+}
+
+.noticeStyle {
+    height: 79px;
+    background-color: blue;
+}

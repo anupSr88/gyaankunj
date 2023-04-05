@@ -6,6 +6,8 @@ import './noticeCss.css'
 import seeAll from "../../../Images/icon_chevron_see_all.svg";
 import { viewAllNotice, saveNotice } from '../../../ApiClient';
 import moment from 'moment'
+import { FaAngleDown } from "react-icons/fa";
+import { FaAngleUp } from "react-icons/fa";
 
 
 
@@ -14,6 +16,8 @@ const Announcements = () => {
     const [showAddAnnouncement, setShowAddAnnouncement] = useState(false)
     const [allNotice, setAllNotice] = useState({})
     const [indexedPublishNotice, setIndexedPublishNotice] = useState(null)
+    const [hideResponse, setHideResponse] = useState([]);
+    const [sectionExpanded, setSectionExpanded] = useState(false);
 
     const userDetails = JSON.parse(localStorage.getItem('UserData'))
 
@@ -42,6 +46,25 @@ const Announcements = () => {
     setShowAddAnnouncement(true)
   }
 
+  const showResponseHandler = (id) => {
+    allNotices();
+    let openHandler = [...hideResponse];
+    openHandler.push(id);
+    setHideResponse([...openHandler]);
+    setSectionExpanded(true);
+  };
+
+  const hideResponseHandler = (id) => {
+    let openHandler = [...hideResponse];
+    let findindex = openHandler.indexOf(id);
+    setSectionExpanded(false);
+
+    if (findindex > -1) {
+      openHandler.splice(findindex, 1);
+      setHideResponse([...openHandler]);
+    }
+  };
+
 
     return(
         <>
@@ -64,19 +87,6 @@ const Announcements = () => {
             <h4>Notice</h4>
             </Col>
             <Col md={2} className="teacherRoutingDD">
-            {/* <span>
-                  <Dropdown>
-                    <Dropdown.Toggle className="dropdownHead" id="dropdown-basic">
-                    Sort By
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">2 </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">3 </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span> */}
             </Col>
             <Col md={3} className='teacherRoutingDD'>
                 <Button variant="outline-primary"
@@ -94,14 +104,34 @@ const Announcements = () => {
         (
           allNotice?.notices?.map((notice, indx) => {
             return <Row style={{height: "93px"}}>
-            <Col md={1} style={{paddingTop: "30px"}}>
-              <img src={seeAll} alt="seeAll" />
-            </Col>
-            <Col md={11} className="noticeContent">
-              {<h6 className="noticeHeader">{notice?.notice_data}</h6>}
+            <Col md={1} style={{paddingTop: "30px"}}
+            >
+            {hideResponse?.includes(notice?.notice_id) ? (
+                        <FaAngleUp style={{height:"25px", width:"25px"}}
+                          onClick={() =>
+                            hideResponseHandler(notice?.notice_id)
+                          }
+                        />
+                      ) : (
+                        <FaAngleDown style={{height:"25px", width:"25px"}}
+                          onClick={() =>
+                            showResponseHandler(notice?.notice_id)
+                          }
+                        />
+                      )}
+                      </Col>
+            <Col md={11} className="noticeContent" 
+            >
+              <Row>
+                <Col md={12} className= {!hideResponse.includes(notice?.notice_id) ? "noticeStyle" : "noticeStyleExpanded"}>
+                {<h6 className="noticeHeader">{notice?.notice_data}</h6>}
               {notice?.published_at ? <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p>
               :
               <p className="notPubnoticeTime">Not yet published. <a style={{fontStyle:"italic", textDecoration:"underline", cursor:"pointer"}} onClick={() => showPublishModal(indx)}>Click here</a> to publish.</p>}
+                </Col>
+
+              </Row>
+             
             </Col>
             
           </Row>

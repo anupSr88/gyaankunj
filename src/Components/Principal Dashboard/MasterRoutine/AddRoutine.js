@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col, Table } from "react-bootstrap";
 import Select from 'react-select'
-import { createMasterRoutine, getTeachersData } from '../../../ApiClient'
+import { createMasterRoutine, getTeachersData, fetchAllSubjects } from '../../../ApiClient'
 import './MasterRoutine.css'
 import {v4 as uuid} from 'uuid';
 import AsyncSelect from 'react-select/async';
+import { FaTrashAlt } from "react-icons/fa";
+
 
 
 const AddRoutine = (props) => {
@@ -19,20 +21,34 @@ const AddRoutine = (props) => {
   const [enableSubmitButton, setEnableSubmitButton] = useState(false)
   const [teacherData, setTeacherData] = useState({})
   const [selectedValue, setSelectedValue] = useState(null);
+  const [allSubjectDetails, setAllSubjectDetails] = useState([])
+  
+
 
 
   useEffect(() => {
     getAllTeachersData()
+    getAllSubjectsData()
   },[])
+
+  const resetForm = () => {
+    setGrade('')
+    setSection('')
+    setDayData('')
+  }
 
   const getAllTeachersData = () => {
     getTeachersData()
     .then((res) => {
       setTeacherData(res.data)
-      // const teacherData = res.data
-      // return teacherData;
     })
-    // .catch((err) => console.log("Teachers err - ",  err))
+  }
+
+  const getAllSubjectsData = () => {
+    fetchAllSubjects()
+    .then((res) => {
+      setAllSubjectDetails(res.data)
+    })
   }
 
   const gradeOptions = [
@@ -95,10 +111,6 @@ const AddRoutine = (props) => {
     setTeacherName(e.target.value)
   }
 
-  // const handleChange = value => {
-  //   setSelectedValue(value);
-  // }
-
   const handlePeriodChange = (e) => {
     setPeriodData(e.target.value)
   }
@@ -129,34 +141,34 @@ const AddRoutine = (props) => {
 
   const addRoutineDetails = () => {
 
-    let ids = uuid()
-    const uniqueId = ids.slice(0,8)
+    let newMember = [...dataToAddRoutine];
+    let newData = {
+      day: dayData,
+      values: [
+        {
+          grade_id: grade,
+          period: periodData,
+          subject_id: subject,
+          teacher_id: teacherName,
+          section_id: section
+        },
+      ],
+    };
 
-    let newMember = [...dataToAddRoutine]
-   let newData = { 
-    day : dayData,
-    "values":[
-      {
-        grade_id : grade,
-        period : periodData,
-        subject_id : subject,
-        teacher_id : teacherName,
-        section_id : section,
-      }
-   ],
-   "start_date": "",
-   "end_date": ""
-    }
+    newMember = [...newMember, newData];
 
-    newMember = [...newMember, newData]
+    setDataToAddRoutine(newMember);
 
-    setDataToAddRoutine(newMember)
-    // postRoutineData();
-  }
+  };
 
   const closeAddModal = () => {
     postRoutineData();
     props.onHide();
+  }
+
+  const deleteRoutineRow = (indx) => {
+    dataToAddRoutine.splice(indx, 1)
+    setDataToAddRoutine([...dataToAddRoutine])
   }
   
   return (
@@ -181,7 +193,7 @@ const AddRoutine = (props) => {
                   options={gradeOptions}
                   onChange={(e) => handleGradeChange(e)}
                 /> */}
-                <select className="teacherBlock" name="grade" id="grade" onChange = {(e) => handleGradeChange(e)}>
+                <select className="teacherBlock" name="grade" id="grade" onChange = {(e) => handleGradeChange(e)} disabled = {grade !== ''}>
                 <option value="">--Grade--</option>
                   {gradeOptions?.map((grade) => {
                     return <option value={grade?.value}>{grade?.label}</option>
@@ -190,37 +202,7 @@ const AddRoutine = (props) => {
               </Col>
               <Col md={2}></Col>
               <Col md={5}>
-                <h6>Add Subject</h6>
-                <select className="teacherBlock" name="subject" id="subject" onChange = {(e) => handleSubjectChange(e)}>
-                <option value="">--Subject--</option>
-                  {subjectOptions?.map((subject) => {
-                    return <option value={subject?.value}>{subject?.label}</option>
-                  })}
-                </select>
-              </Col>
-            </Row>
-            <Row style={{ marginBottom: "10px" }}>
-              <Col md={5} style={{paddingLeft:"25%"}}>
-                <h6>Teacher Name</h6>
-                {/* <AsyncSelect
-                cacheOptions
-                defaultOptions
-                value={selectedValue}
-                loadOptions={getAllTeachersData}
-                getOptionLabel={e => e.teacher_name}
-                getOptionValue={e => e.teacher_id}
-                onInputChange={handleTeacherChange}
-                 onChange={handleChange} /> */}
-
-                <select className="teacherBlock" name="teacher" id="teacher" onChange = {(e) => handleTeacherChange(e)}>
-                <option value="">--Teacher--</option>
-                  {teacherData?.teachers?.map((teacher) => {
-                    return <option value={teacher.teacher_id}>{teacher.teacher_name}</option>
-                  })}
-                </select>
-              </Col>
-              <Col md={2}></Col>
-              <Col md={5}>
+              {(grade && section && dayData) && <fieldset>
                 <h6>Add Period</h6>
                 <select className="teacherBlock" name="period" id="period" onChange = {(e) => handlePeriodChange(e)}>
                 <option value="">--Period--</option>
@@ -228,35 +210,57 @@ const AddRoutine = (props) => {
                     return <option value={period.value}>{period.label}</option>
                   })}
                 </select>
+                </fieldset>}
               </Col>
             </Row>
             <Row style={{ marginBottom: "10px" }}>
-              <Col md={5} style={{paddingLeft:"25%"}}>
+            <Col md={5} style={{paddingLeft:"25%"}}>
+              {grade && <fieldset>
                 <h6>Add Section</h6>
-                {/* <Select
-                  options={sectionOptions}
-                  onChange={(e) => handleSectionChange(e)}
-                /> */}
-                <select className="teacherBlock" name="section" id="section" onChange = {(e) => handleSectionChange(e)}>
+                <select className="teacherBlock" name="section" id="section" onChange = {(e) => handleSectionChange(e)} disabled = {section !== ''}>
                 <option value="">--Section--</option>
                   {sectionOptions?.map((section) => {
                     return <option value={section.value}>{section.label}</option>
                   })}
                 </select>
+                </fieldset>}
               </Col>
               <Col md={2}></Col>
               <Col md={5}>
-                <h6>Add Week Day</h6>
-                {/* <Select
-                  options={dayOption}
-                  onChange={(e) => handleDayChange(e)}
-                /> */}
-                <select className="teacherBlock" name="day" id="day" onChange = {(e) => handleDayChange(e)}>
+                {(grade && section && dayData) && <fieldset>
+                <h6>Add Subject</h6>
+                <select className="teacherBlock" name="subject" id="subject" onChange = {(e) => handleSubjectChange(e)}>
+                <option value="">--Subject--</option>
+                  {allSubjectDetails?.subjects?.map((subject) => {
+                    return <option value={subject?.subject_id}>{subject?.subject_name}</option>
+                  })}
+                </select>
+                </fieldset>}
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: "10px" }}>
+              <Col md={5} style={{paddingLeft:"25%"}}>
+                {section && <fieldset>
+              <h6>Add Week Day</h6>
+                <select className="teacherBlock" name="day" id="day" onChange = {(e) => handleDayChange(e)} disabled = {dayData !== ''}>
                 <option value="">--Week Day--</option>
                   {dayOption?.map((day) => {
                     return <option value={day.value}>{day.label}</option>
                   })}
                 </select>
+                </fieldset>}
+              </Col>
+              <Col md={2}></Col>
+              <Col md={5}>
+              {(grade && section && dayData) && <fieldset>
+              <h6>Teacher Name</h6>
+                <select className="teacherBlock" name="teacher" id="teacher" onChange = {(e) => handleTeacherChange(e)}>
+                <option value="">--Teacher--</option>
+                  {teacherData?.teachers?.map((teacher) => {
+                    return <option value={teacher.teacher_id}>{teacher.teacher_name}</option>
+                  })}
+                </select>
+                </fieldset>}
               </Col>
             </Row>
             <Row style={{ marginBottom: "10px" }}>
@@ -266,6 +270,7 @@ const AddRoutine = (props) => {
                   variant="outline-success"
                   type="submit"
                   onClick={(e) => addRoutineDetails()}
+                  disabled={!(grade && section && dayData && periodData && teacherName && subject)}
                 >
                   Add to Master Routine
                 </Button>
@@ -282,27 +287,29 @@ const AddRoutine = (props) => {
                       <th>Teacher Name</th>
                       <th>Subject Name</th>
                       <th>Weekday</th>
-                      <th>Action</th>
+                      <th></th>
                     </tr>
                   </thead>
                   {dataToAddRoutine?.map((data, indx) => {
                     return (
                       <tbody>
                         <tr>
-                          <td>{data.grade_id}</td>
-                          <td>{data.section_id}</td>
-                          <td>{data.period}</td>
-                          <td>{data.teacher_id}</td>
-                          <td>{data.subject_id}</td>
-                          <td>{data.day}</td>
+                          <td>{data?.values[0].grade_id}</td>
+                          <td>{data?.values[0].section_id}</td>
+                          <td>{data?.values[0].period}</td>
+                          <td>{data?.values[0].teacher_id}</td>
+                          <td>{data?.values[0].subject_id}</td>
+                          <td>{data?.day}</td>
                           <td>
-                            <Button variant="primary">Edit</Button>
+                            {/* <Button variant="primary">Edit</Button>
                             <Button
                               variant="danger"
                               style={{ position: "relative", left: "40px" }}
+                              onClick={() => deleteRoutineRow(indx)}
                             >
                               Delete
-                            </Button>
+                            </Button> */}
+                            <FaTrashAlt style={{ position: "relative", left: "25px", cursor:"pointer" }} onClick={() => deleteRoutineRow(indx)} />
                           </td>
                         </tr>
                       </tbody>
@@ -314,10 +321,10 @@ const AddRoutine = (props) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-primary" style={{ alignItems: "center" }}>
+          <Button variant="outline-primary" style={{ alignItems: "center" }} onClick={resetForm}>
             Reset
           </Button>
-          <Button variant="outline-primary" onClick={closeAddModal}>
+          <Button variant="outline-primary" onClick={closeAddModal} disabled={dataToAddRoutine?.length < 8}>
             Submit
           </Button>
         </Modal.Footer>

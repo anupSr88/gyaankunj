@@ -275,7 +275,7 @@ const TDashboard = () => {
                     </tr>
                   </thead>
                   {
-                    logBookDetails?.log_book_data?.length > 0 ? logBookDetails?.log_book_data?.log_record.map(
+                    logBookDetails?.log_book_data?.log_record?.length > 0 ? logBookDetails?.log_book_data?.log_record?.map(
                       (logData, indx) => {
                         console.log("logData - ", logData)
                         return (

@@ -160,12 +160,12 @@ const LogBook = () => {
               </Row>
               
               :
-               logBookDetails?.log_book_data?.log_record.map((logData, indx) => {
+               logBookDetails?.log_book_data?.log_record?.map((logData, indx) => {
                 return <tbody>
                 <tr>
                 <td>{logData?.period}</td>
                   <td>{logData?.students_present}</td>
-                  <td>{logData?.subject}</td>
+                  <td>{logData?.subject_name}</td>
                   <td>{logData?.content_taught}</td>
                   <td>{logData?.home_work}</td>                   
                 </tr>
@@ -177,7 +177,9 @@ const LogBook = () => {
                 <h6 style={{textAlign : "left"}}>Name of Absentees : </h6>
               </Col>
               <Col md={9} style={{textAlign : "left"}}>
-                <span>{logBookDetails?.log_book_data?.name_of_absentees}</span>
+               {logBookDetails?.log_book_data?.name_of_absentees?.map((absentees, indx) => {
+                return absentees?.student_name && `${absentees?.student_name}, `
+               })}
               </Col>
             </Row>
             <Row style={{padding: "10px"}}>
@@ -185,7 +187,9 @@ const LogBook = () => {
                 <h6 style={{textAlign : "left"}}>Number of Dress Defaulters : </h6>
               </Col>
               <Col md={9} style={{textAlign : "left"}}>
-              <span>{logBookDetails?.log_book_data?.name_of_dress_defaulters}</span>
+               {logBookDetails?.log_book_data?.name_of_dress_defaulters?.map((dressDefaulter, indx) => {
+                return dressDefaulter?.student_name !== null && `${dressDefaulter?.student_name}, `
+               })}
               </Col>
             </Row>
           </div>

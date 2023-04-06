@@ -58,15 +58,15 @@ const MasterRoutine = () => {
 
     
 
-    const sectionA_data = masterRoutineData?.time_table?.grade_1?.section_A && masterRoutineData?.time_table?.grade_1?.section_A
+    const sectionA_data = masterRoutineData?.time_table?.grade_One?.section_A && masterRoutineData?.time_table?.grade_One?.section_A
 
-    const sectionB_data = masterRoutineData?.time_table?.grade_1?.section_B && masterRoutineData?.time_table?.grade_1?.section_B
+    const sectionB_data = masterRoutineData?.time_table?.grade_One?.section_B && masterRoutineData?.time_table?.grade_One?.section_B
 
-    const sectionC_data = masterRoutineData?.time_table?.grade_1?.section_C && masterRoutineData?.time_table?.grade_1?.section_C
+    const sectionC_data = masterRoutineData?.time_table?.grade_One?.section_C && masterRoutineData?.time_table?.grade_One?.section_C
 
-    const sectionD_data = masterRoutineData?.time_table?.grade_1?.section_C && masterRoutineData?.time_table?.grade_1?.section_D
+    const sectionD_data = masterRoutineData?.time_table?.grade_One?.section_C && masterRoutineData?.time_table?.grade_One?.section_D
 
-    const sectionE_data = masterRoutineData?.time_table?.grade_1?.section_C && masterRoutineData?.time_table?.grade_1?.section_E
+    const sectionE_data = masterRoutineData?.time_table?.grade_One?.section_C && masterRoutineData?.time_table?.grade_One?.section_E
 
     console.log("sectionA_data - ", sectionA_data)
     console.log("sectionB_data - ", sectionB_data)
@@ -75,7 +75,7 @@ const MasterRoutine = () => {
 
     // console.log("sectionB_data - ", sectionB_data)
 
-    console.log("mockData - ", mockData.time_table.grade_1)
+    console.log("mockData - ", mockData.time_table.grade_One)
 
     
 

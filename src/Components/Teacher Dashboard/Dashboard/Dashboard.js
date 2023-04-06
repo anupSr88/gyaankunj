@@ -32,9 +32,20 @@ const TDashboard = () => {
     const [gradeToFetchAtt, setGradeToFetchAtt] = useState('')
 
 
-    // useEffect(() => {
-    //     fetchTeacherRoutine()
-    // }, [])
+    useEffect(() => {
+      functn()
+        fetchTeacherRoutine()
+    }, [])
+
+    const functn = () => {
+      const today = new Date();
+    const day = today.getDay();
+    const dayList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const presentDay = dayList[day]
+
+    setWeekDayToFetch(presentDay)
+    }
+    
 
     const userDetails = JSON.parse(window.localStorage.getItem('UserData'))
 
@@ -50,8 +61,6 @@ const TDashboard = () => {
     const fetchTeacherRoutine = () => {
       const userId = userDetails.userid
       const day = weekDayToFetch
-      // const userId = "EMP2"  
-      // const day = "Wednesday"
       getTeacherRoutine(userId, day)
       .then((res) => setTeacherRoutineData(res.data))
       .catch((err) => console.log(err, "errorTeacher"))
@@ -66,6 +75,7 @@ const TDashboard = () => {
     }
 
     const addAbsentees = (e) => {
+      console.log("e - ", e)
       let newAbsenteesList = [...absenteesList, e.target.id]
       let newAbsenteesValue = [...absenteesValue, e.target.value]
       if(absenteesList.includes(e.target.id)) {
@@ -78,7 +88,7 @@ const TDashboard = () => {
       }
       setAbsenteesValue(newAbsenteesValue)
     }
-
+    
     const addDressDefaulterList = (e) => {
       let newDressList = [...dressDList, e.target.id]
       let newDressDValue = [...dressDValue, e.target.value]
@@ -91,25 +101,7 @@ const TDashboard = () => {
         newDressDValue = newDressDValue.filter(dressD => dressD !== e.target.value)
       }
       setDressDValue(newDressDValue)
-
     }
-
-    // const takeAttendance = () => {
-    //   const today = new Date()
-    //   const dd = String(today.getDate()).padStart(2, '0');
-    //   const mm = String(today.getMonth() + 1).padStart(2, '0');
-    //   const yyyy = today.getFullYear();
-    //   const newData = `${yyyy}-${mm}-${dd}`
-    //   console.log("newData - ", newData)
-    //   const attendanceData = {
-    //     "absentees": absenteesList,
-    //     "dress_defaulters": dressDList,
-    //     "date": newData
-    //   }
-    //   saveAttendance(attendanceData)
-    //   .then((res) => console.log('Attendance - ', res.data))
-    //   .catch((err) => console.log('Attendance err - ', err))
-    // }
 
 
     const classOptions = [
@@ -164,6 +156,8 @@ const TDashboard = () => {
     const closeAndLoad = () => {
       setShowCheckAttendanceModal(false)
       getAllStudents()
+      setAbsenteesValue([])
+        setDressDValue([])
     }
 
 
@@ -277,7 +271,6 @@ const TDashboard = () => {
                   {
                     logBookDetails?.log_book_data?.log_record?.length > 0 ? logBookDetails?.log_book_data?.log_record?.map(
                       (logData, indx) => {
-                        console.log("logData - ", logData)
                         return (
                           <tbody>
                             <tr>
@@ -381,21 +374,50 @@ const TDashboard = () => {
                         <Col className="studentAttendanceDetails" md={6}>
                           {student?.student_name}
                         </Col>
-                        <Col className="studentAttendanceDetails" md={2}>
-                          <input
-                            id={student?.student_id}
+
+                        {/* <Col className="studentAttendanceDetails" md={2}>
+                          <Form.Check
                             value={student?.student_name}
-                            type="checkbox"
+                            name="group1"
+                            type="radio"
+                            id={student?.student_id}
                             onChange={(e) => addAbsentees(e)}
                           />
                         </Col>
                         <Col className="studentAttendanceDetails" md={2}>
-                          <input
-                            id={student?.student_id}
+                            <Form.Check
                             value={student?.student_name}
-                            type="checkbox"
+                            name="group1"
+                            type="radio"
+                            id={student?.student_id}
                             onChange={(e) => addDressDefaulterList(e)}
                           />
+                         
+                        </Col> */}
+                        <Col md={4}>
+                          <Form>
+                            
+                              <div key="inline-radio" className="mb-3">
+                                <Form.Check
+                                  inline
+                                  value={student?.student_name}
+                                  name="group1"
+                                  type="radio"
+                                  id={student?.student_id}
+                                  onChange={(e) => addAbsentees(e)}
+                                  style={{position: "relative", right: "27px"}}
+                                />
+                                <Form.Check
+                                  inline
+                                  value={student?.student_name}
+                                  name="group1"
+                                  type="radio"
+                                  id={student?.student_id}
+                                  onChange={(e) => addDressDefaulterList(e)}
+                                  style={{position: "relative", left: "82px"}}
+                                />
+                              </div>
+                          </Form>
                         </Col>
                       </Row>
                     );
@@ -424,7 +446,7 @@ const TDashboard = () => {
                       isSearchable={false}
                       options={weekDayOption}
                       onChange={(e) => handleWeekDayChange(e)}
-                      // onClick={fetchTeacherRoutine}
+                      
                     />
                   </Col>
                   

@@ -7,6 +7,7 @@ import { getMasterRoutineData, viewMasterRoutine } from '../../../ApiClient'
 import Select from 'react-select'
 import PrincipalSidebar from '../PrincipalSidebar';
 import mockData from '../../../Mock Data/masterRoutineMockData.json'
+import { FaCheckSquare } from "react-icons/fa";
 
 const MasterRoutine = () => {
 
@@ -35,8 +36,8 @@ const MasterRoutine = () => {
     // }
 
     const viewMasterRoutineData = () => {
-      const day = "Thursday"
-      const grade_id = "1"
+      const day = weekDay
+      const grade_id = grade
       viewMasterRoutine(day, grade_id)
       .then((res) => setMasterRoutineData(res.data))
       .then((err) => console.log("err - ", err))
@@ -121,7 +122,7 @@ const MasterRoutine = () => {
         <div className="routinemain">
           <div className="masterRoutineheader">
             <Row>
-              <Col md={5} style={{ textAlign: "left", paddingLeft: "50px" }}>
+              <Col md={3} style={{ textAlign: "left", paddingLeft: "50px" }}>
                 <h3>Master Routine</h3>
               </Col>
               <Col md={2} style={{ position: "relative", bottom: "22px" }}>
@@ -131,6 +132,9 @@ const MasterRoutine = () => {
               <Col md={3} style={{ position: "relative", bottom: "22px" }}>
               <span>Day</span>
               <Select className='reportHeading' placeholder="Select Day" options={DayOption} onChange={e => handleDayChange(e)} isSearchable={false} />
+              </Col>
+              <Col md={1}>
+              {(grade && weekDay) && <FaCheckSquare onClick={viewMasterRoutineData} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />} 
               </Col>
               <Col md={2} style={{ position: "relative", bottom: "22px" }}>
                 <Button variant="outline-primary" onClick={handleShowModal} style={{marginTop:"22px"}}>
@@ -170,7 +174,7 @@ const MasterRoutine = () => {
                 
                 <tr>
                   {sectionA_data && <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">
-                    {`${grade}A`}
+                    {masterRoutineData.time_table && `${grade}A`}
                   </td>}
                   </tr>
                   <tr>      

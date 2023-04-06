@@ -66,89 +66,138 @@ const Announcements = () => {
   };
 
 
-    return(
-        <>
+    return (
+      <>
         <Row>
-            <Col md={3} style={{marginTop:"91px", width:"20%"}}>
-                <PrincipalSidebar />     
-            </Col>
-            <Col md={9} style={{width:"80%"}}>
-        <div className='resourcesHeader'>
-        <Row
-          style={{
-            height: "74px",
-            boxShadow: "0px 3px 6px #B4B3B329",
-            position: "relative",
-            left: "12px",
-            width: "100%",
-          }}
-        >
-            <Col md={7}>
-            <h4>Notice</h4>
-            </Col>
-            <Col md={2} className="teacherRoutingDD">
-            </Col>
-            <Col md={3} className='teacherRoutingDD'>
-                <Button variant="outline-primary"
-                onClick={handleShowModal}>
-                  + Add Notice
-                </Button>{" "}
-              </Col>
-        </Row>
-        {allNotice?.status == "failure" ? (<Row style={{height: "93px"}}>
-          <Col md={12} style={{paddingTop: "30px"}}>
-            <span className='failureMessage'>{allNotice.message}</span>
+          <Col md={3} style={{ marginTop: "91px", width: "20%" }}>
+            <PrincipalSidebar />
           </Col>
-        </Row>) 
-        :
-        (
-          allNotice?.notices?.map((notice, indx) => {
-            return <Row style={{height: "93px"}}>
-            <Col md={1} style={{paddingTop: "30px"}}
-            >
-            {hideResponse?.includes(notice?.notice_id) ? (
-                        <FaAngleUp style={{height:"25px", width:"25px"}}
-                          onClick={() =>
-                            hideResponseHandler(notice?.notice_id)
-                          }
-                        />
-                      ) : (
-                        <FaAngleDown style={{height:"25px", width:"25px"}}
-                          onClick={() =>
-                            showResponseHandler(notice?.notice_id)
-                          }
-                        />
-                      )}
-                      </Col>
-            <Col md={11} className="noticeContent" 
-            >
-              <Row>
-                <Col md={12} className= {!hideResponse.includes(notice?.notice_id) ? "noticeStyle" : "noticeStyleExpanded"}>
-                {<h6 className="noticeHeader">{notice?.notice_data}</h6>}
-              {notice?.published_at ? <p className="noticeTime">{moment(notice?.published_at).format("DD-MMM-YYYY")}</p>
-              :
-              <p className="notPubnoticeTime">Not yet published. <a style={{fontStyle:"italic", textDecoration:"underline", cursor:"pointer"}} onClick={() => showPublishModal(indx)}>Click here</a> to publish.</p>}
+          <Col md={9} style={{ width: "80%" }}>
+            <div className="resourcesHeader">
+              <Row
+                style={{
+                  height: "74px",
+                  boxShadow: "0px 3px 6px #B4B3B329",
+                  position: "relative",
+                  left: "12px",
+                  width: "100%",
+                }}
+              >
+                <Col md={7}>
+                  <h4>Notice</h4>
                 </Col>
-
+                <Col md={2} className="teacherRoutingDD"></Col>
+                <Col md={3} className="teacherRoutingDD">
+                  <Button variant="outline-primary" onClick={handleShowModal}>
+                    + Add Notice
+                  </Button>{" "}
+                </Col>
               </Row>
-             
-            </Col>
-            
-          </Row>
-          
-          })
-        )
-        }
-        {showAddAnnouncement && (<AddAnnouncement show={showAddAnnouncement} onHide={() => {setShowAddAnnouncement(false)}} closeAndLoad = {closeAndLoad} />)}
-        
-        
-        </div>
-        </Col>
-        
+              {allNotice?.status == "failure" ? (
+                <Row style={{ height: "93px" }}>
+                  <Col md={12} style={{ paddingTop: "30px" }}>
+                    <span className="failureMessage">{allNotice.message}</span>
+                  </Col>
+                </Row>
+              ) : (
+                    <div>
+                    {
+                      allNotice?.notices?.map((notice, indx) => {
+                        console.log("notice - ", notice)
+                          return (
+                            <fieldset>
+                              <Row className="lessonData">
+                                <Col md={1} style={{ textAlign: "left" }}>
+                                {hideResponse?.includes(notice?.notice_id) ? (
+                          <FaAngleUp
+                            style={{ height: "25px", width: "25px", color:"blue" }}
+                            onClick={() =>
+                              hideResponseHandler(notice?.notice_id)
+                            }
+                          />
+                        ) : (
+                          <FaAngleDown
+                            style={{ height: "25px", width: "25px", color:"blue" }}
+                            onClick={() =>
+                              showResponseHandler(notice?.notice_id)
+                            }
+                          />
+                        )}
+                                </Col>
+                                
+                                <Col
+                            md={11}
+                            className={
+                              !hideResponse.includes(notice?.notice_id)
+                                ? "noticeStyle"
+                                : "noticeStyleExpanded"
+                            }
+                          >
+                            {
+                              <h6 className="noticeHeader">
+                                {notice?.notice_subject}
+                              </h6>
+                            }
+                            {notice?.published_at ? (
+                              <p className="noticeTime">
+                                {moment(notice?.published_at).format(
+                                  "DD-MMM-YYYY"
+                                )}
+                              </p>
+                            ) : (
+                              <p className="notPubnoticeTime">
+                                Not yet published.{" "}
+                                <a
+                                  style={{
+                                    fontStyle: "italic",
+                                    textDecoration: "underline",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => showPublishModal(indx)}
+                                >
+                                  Click here
+                                </a>{" "}
+                                to publish.
+                              </p>
+                            )}
+                            {hideResponse.includes(notice?.notice_id) && <Row>
+                            <Col md={12}>
+                              <h6 className='descriptionHeader'>Description :</h6>
+                              <p className='descriptionData'>{notice?.notice_data}</p>
+                            </Col>
+                          </Row>}
+                          </Col>
+                          {/* <Row>
+                            <Col md={12}>
+                              <h6>Description :</h6>
+                              <p>{notice?.notice_data}</p>
+                            </Col>
+                          </Row> */}
+                                
+                                
+                              </Row>
+                            </fieldset>
+                          );
+                        }
+                      )}
+                  </div>
+                //   );
+                // })
+              )}
+              {showAddAnnouncement && (
+                <AddAnnouncement
+                  show={showAddAnnouncement}
+                  onHide={() => {
+                    setShowAddAnnouncement(false);
+                  }}
+                  closeAndLoad={closeAndLoad}
+                />
+              )}
+            </div>
+          </Col>
         </Row>
-        
-        </>
-    )
+      </>
+    );
 }
 
 export default Announcements;

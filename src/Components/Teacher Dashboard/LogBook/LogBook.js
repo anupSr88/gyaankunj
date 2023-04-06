@@ -70,7 +70,7 @@ const LogBook = () => {
 
   const closeAndLoad = () => {
     setShowAddLogbook(false)
-    showLogBookData();
+    // showLogBookData();
   }
 
     return (

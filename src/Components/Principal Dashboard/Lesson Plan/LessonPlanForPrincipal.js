@@ -7,12 +7,14 @@ import downArrow from "../../../Images/icon_chevron_see_all.svg";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleUp } from "react-icons/fa";
 import { lessonPlanAllDetails, verifyLessonPlan } from "../../../ApiClient";
+import SendBackPlan from './SendbackLessonPlan'
 
 function LessonPlanPrinciView(props) {
   const [hideResponse, setHideResponse] = useState([]);
   const [sectionExpanded, setSectionExpanded] = useState(false);
   const [verifiedTrue, setverifiedTrue] = useState(false);
   const [lessonAllDetails, setLessonAllDetails] = useState([]);
+  const [sendBackModal, showSendbackModal] = useState(false)
 
   // const showLessonPlanDetails = (id) => {
   //     setExpandcard(!expandCard)
@@ -70,11 +72,11 @@ function LessonPlanPrinciView(props) {
             <Col md={2} className="lessonHeading">
               <h6>GRADE</h6>
             </Col>
-            <Col md={4} className="lessonHeading">
+            <Col md={2} className="lessonHeading">
               <h6>SUBJECT NAME</h6>
             </Col>
 
-            <Col md={4} className="lessonHeading" style={{ textAlign: "left" }}>
+            <Col md={3} className="lessonHeading" style={{ textAlign: "left" }}>
               <h6>LESSON NAME</h6>
             </Col>
           </Row>
@@ -108,7 +110,7 @@ function LessonPlanPrinciView(props) {
                   <Col md={2} className="gradeName">
                     {lessons.grade ? <p>{lessons.grade}</p> : "-"}
                   </Col>
-                  <Col md={4} className="subjectName">
+                  <Col md={2} className="subjectName">
                     <p>{lessons.subject_name}</p>
                   </Col>
 
@@ -116,7 +118,10 @@ function LessonPlanPrinciView(props) {
                     <p>{lessons.topic_name}</p>
                   </Col>
                   <Col md={2}>
-                    {verifiedTrue ? <Button id={indx} variant="success">Approved</Button> : <Button variant="primary" onClick={() => approveLessonPlan(lessons)}>Approve</Button>}
+                    {verifiedTrue ? <Button id={indx} variant="outline-success">Approved</Button> : <Button variant="outline-success" onClick={() => approveLessonPlan(lessons)}>Approve</Button>}
+                  </Col>
+                  <Col md={2}>
+                    {verifiedTrue ? <Button id={indx} variant="outline-danger">Send Back</Button> : <Button variant="outline-danger" onClick={() => showSendbackModal(true)}>Send back</Button>}
                   </Col>
                   <Col md={1}>
                       {hideResponse?.includes(lessons?.lesson_id) ? (
@@ -194,6 +199,8 @@ function LessonPlanPrinciView(props) {
           );
         })
       )}
+      {sendBackModal && <SendBackPlan show={sendBackModal}
+            onHide={() => showSendbackModal(false)} />}
     </>
   );
 }

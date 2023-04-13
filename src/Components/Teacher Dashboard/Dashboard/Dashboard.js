@@ -59,7 +59,7 @@ const TDashboard = () => {
     }
 
     const fetchTeacherRoutine = () => {
-      const userId = userDetails.userid
+      const userId = userDetails.user_id
       const day = weekDayToFetch
       getTeacherRoutine(userId, day)
       .then((res) => setTeacherRoutineData(res.data))

@@ -59,16 +59,16 @@ color: #2A2D2F;
 }
 
 .lessonName{
-    font: normal normal bold 22px/34px Roboto;
+    font: normal normal normal 22px/34px Roboto;
     text-align: left;
 }
 
 .gradeName{
-    font: normal normal bold 22px/34px Roboto; 
+    font: normal normal normal 22px/34px Roboto; 
 }
 
 .subjectName{
-    font: normal normal bold 22px/34px Roboto; 
+    font: normal normal normal 22px/34px Roboto; 
 }
 
 .lessonData {

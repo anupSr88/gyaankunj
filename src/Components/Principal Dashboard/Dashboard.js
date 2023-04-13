@@ -555,7 +555,7 @@ const fetchTeacherRoutine = () => {
               </Col>
               {<Col md={9} style={{textAlign : "left"}}>
                 {princiViewLogBook?.log_book_data?.name_of_absentees?.map((absentees, indx) => {
-                 return  <span>{`${absentees}, `}</span>
+                 return absentees?.student_name !== null && <span>{`${absentees?.student_name}, `}</span>
                 })}
               </Col>}
             </Row>
@@ -565,7 +565,8 @@ const fetchTeacherRoutine = () => {
               </Col>
               <Col md={9} style={{textAlign : "left"}}>
               {princiViewLogBook?.log_book_data?.name_of_dress_defaulters?.map((dressDefaulter, indx) => {
-                 return  <span>{`${dressDefaulter}, `}</span>
+                console.log("dressDefaulter - ", dressDefaulter)
+                 return dressDefaulter?.student_name !== null && <span>{`${dressDefaulter?.student_name}, `}</span>
                 })}
               </Col>
             </Row>

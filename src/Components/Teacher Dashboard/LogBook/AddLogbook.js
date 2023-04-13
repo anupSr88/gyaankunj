@@ -96,7 +96,7 @@ const AddLogBook = (props) => {
       "section_id": section,
       "period": periodData,
       "subject_id": subject,
-      "teacher_id": userDetails.userid,
+      "teacher_id": userDetails.user_id,
       "content_taught": contentTaught,
       "home_work": homework,
       "date": newData

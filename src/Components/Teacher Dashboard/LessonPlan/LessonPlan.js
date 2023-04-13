@@ -22,7 +22,7 @@ const TLessonPlan = () => {
 
     
     const lessonPlans = () => {
-      const teacher_id = userDetails?.userid
+      const teacher_id = userDetails?.user_id
       getLessonPlan(teacher_id)
       .then((res) => setLessonPlanData(res.data))
       .catch((err) => console.log(err))

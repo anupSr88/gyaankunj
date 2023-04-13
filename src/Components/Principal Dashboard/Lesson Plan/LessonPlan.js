@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './LessonPlan.css'
 import LessonPlanPrinciView from './LessonPlanForPrincipal'
-import {getLessonPlan, getLessonPlanMetadata, getTeachersData } from '../../../ApiClient'
+import {getLessonPlan, getTeachersData } from '../../../ApiClient'
 import PrincipalSidebar from '../PrincipalSidebar';
 import { FaCheckSquare } from "react-icons/fa";
 
@@ -48,8 +48,6 @@ const TLessonPlan = () => {
       .then((res) => setLessonPlanData(res.data))
       .catch((err) => console.log(err))
     }
-
-    console.log("teacherName - ", teacherName)
 
     return (
       <>

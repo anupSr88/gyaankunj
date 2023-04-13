@@ -14,7 +14,7 @@ const StudentAssigments = () => {
     }, [])
 
     const fetchStudentAssignments = () => {
-        const student_id = userDetails.userid
+        const student_id = userDetails.user_id
         studentAssignmentList(student_id)
         .then((res) => setAssignmentFullList(res.data))
         .catch((err) => console.log("Assignment Tab err - ", err))

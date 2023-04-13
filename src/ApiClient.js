@@ -71,7 +71,7 @@ const fetchAllSubjects = () => {
 }
 
 const getTeacherRoutine = (userId, day) => {
-    return apiInstance.get(`/view_teacher_routine?userid=${userId}&day=${day}`)
+    return apiInstance.get(`/view_teacher_routine?user_id=${userId}&day=${day}`)
 }
 
 const viewStudentAttendance = (grade, section, month) => {

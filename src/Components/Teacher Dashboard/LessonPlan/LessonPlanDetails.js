@@ -67,12 +67,8 @@ function LessonPlanDetails(props) {
       </Card>
     {
     props?.lessonPlanData?.message ? <h6 style={{position:"relative", top:"20px"}}>No Lesson Plans Available!!</h6>
-
     : 
-
     props?.lessonPlanData?.lesson_plan_data?.map((lessons, indx) => {
-        console.log("lessons - ", lessons)
-
        return <Card 
        className={hideResponse?.includes(lessons?.lesson_id) ? 'lessonPlanCardExpanded' : 'lessonPlanCard'}
        >

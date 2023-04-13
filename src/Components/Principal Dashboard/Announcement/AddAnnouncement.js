@@ -30,7 +30,7 @@ const AddAnnouncement = (props) => {
 
   const saveNoticeData = () => {
     const data = {
-      user_id: userDetails?.userid,
+      user_id: userDetails?.user_id,
       data: noticeDescription,
       notice_subject : noticeSubject
     }

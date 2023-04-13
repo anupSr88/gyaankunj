@@ -140,7 +140,6 @@ const AddRoutine = (props) => {
   
 
   const addRoutineDetails = () => {
-
     let newMember = [...dataToAddRoutine];
     let newData = {
       day: dayData,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
 import Select from "react-select";
-import {  saveLessonPlan } from "../../../ApiClient";
+import {  saveLessonPlan, getLessonPlanMetadata } from "../../../ApiClient";
 
 const AddLessonPlan = (props) => {
   const [grade, setGrade] = useState("");
@@ -16,7 +16,13 @@ const AddLessonPlan = (props) => {
   const [teachingMethod, setTeachingMethod] = useState("");
   const [learningOutcomes, setLearningOutcomes] = useState("");
   const [teachingAids, setTeachingAids] = useState("");
-  const [chapterNo, setChapterNo] = useState('')
+  const [chapterName, setChapterName] = useState('')
+  const [lessonMetadata, setLessonMetadata] = useState([])
+
+  useEffect(() => {
+    lessonPlanMetadata()
+  },[grade, section])
+
 
   const userDetails = JSON.parse(window.localStorage.getItem('UserData'))
 
@@ -53,21 +59,36 @@ const AddLessonPlan = (props) => {
       "grade_id": grade,
     "section_id": section,
     "subject_id": subject,
-    "teacher_id": userDetails.userid,
+    "teacher_id": userDetails.user_id,
     "start_date": startDate,
     "end_date": endDate,
-    "chapter_id": chapterNo,
+    "chapter_id": chapterName,
     "topic_name": topicName,
     "learning_objectives" : lObjective,
-	"teaching_methods": teachingMethod,
-	"learning_outcome": learningOutcomes,
-	"teaching_aid_references": teachingAids
+    "teaching_methods": teachingMethod,
+    "learning_outcome": learningOutcomes,
+    "teaching_aid_references": teachingAids
     }
     saveLessonPlan(lessonPlanData)
       .then((data) => {console.log(data, "data")
       props.onHide()})
       .catch((err) => console.log(err, "err"));
   };
+
+  const lessonPlanMetadata = () => {
+    const grade_id = grade
+    const section_id = section
+    getLessonPlanMetadata(grade_id, section_id)
+    .then((res) => setLessonMetadata(res.data))
+    .catch((err) => console.log("metadata err - "))
+  }
+
+
+  const handleChapterName = (e) => {
+    console.log(e.target.value)
+    setChapterName(e.target.value)
+
+  }
 
   return (
     <>
@@ -150,19 +171,25 @@ const AddLessonPlan = (props) => {
               </Col>
               <Col md={1}></Col>
             </Row>
-            <Row>
+            <Row style={{ marginBottom: "50px" }}>
               <Col md={2}>
-                <span>Chapter Number:</span>
+                <span>Chapter Name:</span>
               </Col>
               <Col md={2}>
-                <Form.Group
+                {/* <Form.Group
                   className="mb-3"
                   controlId="exampleForm.ControlInput1"
                   value={chapterNo}
                   onChange={(e) => setChapterNo(e.target.value)}
                 >
                   <Form.Control type="text" placeholder="Chapter Number" />
-                </Form.Group>
+                </Form.Group> */}
+                <select className="lessonPlanChName" name="day" id="day" onChange = {(e) => handleChapterName(e)}>
+                <option value="">Select Chapter Name</option>
+                  {lessonMetadata?.status == "success" && lessonMetadata?.metadata?.map((chapterName) => {
+                    return <option value={chapterName.chapter_id}>{chapterName.chapter_name}</option>
+                  })}
+                </select>
               </Col>
             </Row>
             <Row>

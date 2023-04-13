@@ -44,16 +44,16 @@ const LoginPage = (props) => {
         if (data.status === "success") {
           let user = localStorage.setItem("UserData", JSON.stringify(data));
           props.onHide();
-          if(data.role === 'admin' || data.role === 'principal') {
+          if(data.role === 'ADMIN' || data.role === 'PRINCIPAL') {
             navigate('/principalDashboard/Dashboard');
           }
-          else if(data.role === 'teacher') {
+          else if(data.role === 'TEACHER') {
             navigate({
               pathname: `${myConstant.teacherRoutesConfig.teacherdashboard}`,
               state: `${myConstant.teacherRoutesConfig.teacherdashboard}`,
             });
           }
-          else if(data.role === 'student') {
+          else if(data.role === 'STUDENT') {
             navigate({
               pathname: `${myConstant.studentRoutesConfig.studentdashboard}`,
               state: `${myConstant.studentRoutesConfig.studentdashboard}`,

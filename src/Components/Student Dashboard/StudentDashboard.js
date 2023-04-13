@@ -30,7 +30,7 @@ useEffect(() => {
 },[])
 
 const getStudentAssignmentList = () => {
-  const student_id = userDetails.userid
+  const student_id = userDetails.user_id
   studentAssignmentList(student_id)
   .then((res) => setAssignmentData(res.data))
   .catch((err) => console.log("Assignments err - ", err))

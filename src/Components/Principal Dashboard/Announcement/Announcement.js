@@ -30,7 +30,7 @@ const Announcements = () => {
   }
 
   const allNotices = () => {
-    const user_id = userDetails.userid
+    const user_id = userDetails.user_id
     viewAllNotice(user_id)
     .then((res) => setAllNotice(res.data))
     .catch((err) => console.log("Notices err - ", err))

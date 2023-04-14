@@ -12,7 +12,7 @@ import { FaCheckSquare } from "react-icons/fa";
 const MasterRoutine = () => {
 
     const [showAddRoutine, setShowAddRoutine] = useState(false)
-    const [masterRoutineData, setMasterRoutineData] = useState({})
+    const [masterRoutineData, setMasterRoutineData] = useState([])
     const [fetchedRoutineData, setFetchedRoutineData] = useState([])
     const [section, setSection] = useState('')
     const [sectionName, setSectionName] = useState('')
@@ -56,26 +56,7 @@ const MasterRoutine = () => {
       setWeekDay(e.value)
     }
 
-    
-
-    const sectionA_data = masterRoutineData?.time_table?.grade_One?.section_A && masterRoutineData?.time_table?.grade_One?.section_A
-
-    const sectionB_data = masterRoutineData?.time_table?.grade_One?.section_B && masterRoutineData?.time_table?.grade_One?.section_B
-
-    const sectionC_data = masterRoutineData?.time_table?.grade_One?.section_C && masterRoutineData?.time_table?.grade_One?.section_C
-
-    const sectionD_data = masterRoutineData?.time_table?.grade_One?.section_C && masterRoutineData?.time_table?.grade_One?.section_D
-
-    const sectionE_data = masterRoutineData?.time_table?.grade_One?.section_C && masterRoutineData?.time_table?.grade_One?.section_E
-
-    console.log("sectionA_data - ", sectionA_data)
-    console.log("sectionB_data - ", sectionB_data)
-    console.log("sectionC_data - ", sectionC_data)
-    
-
-    // console.log("sectionB_data - ", sectionB_data)
-
-    console.log("mockData - ", mockData.time_table.grade_One)
+    console.log("masterRoutineData - ", masterRoutineData)
 
     
 
@@ -161,7 +142,7 @@ const MasterRoutine = () => {
                   <th>2nd</th>
                   <th>3rd</th>
                   <th>4th</th>
-                  <th style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} >BREAK</th>
+                  {/* <th style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan={6} >BREAK</th> */}
                   <th>5th</th>
                   <th>6th</th>
                   <th>7th</th>
@@ -169,226 +150,157 @@ const MasterRoutine = () => {
                   
                 </tr>
               </thead>
-             
-                <tbody className='routineTable'>
-                
-                <tr>
-                  {sectionA_data && <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">
-                    {masterRoutineData.time_table && `${grade}A`}
-                  </td>}
-                  </tr>
-                  <tr>      
-                  {sectionA_data && <td style={{backgroundColor:"cyan"}}>{sectionA_data?.time_range[0]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"cyan"}}>{sectionA_data?.time_range[1]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"cyan"}}>{sectionA_data?.time_range[2]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"cyan"}}>{sectionA_data?.time_range[3]}</td>}
-                 {sectionA_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionA_data && <td style={{backgroundColor:"cyan"}}>{sectionA_data?.time_range[4]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"cyan"}}>{sectionA_data?.time_range[5]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"cyan"}}>{sectionA_data?.time_range[6]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"cyan"}}>{sectionA_data?.time_range[7]}</td>}
-                  </tr>
+              
+              {masterRoutineData?.status == "success" ? <tbody className='routineTable'>
 
-                  <tr>      
-                  {sectionA_data && <td>{sectionA_data?.subject[0]}</td>}
-                  {sectionA_data && <td>{sectionA_data?.subject[1]}</td>}
-                  {sectionA_data && <td>{sectionA_data?.subject[2]}</td>}
-                  {sectionA_data && <td>{sectionA_data?.subject[3]}</td>}
-                  {sectionA_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionA_data && <td>{sectionA_data?.subject[4]}</td>}
-                  {sectionA_data && <td>{sectionA_data?.subject[5]}</td>}
-                  {sectionA_data && <td>{sectionA_data?.subject[6]}</td>}
-                  {sectionA_data && <td>{sectionA_data?.subject[7]}</td>}
-                  </tr>
-                  
-                  <tr style={{borderBottom:"2px solid #3A444E"}}>      
-                  {sectionA_data && <td style={{backgroundColor:"lightGray"}}>{sectionA_data?.teacher[0]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"lightGray"}}>{sectionA_data?.teacher[1]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"lightGray"}}>{sectionA_data?.teacher[2]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"lightGray"}}>{sectionA_data?.teacher[3]}</td>}
-                  {sectionA_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionA_data && <td style={{backgroundColor:"lightGray"}}>{sectionA_data?.teacher[4]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"lightGray"}}>{sectionA_data?.teacher[5]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"lightGray"}}>{sectionA_data?.teacher[6]}</td>}
-                  {sectionA_data && <td style={{backgroundColor:"lightGray"}}>{sectionA_data?.teacher[7]}</td>}
-                  </tr>
+                {/* SECTION A */}
+
+              {/* {masterRoutineData.time_table?.section_A && <tr>
+                <td></td>
+              </tr>} */}
+              {masterRoutineData.time_table?.section_A &&
+              <tr>
+                  <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">
+                    {masterRoutineData.time_table && `${masterRoutineData.grade_id}A`}
+                  </td>
+                  </tr>}
+
+                  {masterRoutineData.time_table?.section_A && <tr style={{backgroundColor:"#064584"}}>      
+                  {masterRoutineData?.time_table?.section_A?.time_range?.map((timeRange) => {
+                    return <td style={{color:"white"}}>{timeRange}</td>
+                  })}  
+                  </tr>}
+
+                  {masterRoutineData.time_table?.section_A && <tr>      
+                  {masterRoutineData.time_table?.section_A?.subject.map((subject) => {
+                    return <td>{subject}</td>
+                  })}  
+                  </tr>}
+
+                  {masterRoutineData.time_table?.section_A && <tr>      
+                  {masterRoutineData.time_table?.section_A?.teacher.map((teacher) => {
+                    return <td>{teacher}</td>
+                  })}  
+                  </tr>}
 
 
-                  {/* Section B */}
+                  {/* sECTION B */}
 
-                  <tr>
-                  {sectionB_data && <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">
-                    {`${grade}B`}
-                  </td>}
-                  </tr>
-                  {/* <tr>      
-                  {sectionB_data && <td style={{backgroundColor:"cyan"}}>{sectionB_data?.time_range[0]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"cyan"}}>{sectionB_data?.time_range[1]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"cyan"}}>{sectionB_data?.time_range[2]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"cyan"}}>{sectionB_data?.time_range[3]}</td>}
-                 {sectionB_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionB_data && <td style={{backgroundColor:"cyan"}}>{sectionB_data?.time_range[4]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"cyan"}}>{sectionB_data?.time_range[5]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"cyan"}}>{sectionB_data?.time_range[6]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"cyan"}}>{sectionB_data?.time_range[7]}</td>}
-                  </tr> */}
+                  {masterRoutineData.time_table?.section_B && <tr>
+                  <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="3">
+                    {masterRoutineData.time_table && `${masterRoutineData.grade_id}B`}
+                  </td>
+                  </tr>}
 
-                  <tr>      
-                  {sectionB_data && <td>{sectionB_data?.subject[0]}</td>}
-                  {sectionB_data && <td>{sectionB_data?.subject[1]}</td>}
-                  {sectionB_data && <td>{sectionB_data?.subject[2]}</td>}
-                  {sectionB_data && <td>{sectionB_data?.subject[3]}</td>}
-                  {sectionB_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionB_data && <td>{sectionB_data?.subject[4]}</td>}
-                  {sectionB_data && <td>{sectionB_data?.subject[5]}</td>}
-                  {sectionB_data && <td>{sectionB_data?.subject[6]}</td>}
-                  {sectionB_data && <td>{sectionB_data?.subject[7]}</td>}
-                  </tr>
-                  
-                  <tr style={{borderBottom:"2px solid #3A444E"}}>      
-                  {sectionB_data && <td style={{backgroundColor:"lightGray"}}>{sectionB_data?.teacher[0]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"lightGray"}}>{sectionB_data?.teacher[1]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"lightGray"}}>{sectionB_data?.teacher[2]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"lightGray"}}>{sectionB_data?.teacher[3]}</td>}
-                  {sectionB_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionB_data && <td style={{backgroundColor:"lightGray"}}>{sectionB_data?.teacher[4]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"lightGray"}}>{sectionB_data?.teacher[5]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"lightGray"}}>{sectionB_data?.teacher[6]}</td>}
-                  {sectionB_data && <td style={{backgroundColor:"lightGray"}}>{sectionB_data?.teacher[7]}</td>}
-                  </tr>
+                  {/* {masterRoutineData.time_table?.section_B && <tr style={{backgroundColor:"#064584"}}>      
+                  {masterRoutineData?.time_table?.section_B?.time_range?.map((timeRange) => {
+                    return <td style={{color:"white"}}>{timeRange}</td>
+                  })}  
+                  </tr>} */}
 
-                  {/* Sectrion C */}
+                  {masterRoutineData.time_table?.section_B && <tr style={{backgroundColor:"#c6d0da"}}>      
+                  {masterRoutineData.time_table?.section_B?.subject.map((subject) => {
+                    return <td>{subject}</td>
+                  })}  
+                  </tr>}
 
+                  {masterRoutineData.time_table?.section_B && <tr style={{backgroundColor:"#c6d0da"}}>      
+                  {masterRoutineData.time_table?.section_B?.teacher.map((teacher) => {
+                    return <td>{teacher}</td>
+                  })}  
+                  </tr>}
 
-                  <tr>
-                  {sectionC_data && <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">
-                    {`${grade}C`}
-                  </td>}
-                  </tr>
-                  <tr>      
-                  {sectionC_data && <td style={{backgroundColor:"cyan"}}>{sectionC_data?.time_range[0]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"cyan"}}>{sectionC_data?.time_range[1]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"cyan"}}>{sectionC_data?.time_range[2]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"cyan"}}>{sectionC_data?.time_range[3]}</td>}
-                 {sectionC_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionC_data && <td style={{backgroundColor:"cyan"}}>{sectionC_data?.time_range[4]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"cyan"}}>{sectionC_data?.time_range[5]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"cyan"}}>{sectionC_data?.time_range[6]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"cyan"}}>{sectionC_data?.time_range[7]}</td>}
-                  </tr>
+                  {/* sECTION C */}
 
-                  <tr>      
-                  {sectionC_data && <td>{sectionC_data?.subject[0]}</td>}
-                  {sectionC_data && <td>{sectionC_data?.subject[1]}</td>}
-                  {sectionC_data && <td>{sectionC_data?.subject[2]}</td>}
-                  {sectionC_data && <td>{sectionC_data?.subject[3]}</td>}
-                  {sectionC_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionC_data && <td>{sectionC_data?.subject[4]}</td>}
-                  {sectionC_data && <td>{sectionC_data?.subject[5]}</td>}
-                  {sectionC_data && <td>{sectionC_data?.subject[6]}</td>}
-                  {sectionC_data && <td>{sectionC_data?.subject[7]}</td>}
-                  </tr>
-                  
-                  <tr style={{borderBottom:"2px solid #3A444E"}}>      
-                  {sectionC_data && <td style={{backgroundColor:"lightGray"}}>{sectionC_data?.teacher[0]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"lightGray"}}>{sectionC_data?.teacher[1]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"lightGray"}}>{sectionC_data?.teacher[2]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"lightGray"}}>{sectionC_data?.teacher[3]}</td>}
-                  {sectionC_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionC_data && <td style={{backgroundColor:"lightGray"}}>{sectionC_data?.teacher[4]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"lightGray"}}>{sectionC_data?.teacher[5]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"lightGray"}}>{sectionC_data?.teacher[6]}</td>}
-                  {sectionC_data && <td style={{backgroundColor:"lightGray"}}>{sectionC_data?.teacher[7]}</td>}
-                  </tr>
+                  {masterRoutineData.time_table?.section_C && <tr>
+                  <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="3">
+                    {masterRoutineData.time_table && `${masterRoutineData.grade_id}C`}
+                  </td>
+                  </tr>}
+
+                  {/* {masterRoutineData.time_table?.section_C && <tr style={{backgroundColor:"#064584"}}>      
+                  {masterRoutineData?.time_table?.section_C?.time_range?.map((timeRange) => {
+                    return <td style={{color:"white"}}>{timeRange}</td>
+                  })}  
+                  </tr>} */}
+
+                  {masterRoutineData.time_table?.section_C && <tr>      
+                  {masterRoutineData.time_table?.section_C?.subject.map((subject) => {
+                    return <td>{subject}</td>
+                  })}  
+                  </tr>}
+
+                  {masterRoutineData.time_table?.section_C && <tr>      
+                  {masterRoutineData.time_table?.section_C?.teacher.map((teacher) => {
+                    return <td>{teacher}</td>
+                  })}  
+                  </tr>}
 
 
-                  {/* Section D */}
+                  {/* sECTION D */}
 
-                  <tr>
-                  {sectionD_data && <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">
-                    {`${grade}D`}
-                  </td>}
-                  </tr>
-                  <tr>      
-                  {sectionD_data && <td style={{backgroundColor:"cyan"}}>{sectionD_data?.time_range[0]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"cyan"}}>{sectionD_data?.time_range[1]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"cyan"}}>{sectionD_data?.time_range[2]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"cyan"}}>{sectionD_data?.time_range[3]}</td>}
-                 {sectionD_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionD_data && <td style={{backgroundColor:"cyan"}}>{sectionD_data?.time_range[4]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"cyan"}}>{sectionD_data?.time_range[5]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"cyan"}}>{sectionD_data?.time_range[6]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"cyan"}}>{sectionD_data?.time_range[7]}</td>}
-                  </tr>
+                  {masterRoutineData.time_table?.section_D && <tr>
+                  <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="3">
+                    {masterRoutineData.time_table && `${masterRoutineData.grade_id}D`}
+                  </td>
+                  </tr>}
 
-                  <tr>      
-                  {sectionD_data && <td>{sectionD_data?.subject[0]}</td>}
-                  {sectionD_data && <td>{sectionD_data?.subject[1]}</td>}
-                  {sectionD_data && <td>{sectionD_data?.subject[2]}</td>}
-                  {sectionD_data && <td>{sectionD_data?.subject[3]}</td>}
-                  {sectionD_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionD_data && <td>{sectionD_data?.subject[4]}</td>}
-                  {sectionD_data && <td>{sectionD_data?.subject[5]}</td>}
-                  {sectionD_data && <td>{sectionD_data?.subject[6]}</td>}
-                  {sectionD_data && <td>{sectionD_data?.subject[7]}</td>}
-                  </tr>
-                  
-                  <tr style={{borderBottom:"2px solid #3A444E"}}>      
-                  {sectionD_data && <td style={{backgroundColor:"lightGray"}}>{sectionD_data?.teacher[0]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"lightGray"}}>{sectionD_data?.teacher[1]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"lightGray"}}>{sectionD_data?.teacher[2]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"lightGray"}}>{sectionD_data?.teacher[3]}</td>}
-                  {sectionD_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionD_data && <td style={{backgroundColor:"lightGray"}}>{sectionD_data?.teacher[4]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"lightGray"}}>{sectionD_data?.teacher[5]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"lightGray"}}>{sectionD_data?.teacher[6]}</td>}
-                  {sectionD_data && <td style={{backgroundColor:"lightGray"}}>{sectionD_data?.teacher[7]}</td>}
-                  </tr>
+                  {/* {masterRoutineData.time_table?.section_D && <tr style={{backgroundColor:"#064584"}}>      
+                  {masterRoutineData?.time_table?.section_D?.time_range?.map((timeRange) => {
+                    return <td style={{color:"white"}}>{timeRange}</td>
+                  })}  
+                  </tr>} */}
 
-                  {/* Section E */}
+                  {masterRoutineData.time_table?.section_D && <tr style={{backgroundColor:"#c6d0da"}}>      
+                  {masterRoutineData.time_table?.section_D?.subject.map((subject) => {
+                    return <td>{subject}</td>
+                  })}  
+                  </tr>}
 
-                  <tr>
-                  {sectionE_data && <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="4">
-                    {`${grade}E`}
-                  </td>}
-                  </tr>
-                  <tr>      
-                  {sectionE_data && <td style={{backgroundColor:"cyan"}}>{sectionE_data?.time_range[0]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"cyan"}}>{sectionE_data?.time_range[1]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"cyan"}}>{sectionE_data?.time_range[2]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"cyan"}}>{sectionE_data?.time_range[3]}</td>}
-                 {sectionE_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionE_data && <td style={{backgroundColor:"cyan"}}>{sectionE_data?.time_range[4]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"cyan"}}>{sectionE_data?.time_range[5]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"cyan"}}>{sectionE_data?.time_range[6]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"cyan"}}>{sectionE_data?.time_range[7]}</td>}
-                  </tr>
+                  {masterRoutineData.time_table?.section_D && <tr style={{backgroundColor:"#c6d0da"}}>      
+                  {masterRoutineData.time_table?.section_D?.teacher.map((teacher) => {
+                    return <td>{teacher}</td>
+                  })}  
+                  </tr>}
 
-                  <tr>      
-                  {sectionE_data && <td>{sectionE_data?.subject[0]}</td>}
-                  {sectionE_data && <td>{sectionE_data?.subject[1]}</td>}
-                  {sectionE_data && <td>{sectionE_data?.subject[2]}</td>}
-                  {sectionE_data && <td>{sectionE_data?.subject[3]}</td>}
-                  {sectionE_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionE_data && <td>{sectionE_data?.subject[4]}</td>}
-                  {sectionE_data && <td>{sectionE_data?.subject[5]}</td>}
-                  {sectionE_data && <td>{sectionE_data?.subject[6]}</td>}
-                  {sectionE_data && <td>{sectionE_data?.subject[7]}</td>}
-                  </tr>
-                  
-                  <tr style={{borderBottom:"3px solid #3A444E"}}>      
-                  {sectionE_data && <td style={{backgroundColor:"lightGray"}}>{sectionE_data?.teacher[0]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"lightGray"}}>{sectionE_data?.teacher[1]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"lightGray"}}>{sectionE_data?.teacher[2]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"lightGray"}}>{sectionE_data?.teacher[3]}</td>}
-                  {sectionE_data && <td style={{color: "#F3FAFF", backgroundColor:"#3F4954"}}></td>}
-                  {sectionE_data && <td style={{backgroundColor:"lightGray"}}>{sectionE_data?.teacher[4]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"lightGray"}}>{sectionE_data?.teacher[5]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"lightGray"}}>{sectionE_data?.teacher[6]}</td>}
-                  {sectionE_data && <td style={{backgroundColor:"lightGray"}}>{sectionE_data?.teacher[7]}</td>}
-                  </tr>
-                
+
+                  {/* sECTION E */}
+
+
+                  {masterRoutineData.time_table?.section_E && <tr>
+                  <td className='gradeStyle' style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} rowSpan="3">
+                    {masterRoutineData.time_table && `${masterRoutineData.grade_id}E`}
+                  </td>
+                  </tr>}
+
+                  {/* {masterRoutineData.time_table?.section_E && <tr style={{backgroundColor:"#064584"}}>      
+                  {masterRoutineData?.time_table?.section_E?.time_range?.map((timeRange) => {
+                    return <td style={{color:"white"}}>{timeRange}</td>
+                  })}  
+                  </tr>} */}
+
+                  {masterRoutineData.time_table?.section_E && <tr>      
+                  {masterRoutineData.time_table?.section_E?.subject.map((subject) => {
+                    return <td>{subject}</td>
+                  })}  
+                  </tr>}
+
+                  {masterRoutineData.time_table?.section_E && <tr>      
+                  {masterRoutineData.time_table?.section_E?.teacher.map((teacher) => {
+                    return <td>{teacher}</td>
+                  })}  
+                  </tr>}
+
               </tbody> 
+              :
+              <tbody>
+                <tr>
+                  <td colSpan={10}>
+                    No Routine Available!!
+                  </td>
+                </tr>
+              </tbody>
+              }
               
             </Table>
           </div>

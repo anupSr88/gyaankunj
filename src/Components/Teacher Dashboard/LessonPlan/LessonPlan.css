@@ -83,3 +83,15 @@ color: #2A2D2F;
     font: normal normal normal 18px/21px Roboto;
 letter-spacing: 0px;
 }
+
+.lessonPlanChName {
+    width: 700px;
+    height: 44px;
+    border-radius: 7px;
+}
+
+.lessonPlanSubject{
+    width: 337px;
+    height: 38px;
+    border-radius: 4px;
+}

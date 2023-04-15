@@ -86,11 +86,11 @@ const AddLogBook = (props) => {
   }
 
   const addLogBookData = () => {
-    const today = new Date()
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const yyyy = today.getFullYear();
-        const newData = `${yyyy}-${mm}-${dd}`
+    // const today = new Date()
+    //     const dd = String(today.getDate()).padStart(2, '0');
+    //     const mm = String(today.getMonth() + 1).padStart(2, '0');
+    //     const yyyy = today.getFullYear();
+    //     const newData = `${yyyy}-${mm}-${dd}`
     const logbookDetails = {
       "grade_id": grade,
       "section_id": section,
@@ -99,7 +99,7 @@ const AddLogBook = (props) => {
       "teacher_id": userDetails.user_id,
       "content_taught": contentTaught,
       "home_work": homework,
-      "date": newData
+      // "date": newData
     }
     createLogBook(logbookDetails)
     .then((res) => {console.log("Logbook added - ", res.data)

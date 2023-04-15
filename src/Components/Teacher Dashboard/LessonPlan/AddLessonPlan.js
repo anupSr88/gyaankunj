@@ -27,16 +27,16 @@ const AddLessonPlan = (props) => {
   const userDetails = JSON.parse(window.localStorage.getItem('UserData'))
 
   const gradeOptions = [
-    {value: "1", label: 1},
-    {value: "2", label: 2},
-    {value: "3", label: 3},
-    {value: "4", label: 4},
-    {value: "5", label: 5},
-    {value: "6", label: 6},
-    {value: "7", label: 7},
-    {value: "8", label: 8},
-    {value: "9", label: 9},
-    {value: "10", label: 10},
+    {value: "1", label: "1"},
+    {value: "2", label: "2"},
+    {value: "3", label: "3"},
+    {value: "4", label: "4"},
+    {value: "5", label: "5"},
+    {value: "6", label: "6"},
+    {value: "7", label: "7"},
+    {value: "8", label: "8"},
+    {value: "9", label: "9"},
+    {value: "10", label: "10"},
    ]
 
   const subjectOptions = [
@@ -125,13 +125,18 @@ const AddLessonPlan = (props) => {
                 />
               </Col>
               <Col md={3}>
-                <span>Subject</span>
-                <Select
+                <span>Subject</span> <br />
+                {/* <Select
                   options={subjectOptions}
-                  // value={subject}
                   onChange={(e) => setSubject(e.value)}
                   placeholder="Add Subject"
-                />
+                /> */}
+                <select className="lessonPlanSubject" name="subject" id="subject" onChange = {(e) => setSubject(e.target.value)}>
+                <option value="">Select Chapter Name</option>
+                  {lessonMetadata?.status == "success" && lessonMetadata?.metadata?.map((subjectName) => {
+                    return <option value={subjectName.subject_id}>{subjectName.subject_name}</option>
+                  })}
+                </select>
               </Col>
               <Col md={3}>
                 <span>Teacher</span>
@@ -175,15 +180,7 @@ const AddLessonPlan = (props) => {
               <Col md={2}>
                 <span>Chapter Name:</span>
               </Col>
-              <Col md={2}>
-                {/* <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlInput1"
-                  value={chapterNo}
-                  onChange={(e) => setChapterNo(e.target.value)}
-                >
-                  <Form.Control type="text" placeholder="Chapter Number" />
-                </Form.Group> */}
+              <Col md={6}>
                 <select className="lessonPlanChName" name="day" id="day" onChange = {(e) => handleChapterName(e)}>
                 <option value="">Select Chapter Name</option>
                   {lessonMetadata?.status == "success" && lessonMetadata?.metadata?.map((chapterName) => {

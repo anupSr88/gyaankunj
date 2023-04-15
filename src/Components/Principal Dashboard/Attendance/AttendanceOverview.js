@@ -129,7 +129,7 @@ const AttendanceOverview = () => {
             </Col>
             <Col md={9} style={{width:"80%"}}>
         <div>
-          <div className="attendanceSectionOverview">
+          <div className="attendanceSectionOverview" style={{height:"74px"}}>
             <Row
               style={{
                 height: "74px",
@@ -143,7 +143,7 @@ const AttendanceOverview = () => {
                 <h4>Attendance Overview</h4>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col
                 md={3}
                 className="attendanceOverviewInner"
@@ -206,14 +206,6 @@ const AttendanceOverview = () => {
                     </h6>
                   </Col>
                   <Col md={3}>
-                    {/* <span>
-                      <Select
-                        placeholder="Select Grade"
-                        options={gradeOptions}
-                        onChange={(e) => handleGradeChange(e)}
-                        isSearchable={false}
-                      />
-                    </span> */}
                   </Col>
                 </Row>
 
@@ -299,17 +291,17 @@ const AttendanceOverview = () => {
                   </Col>
                 </Row>
               </Col>
-            </Row>
+            </Row> */}
           </div>
 
           <div>
-            <Row style={{ padding: "0px 51px" }}>
+            <Row style={{ padding: "0px 51px", position:"relative", bottom:"11px" }}>
               <Col
                 md={6}
                 style={{
-                  // borderBottom: teacherTabActive ? "7px solid #1E79B6" : "",
+                  
                   backgroundColor: teacherTabActive ? "cornflowerblue" : "",
-                  // borderTop: teacherTabActive ? "7px solid limegreen" : "",
+                  
                   borderRadius: teacherTabActive ? "10px" : "",
                   cursor: "pointer",
                 }}
@@ -473,14 +465,14 @@ const AttendanceOverview = () => {
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
                 
-                  <span>
+                  {/* <span>
                     <Select placeholder="Select Section" isSearchable={false} options={sectionOptions} onChange={e => handleSectionSelectChange(e)} />
-                  </span>
+                  </span> */}
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
-                  <span>
+                  {/* <span>
                   <Select placeholder="Select Class" isSearchable={false} options={gradeOptions} onChange={e => handleClassChange(e)} />
-                  </span>
+                  </span> */}
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
                   <span>

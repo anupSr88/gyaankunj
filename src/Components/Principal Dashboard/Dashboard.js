@@ -146,7 +146,7 @@ attendanceOverview(grade_id, section_id)
 
 const getAllGradeDetails = () => {
 getGradeDetails()
-.then((res) => console.log("grade Data - ",res.data))
+.then((res) => setGradeData(res.data))
 .catch((err) => console.log(err))
 }
 
@@ -176,6 +176,8 @@ const fetchTeacherRoutine = () => {
   .then((res) => setTeacherRoutineData(res.data))
   .catch((err) => console.log(err, "errorTeacher"))
 }
+
+console.log("gradeData - ", gradeData.grade)
 
 
     return (
@@ -270,12 +272,13 @@ const fetchTeacherRoutine = () => {
                           </h6>
                         </Col>
                         <Col md={5} className="dflex">
-                          <Select
-                            placeholder="Select Grade"
-                            options={gradeOptions}
-                            onChange={(e) => handleGradeChange(e)}
-                            isSearchable={false}
-                          />
+                          
+                          <select className="principalGradeView" name="teacher" id="teacher" onChange = {(e) => handleGradeChange(e)}>
+                <option value="">--Grade--</option>
+                  {gradeData?.grade?.map((grade) => {
+                    return <option value={grade?.id}>{grade?.value}</option>
+                  })}
+                </select>
                         </Col>
                       </Row>
 
@@ -376,84 +379,6 @@ const fetchTeacherRoutine = () => {
                   </Row>
                 </div>
 
-                {/* <div className="teacherRoutineforPrinci">
-                  <Row
-                    style={{
-                      height: "74px",
-                      boxShadow: "0px 3px 6px #B4B3B329",
-                      position: "relative",
-                      left: "12px",
-                      width: "100%",
-                    }}
-                  >
-                    <Col md={6}>
-                      <h4>Teacher Routine</h4>
-                    </Col>
-                    <Col md={2} className="teacherRoutingDD">
-                    <select className="teacherRoutineBlock" name="teacher" id="teacher" onChange = {(e) => handleTeacherChange(e)}>
-                <option value="">--Teacher--</option>
-                  {teacherData?.teachers?.map((teacher) => {
-                    return <option value={teacher.teacher_id}>{teacher.teacher_name}</option>
-                  })}
-                </select>
-                    </Col>
-                    <Col md={2} className="teacherRoutingDD">
-                    <select className="teacherRoutineBlock" name="day" id="day" onChange = {(e) => handleDayChange(e)}>
-                <option value="">--Week Day--</option>
-                  {dayOption?.map((day) => {
-                    return <option value={day.value}>{day.label}</option>
-                  })}
-                </select>
-                    </Col>
-                    <Col md={2} style={{paddingTop: "20px"}}>
-                      <Button
-                        disabled={
-                          !(dayData && teacherName)
-                        }
-                        variant="primary"
-                        onClick={fetchTeacherRoutine}
-                      >
-                        Search
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-            <Col md={5}></Col>
-          <Col md = {2} style={{paddingLeft:"62px"}}>
-            <h4>Monday</h4>
-          </Col>
-          <Col md={5}></Col>
-        </Row>
-                  <Row>
-                  <Table Stripprd bordered hover>
-              <thead>
-                <tr className="routineSection">
-                  <th>1st</th>
-                  <th>2nd</th>
-                  <th>3rd</th>
-                  <th>4th</th>
-                  <th style={{color: "#F3FAFF", backgroundColor:"#3F4954"}} >BREAK</th>
-                  <th>5th</th>
-                  <th>6th</th>
-                  <th>7th</th>
-                  <th>8th</th>
-                  
-                </tr>
-              </thead>
-             
-                <tbody className='routineTable'>
-                  <tr>      
-                  <td>Test</td>
-                  </tr>
-
-                  
-                
-              </tbody> 
-              
-            </Table>
-                  </Row>
-                </div> */}
-
                 <div className="princiDashboardLogbook">
                   <Row
                     style={{
@@ -468,23 +393,24 @@ const fetchTeacherRoutine = () => {
                       <h4>Log Book</h4>
                     </Col>
                     <Col md={2} className="teacherRoutingDD">
-                    <select className="teacherRoutineBlock" style={{width: "100px"}} name="grade" id="grade" onChange = {(e) => handleGradeChangeToFetchLog(e)}>
+                    <select className="principalGradeView" name="grade" id="grade" onChange = {(e) => handleGradeChangeToFetchLog(e)}>
                 <option value="">--Grade--</option>
-                  {gradeOptions?.map((grade) => {
-                    return <option value={grade.value}>{grade.label}</option>
+                  {gradeData?.grade?.map((grade) => {
+                    return <option value={grade?.id}>{grade?.value}</option>
                   })}
                 </select>
                     </Col>
                     <Col md={2} className="teacherRoutingDD">
-                    <select className="teacherRoutineBlock" style={{width: "100px"}} name="section" id="section" onChange = {(e) => handleSectionChangeToFetchLog(e)}>
+                    <select className="principalGradeView" name="section" id="section" onChange = {(e) => handleSectionChangeToFetchLog(e)}>
                 <option value="">--Section--</option>
-                  {sectionOptions?.map((section) => {
-                    return <option value={section.value}>{section.label}</option>
+                  {gradeData?.section?.map((section) => {
+                    return <option value={section.id}>{section.value}</option>
                   })}
                 </select>
                     </Col>
-                    <Col md={2} style={{ marginTop: "20px"}}>
+                    <Col md={2} style={{ marginTop: "17px"}}>
                   <Form.Control
+                  style={{height:"45px"}}
                     type="date"
                     name="datepic"
                     placeholder="DateRange"

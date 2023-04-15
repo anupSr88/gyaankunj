@@ -117,12 +117,12 @@ function LessonPlanPrinciView(props) {
                   <Col md={3} className="lessonName">
                     <p>{lessons.topic_name}</p>
                   </Col>
-                  <Col md={2}>
+                  {/* <Col md={2}>
                     {verifiedTrue ? <Button id={indx} variant="outline-success">Approved</Button> : <Button variant="outline-success" onClick={() => approveLessonPlan(lessons)}>Approve</Button>}
                   </Col>
                   <Col md={2}>
                     {verifiedTrue ? <Button id={indx} variant="outline-danger">Send Back</Button> : <Button variant="outline-danger" onClick={() => showSendbackModal(true)}>Send back</Button>}
-                  </Col>
+                  </Col> */}
                   <Col md={1}>
                       {hideResponse?.includes(lessons?.lesson_id) ? (
                         <FaAngleUp style={{height:"25px", width:"25px"}}
@@ -187,6 +187,15 @@ function LessonPlanPrinciView(props) {
                                 <Col md={9} style={{ textAlign: "left" }}>
                                   {lessonDetail.teaching_aid_references}
                                 </Col>
+                              </Row>
+                              <Row>
+                                <Col md={8}></Col>
+                                <Col md={2}>
+                    {verifiedTrue ? <Button id={indx} variant="outline-success">Approved</Button> : <Button variant="outline-success" onClick={() => approveLessonPlan(lessons)}>Approve</Button>}
+                  </Col>
+                  <Col md={2}>
+                    {verifiedTrue ? <Button id={indx} variant="outline-danger">Send Back</Button> : <Button variant="outline-danger" onClick={() => showSendbackModal(true)}>Send back</Button>}
+                  </Col>
                               </Row>
                             </fieldset>
                           );

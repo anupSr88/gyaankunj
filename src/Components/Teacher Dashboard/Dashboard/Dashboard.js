@@ -475,7 +475,7 @@ const TDashboard = () => {
                                   letterSpacing: " 0px",
                                   color: "white",
                                 }}
-                              >{`${routine.time_range} --- ${routine.subject_name}--${routine.grade}${routine.section_name}`}</span>
+                              >{`${routine.grade}${routine.section_name} --- ${routine.time_range} --- ${routine.subject_name}`}</span>
                             </Card.Body>
                           </Card>
                         );

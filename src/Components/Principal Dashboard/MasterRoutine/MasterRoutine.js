@@ -3,7 +3,7 @@ import { Row, Col, Dropdown, Button, Table } from "react-bootstrap";
 import './MasterRoutine.css'
 import AddRoutine from './AddRoutine'
 import axios from 'axios'
-import { getMasterRoutineData, viewMasterRoutine } from '../../../ApiClient'
+import { getGradeDetails, viewMasterRoutine } from '../../../ApiClient'
 import Select from 'react-select'
 import PrincipalSidebar from '../PrincipalSidebar';
 import mockData from '../../../Mock Data/masterRoutineMockData.json'
@@ -19,11 +19,13 @@ const MasterRoutine = () => {
     const [grade, setGrade] = useState('')
     const [weekDay, setWeekDay] = useState('')
     const [editingState, setEditingState] = useState(false)
+    const [gradeData, setGradeData] = useState([]);
 
     useEffect(() => {
       // getMasterRoutine();
       viewMasterRoutineData();
-    },[])
+      getAllGradeDetails()
+    },[weekDay, grade])
 
     const handleShowModal = () => {
        setShowAddRoutine(true)
@@ -44,7 +46,7 @@ const MasterRoutine = () => {
     }
 
     const handleGradeChange = (e) => {
-      setGrade(e.value)
+      setGrade(e.target.value)
     }
   
     const handleSectionChange = (e) => {
@@ -53,10 +55,14 @@ const MasterRoutine = () => {
     }
 
     const handleDayChange = (e) => {
-      setWeekDay(e.value)
+      setWeekDay(e.target.value)
     }
 
-    console.log("masterRoutineData - ", masterRoutineData)
+    const getAllGradeDetails = () => {
+      getGradeDetails()
+      .then((res) => setGradeData(res.data))
+      .catch((err) => console.log(err))
+      }
 
     
 
@@ -103,20 +109,28 @@ const MasterRoutine = () => {
         <div className="routinemain">
           <div className="masterRoutineheader">
             <Row>
-              <Col md={3} style={{ textAlign: "left", paddingLeft: "50px" }}>
+              <Col md={6} style={{ textAlign: "left", paddingLeft: "50px" }}>
                 <h3>Master Routine</h3>
               </Col>
-              <Col md={2} style={{ position: "relative", bottom: "22px" }}>
-              <span>Grade</span>
-            <Select className='reportHeading' placeholder="Select Grade" options={gradeOptions} onChange={e => handleGradeChange(e)} isSearchable={false} />
+              <Col md={2}>
+              <select className="principalGradeView" name="teacher" id="teacher" onChange = {(e) => handleGradeChange(e)}>
+                <option value="">--Grade--</option>
+                  {gradeData?.grade?.map((grade) => {
+                    return <option value={grade?.id}>{grade?.value}</option>
+                  })}
+                </select>
+                </Col>
+              <Col md={2}>
+              <select className="principalGradeView" name="weekDay" id="weekDay" onChange = {(e) => handleDayChange(e)}>
+                <option value="">--Week Day--</option>
+                  {DayOption?.map((weekDay) => {
+                    return <option value={weekDay?.value}>{weekDay?.label}</option>
+                  })}
+                </select>
               </Col>
-              <Col md={3} style={{ position: "relative", bottom: "22px" }}>
-              <span>Day</span>
-              <Select className='reportHeading' placeholder="Select Day" options={DayOption} onChange={e => handleDayChange(e)} isSearchable={false} />
-              </Col>
-              <Col md={1}>
+              {/* <Col md={1}>
               {(grade && weekDay) && <FaCheckSquare onClick={viewMasterRoutineData} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />} 
-              </Col>
+              </Col> */}
               <Col md={2} style={{ position: "relative", bottom: "22px" }}>
                 <Button variant="outline-primary" onClick={handleShowModal} style={{marginTop:"22px"}}>
                   + Add Routine
@@ -153,6 +167,30 @@ const MasterRoutine = () => {
               
               {masterRoutineData?.status == "success" ? <tbody className='routineTable'>
 
+                {/* <tr>
+                  <td></td>
+                  <td></td>
+                </tr> */}
+
+{/* {masterRoutineData.time_table?.section_A && <tr style={{backgroundColor:"#064584"}}>   
+<td></td>   
+                  {masterRoutineData?.time_table?.section_A?.time_range?.map((timeRange) => {
+                    return <td style={{color:"white"}}>{timeRange}</td>
+                  })}  
+                  </tr>} */}
+
+                  <tr style={{backgroundColor:"#064584"}}>
+                    <td></td>
+                    <td style={{color:"white"}}>07:45 - 08:25 AM</td>
+                    <td style={{color:"white"}}>08:25 - 09:05 AM</td>
+                    <td style={{color:"white"}}>09:05 - 09:45 AM</td>
+                    <td style={{color:"white"}}>09:45 - 10:25 AM</td>
+                    <td style={{color:"white"}}>10:45 - 11:25 AM</td>
+                    <td style={{color:"white"}}>11:25 - 12:05 PM</td>
+                    <td style={{color:"white"}}>12:05 - 12:45 AM</td>
+                    <td style={{color:"white"}}>12:45 - 01:25 PM</td>
+                  </tr>
+
                 {/* SECTION A */}
 
               {/* {masterRoutineData.time_table?.section_A && <tr>
@@ -165,11 +203,11 @@ const MasterRoutine = () => {
                   </td>
                   </tr>}
 
-                  {masterRoutineData.time_table?.section_A && <tr style={{backgroundColor:"#064584"}}>      
+                  {/* {masterRoutineData.time_table?.section_A && <tr style={{backgroundColor:"#064584"}}>      
                   {masterRoutineData?.time_table?.section_A?.time_range?.map((timeRange) => {
                     return <td style={{color:"white"}}>{timeRange}</td>
                   })}  
-                  </tr>}
+                  </tr>} */}
 
                   {masterRoutineData.time_table?.section_A && <tr>      
                   {masterRoutineData.time_table?.section_A?.subject.map((subject) => {
@@ -192,12 +230,6 @@ const MasterRoutine = () => {
                   </td>
                   </tr>}
 
-                  {/* {masterRoutineData.time_table?.section_B && <tr style={{backgroundColor:"#064584"}}>      
-                  {masterRoutineData?.time_table?.section_B?.time_range?.map((timeRange) => {
-                    return <td style={{color:"white"}}>{timeRange}</td>
-                  })}  
-                  </tr>} */}
-
                   {masterRoutineData.time_table?.section_B && <tr style={{backgroundColor:"#c6d0da"}}>      
                   {masterRoutineData.time_table?.section_B?.subject.map((subject) => {
                     return <td>{subject}</td>
@@ -217,12 +249,6 @@ const MasterRoutine = () => {
                     {masterRoutineData.time_table && `${masterRoutineData.grade_id}C`}
                   </td>
                   </tr>}
-
-                  {/* {masterRoutineData.time_table?.section_C && <tr style={{backgroundColor:"#064584"}}>      
-                  {masterRoutineData?.time_table?.section_C?.time_range?.map((timeRange) => {
-                    return <td style={{color:"white"}}>{timeRange}</td>
-                  })}  
-                  </tr>} */}
 
                   {masterRoutineData.time_table?.section_C && <tr>      
                   {masterRoutineData.time_table?.section_C?.subject.map((subject) => {
@@ -244,12 +270,6 @@ const MasterRoutine = () => {
                     {masterRoutineData.time_table && `${masterRoutineData.grade_id}D`}
                   </td>
                   </tr>}
-
-                  {/* {masterRoutineData.time_table?.section_D && <tr style={{backgroundColor:"#064584"}}>      
-                  {masterRoutineData?.time_table?.section_D?.time_range?.map((timeRange) => {
-                    return <td style={{color:"white"}}>{timeRange}</td>
-                  })}  
-                  </tr>} */}
 
                   {masterRoutineData.time_table?.section_D && <tr style={{backgroundColor:"#c6d0da"}}>      
                   {masterRoutineData.time_table?.section_D?.subject.map((subject) => {

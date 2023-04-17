@@ -159,8 +159,6 @@ const TDashboard = () => {
     const closeAndLoad = () => {
       setShowCheckAttendanceModal(false)
       getAllStudents()
-      setAbsenteesValue([])
-        setDressDValue([])
     }
 
     const getAllGradeDetails = () => {
@@ -336,6 +334,28 @@ const TDashboard = () => {
                     </td>
                   )}
                 </Table>
+                <Row style={{padding: "10px"}}>
+              <Col md={3}>
+                <h6 style={{textAlign : "left"}}>Name of Absentees : </h6>
+              </Col>
+              {<Col md={9} style={{textAlign : "left"}}>
+                {logBookDetails?.log_book_data?.name_of_absentees?.map((absentees, indx) => {
+                  console.log("Absentees - ", absentees)
+                 return absentees?.student_name !== null && <span>{`${absentees?.student_name}, `}</span>
+                })}
+              </Col>}
+            </Row>
+            <Row style={{padding: "10px"}}>
+              <Col md={3}>
+                <h6 style={{textAlign : "left"}}>Dress Defaulters : </h6>
+              </Col>
+              <Col md={9} style={{textAlign : "left"}}>
+              {logBookDetails?.log_book_data?.name_of_dress_defaulters?.map((dressDefaulter, indx) => {
+                console.log("dressDefaulter - ", dressDefaulter)
+                 return dressDefaulter?.student_name !== null && <span>{`${dressDefaulter?.student_name}, `}</span>
+                })}
+              </Col>
+            </Row>
               </div>
             </div>
 

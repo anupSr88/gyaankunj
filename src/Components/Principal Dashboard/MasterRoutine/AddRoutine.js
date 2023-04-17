@@ -275,7 +275,7 @@ const AddRoutine = (props) => {
                   variant="outline-success"
                   type="submit"
                   onClick={(e) => addRoutineDetails()}
-                  disabled={!(grade && section && dayData && periodData && teacherName && subject)}
+                  disabled={!(periodData && teacherName && subject)}
                 >
                   Add to Master Routine
                 </Button>

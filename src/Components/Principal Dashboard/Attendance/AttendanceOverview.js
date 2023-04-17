@@ -74,7 +74,7 @@ const AttendanceOverview = () => {
 
 
     const handleGradeChange = (e) => {
-      setGrade(e.target.value)
+      setClassSelect(e.target.value)
     }
 
     const handleSectionSelectChange = (e) => {

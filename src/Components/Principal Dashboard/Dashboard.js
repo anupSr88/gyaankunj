@@ -177,8 +177,6 @@ const fetchTeacherRoutine = () => {
   .catch((err) => console.log(err, "errorTeacher"))
 }
 
-console.log("gradeData - ", gradeData.grade)
-
 
     return (
       <>
@@ -481,6 +479,7 @@ console.log("gradeData - ", gradeData.grade)
               </Col>
               {<Col md={9} style={{textAlign : "left"}}>
                 {princiViewLogBook?.log_book_data?.name_of_absentees?.map((absentees, indx) => {
+                  console.log("Absentees - ", absentees)
                  return absentees?.student_name !== null && <span>{`${absentees?.student_name}, `}</span>
                 })}
               </Col>}

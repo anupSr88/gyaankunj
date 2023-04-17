@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import TeacherSidebar from '../TeacherSidebar'
 import { Row, Col, Table, Button } from "react-bootstrap";
-import { viewStudentAttendance } from '../../../ApiClient'
+import { viewStudentAttendance, getGradeDetails } from '../../../ApiClient'
 import Select from 'react-select'
 
 const TeacherAttendance = () => {
 
     const [studentAttendance, setStudentAttendance] = useState([])
     const [sectionSelect, setSectionSelect] = useState('')
-    const [gradeData, setGrade] = useState('')
+    const [gradeToFetch, setGrade] = useState("");
+    const [gradeData, setGradeData] = useState([]); 
     const [monthData, setMonth] = useState('')
+
+    useEffect(() => {
+      getAllGradeDetails()
+    },[])
+
+    // useEffect(() => {
+    //   fetchStudentAttendance()
+    // }, [gradeToFetch, sectionSelect, monthData])
 
     const gradeOptions = [
       {value: "1", label: 1},
@@ -47,7 +56,7 @@ const TeacherAttendance = () => {
      ]
 
     const fetchStudentAttendance = () => {
-        const grade = gradeData
+        const grade = gradeToFetch
         const section = sectionSelect
         const month = monthData
         viewStudentAttendance(grade, section, month)
@@ -61,7 +70,7 @@ const TeacherAttendance = () => {
     }
 
     const handleSectionSelectChange = (e) => {
-      setSectionSelect(e.value)
+      setSectionSelect(e.target.value)
     }
 
     const handleMonthChange = (e) => {
@@ -69,53 +78,98 @@ const TeacherAttendance = () => {
     }
 
     const handleClassChange = (e) => {
-      setGrade(e.value)
+      setGrade(e.target.value)
     }
+
+    const getAllGradeDetails = () => {
+      getGradeDetails()
+      .then((res) => setGradeData(res.data))
+      .catch((err) => console.log(err))
+      }
 
 
     return (
-        <>
-
+      <>
         <Row>
-            <Col md={3}  style={{marginTop:"91px", width:"20%"}}>
-                <TeacherSidebar />
-            </Col>
-            <Col md={9} style={{width:"80%"}}>
+          <Col md={3} style={{ marginTop: "91px", width: "20%" }}>
+            <TeacherSidebar />
+          </Col>
+          <Col md={9} style={{ width: "80%" }}>
             <div className="reportSection">
-      <Row
-          style={{
-            height: "74px",
-            boxShadow: "0px 3px 6px #B4B3B329",
-            position: "relative",
-            left: "12px",
-            width: "100%",
-          }}
-        >
-            <Col md={4}>
-            <h4>Attendance</h4>
-            </Col>
-            <Col md={2} className="teacherRoutingDD">
-                  <span>
+              <Row
+                style={{
+                  height: "74px",
+                  boxShadow: "0px 3px 6px #B4B3B329",
+                  position: "relative",
+                  left: "12px",
+                  width: "100%",
+                }}
+              >
+                <Col md={4}>
+                  <h4>Attendance</h4>
+                </Col>
+                <Col md={2} className="teacherRoutingDD">
+                  {/* <span>
                     <Select placeholder="Select Section" isSearchable={false} options={sectionOptions} onChange={e => handleSectionSelectChange(e)} />
+                  </span> */}
+                  <select
+                    className="principalGradeView"
+                    name="grade"
+                    id="grade"
+                    onChange={(e) => handleClassChange(e)}
+                  >
+                    <option value="">--Grade--</option>
+                    {gradeData?.grade?.map((grade) => {
+                      return <option value={grade?.id}>{grade?.value}</option>;
+                    })}
+                  </select>
+                </Col>
+                <Col md={2} className="teacherRoutingDD">
+                  {/* <span>
+                    <Select
+                      placeholder="Select Class"
+                      isSearchable={false}
+                      options={gradeOptions}
+                      onChange={(e) => handleClassChange(e)}
+                    />
+                  </span> */}
+                  <select
+                    className="principalGradeView"
+                    name="section"
+                    id="section"
+                    onChange={(e) => handleSectionSelectChange(e)}
+                  >
+                    <option value="">--Section--</option>
+                    {gradeData?.section?.map((section) => {
+                      return (
+                        <option value={section.id}>{section.value}</option>
+                      );
+                    })}
+                  </select>
+                </Col>
+                <Col md={2} className="teacherRoutingDD">
+                  <span>
+                    <Select
+                      placeholder="Select Month"
+                      isSearchable={false}
+                      options={monthOptions}
+                      onChange={(e) => handleMonthChange(e)}
+                    />
                   </span>
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
                   <span>
-                  <Select placeholder="Select Class" isSearchable={false} options={gradeOptions} onChange={e => handleClassChange(e)} />
+                    <Button
+                      disabled={!(gradeToFetch && sectionSelect && monthData)}
+                      variant="primary"
+                      onClick={fetchStudentAttendance}
+                    >
+                      Submit
+                    </Button>
                   </span>
                 </Col>
-                <Col md={2} className="teacherRoutingDD">
-                  <span>
-                  <Select placeholder="Select Month" isSearchable={false} options={monthOptions} onChange={e => handleMonthChange(e)} />
-                  </span>
-                </Col>
-                <Col md={2} className="teacherRoutingDD">
-                  <span>
-                  <Button disabled = {!(gradeData && sectionSelect && monthData)} variant="primary" onClick={fetchStudentAttendance}>Submit</Button>
-                  </span>
-                </Col>
-        </Row>
-        <div className="routineSection">
+              </Row>
+              <div className="routineSection">
                 <div>
                   <Row>
                     <Col md={2}>
@@ -149,7 +203,7 @@ const TeacherAttendance = () => {
                         background: "#7A9ABF 0% 0% no-repeat padding-box",
                         borderRadius: "4px 4px 0px 0px",
                         opacity: "1",
-                        overflow:"auto"
+                        overflow: "auto",
                       }}
                     >
                       <th>Roll No.</th>
@@ -191,41 +245,60 @@ const TeacherAttendance = () => {
                   {/* {studentTotalAttendance?.student_report?.attendance_data.map(
                     (studentAttendance, indx) => {
                       return ( */}
-                        <tbody>
-                          {studentAttendance?.student_attendance?.length > 0 ? studentAttendance?.student_attendance?.map((attendance, indx) => {
-                            return (
-                                <tr>
-                            <td>{attendance.roll_no}</td>
-                            <td>{attendance.name}</td>
-                            <td>{attendance.attendance_percentage}</td>
-                            
-                            {Object.entries(attendance?.attendance)?.map(([key, value]) => {
-                              return (
-                                <td><div className= {value.toString() === 'Present' ? 'present' : 'absent'}></div></td>
-                              )
-                            })}
-                            {/* <td>{attendance?.attendance.value}</td> */}
-                          </tr>
-                            )
-                          })
-                        :
-                        <td style={{height: "134px", paddingTop: "62px", font: "normal normal normal 21px/21px Roboto"}} colSpan={34}>Select Grade, Section and Month to view Student's attendance</td>
+                  <tbody>
+                    {studentAttendance?.student_attendance?.length > 0 ? (
+                      studentAttendance?.student_attendance?.map(
+                        (attendance, indx) => {
+                          return (
+                            <tr>
+                              <td>{attendance.roll_no}</td>
+                              <td>{attendance.name}</td>
+                              <td>{attendance.attendance_percentage}</td>
+
+                              {Object.entries(attendance?.attendance)?.map(
+                                ([key, value]) => {
+                                  return (
+                                    <td>
+                                      <div
+                                        className={
+                                          value.toString() === "Present"
+                                            ? "present"
+                                            : "absent"
+                                        }
+                                      ></div>
+                                    </td>
+                                  );
+                                }
+                              )}
+                              {/* <td>{attendance?.attendance.value}</td> */}
+                            </tr>
+                          );
                         }
-                        </tbody>
-                      {/* );
+                      )
+                    ) : (
+                      <td
+                        style={{
+                          height: "134px",
+                          paddingTop: "62px",
+                          font: "normal normal normal 21px/21px Roboto",
+                        }}
+                        colSpan={34}
+                      >
+                        Select Grade, Section and Month to view Student's
+                        attendance
+                      </td>
+                    )}
+                  </tbody>
+                  {/* );
                     }
                   )} */}
                 </Table>
               </div>
-          
-        
-      </div>
-            </Col>
+            </div>
+          </Col>
         </Row>
-        
-        
-        </>
-    )
+      </>
+    );
 }
 
 export default TeacherAttendance

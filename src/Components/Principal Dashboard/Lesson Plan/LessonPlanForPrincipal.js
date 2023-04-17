@@ -69,14 +69,14 @@ function LessonPlanPrinciView(props) {
       <Card className="lessonPlanCardHeader">
         <Card.Body>
           <Row>
-            <Col md={2} className="lessonHeading">
+            <Col md={3} className="lessonHeading">
               <h6>GRADE</h6>
             </Col>
-            <Col md={2} className="lessonHeading">
+            <Col md={3} className="lessonHeading">
               <h6>SUBJECT NAME</h6>
             </Col>
 
-            <Col md={3} className="lessonHeading" style={{ textAlign: "left" }}>
+            <Col md={5} className="lessonHeading" style={{ textAlign: "left" }}>
               <h6>LESSON NAME</h6>
             </Col>
           </Row>
@@ -107,14 +107,14 @@ function LessonPlanPrinciView(props) {
                 <Row
                 // style={{height :expandCard? '66px' : "", boxShadow: expandCard? '0px 3px 6px #B4B3B329' : ""}}
                 >
-                  <Col md={2} className="gradeName">
+                  <Col md={3} className="gradeName">
                     {lessons.grade ? <p>{lessons.grade}</p> : "-"}
                   </Col>
-                  <Col md={2} className="subjectName">
+                  <Col md={3} className="subjectName">
                     <p>{lessons.subject_name}</p>
                   </Col>
 
-                  <Col md={3} className="lessonName">
+                  <Col md={5} className="lessonName">
                     <p>{lessons.topic_name}</p>
                   </Col>
                   {/* <Col md={2}>

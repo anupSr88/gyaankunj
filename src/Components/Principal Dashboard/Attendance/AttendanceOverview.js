@@ -1,18 +1,19 @@
 import React from 'react';
 import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar, Button } from "react-bootstrap";
 import { useState } from "react";
-import { attendanceOverview, viewAttendanceReport } from '../../../ApiClient'
+import { attendanceOverview, viewAttendanceReport, getGradeDetails } from '../../../ApiClient'
 import { useEffect } from 'react';
 import Select from 'react-select'
 import PrincipalSidebar from '../PrincipalSidebar';
 
 const AttendanceOverview = () => {
     const [checked, setChecked] = useState(false);
-    const [radioValue, setRadioValue] = useState("1");
+    const [radioValue, setRadioValue] = useState("");
     const [tableData, setTableData] = useState([])
     const [overallAttendance, setOverallAttendance] = useState({})
     const [grade, setGrade] = useState('')
-    const [section, setSection] = useState('1')
+    const [gradeData, setGradeData] = useState([]);
+    const [section, setSection] = useState('')
     const [yearData, setYear] = useState('')
     const [teacherTabActive, setTeacherTabActive] = useState(true)
     const [sectionSelect, setSectionSelect] = useState('')
@@ -21,10 +22,14 @@ const AttendanceOverview = () => {
     const [teacherTotalAttendance, setTeacherTotalAttendance] = useState({})
     const [studentTotalAttendance, setStudentTotalAttendance] = useState({})
 
-    useEffect(() => {
-      getAttendanceOverview()
-      getFullAttendanceData()
-  },[grade, section])
+  //   useEffect(() => {
+  //     getAttendanceOverview()
+  //     getFullAttendanceData()
+  // },[grade, section])
+
+  useEffect(() => {
+    getAllGradeDetails()
+  }, [grade, section])
 
   const sectionOptions = [
     { value: '1', label: 'A' },
@@ -69,11 +74,11 @@ const AttendanceOverview = () => {
 
 
     const handleGradeChange = (e) => {
-      setGrade(e.value)
+      setGrade(e.target.value)
     }
 
     const handleSectionSelectChange = (e) => {
-      setSectionSelect(e.value)
+      setSectionSelect(e.target.value)
     }
 
     const handleClassChange = (e) => {
@@ -82,10 +87,8 @@ const AttendanceOverview = () => {
     }
 
     const handleYearChange = (e) => {
-      setYear(e.value)
+      setYear(e.target.value)
     }
-
-    console.log("year - ", yearData)
     
     const handleSectionChange = (e) => {
       console.log("e -", e)
@@ -119,7 +122,11 @@ const AttendanceOverview = () => {
       setTeacherTabActive(false)
     }
 
-    
+    const getAllGradeDetails = () => {
+      getGradeDetails()
+      .then((res) => setGradeData(res.data))
+      .catch((err) => console.log(err))
+      }
 
     return (
       <>
@@ -364,18 +371,30 @@ const AttendanceOverview = () => {
                   <h4>Students Attendance</h4>
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
-                  <span>
-                    <Select placeholder="Select Section" isSearchable={false} options={sectionOptions} onChange={e => handleSectionSelectChange(e)} />
-                  </span>
-                </Col>
+                    <select className="principalGradeView" name="grade" id="grade" onChange = {(e) => handleGradeChange(e)}>
+                <option value="">--Grade--</option>
+                  {gradeData?.grade?.map((grade) => {
+                    return <option value={grade?.id}>{grade?.value}</option>
+                  })}
+                </select>
+                    </Col>
+                    <Col md={2} className="teacherRoutingDD">
+                    <select className="principalGradeView" name="section" id="section" onChange = {(e) => handleSectionSelectChange(e)}>
+                <option value="">--Section--</option>
+                  {gradeData?.section?.map((section) => {
+                    return <option value={section.id}>{section.value}</option>
+                  })}
+                </select>
+                    </Col>
                 <Col md={2} className="teacherRoutingDD">
                   <span>
-                  <Select placeholder="Select Class" isSearchable={false} options={gradeOptions} onChange={e => handleClassChange(e)} />
-                  </span>
-                </Col>
-                <Col md={2} className="teacherRoutingDD">
-                  <span>
-                  <Select placeholder="Select Year" isSearchable={false} options={yearOptions} onChange={e => handleYearChange(e)} />
+                  {/* <Select placeholder="Select Year" isSearchable={false} options={yearOptions} onChange={e => handleYearChange(e)} /> */}
+                  <select className="principalGradeView" name="year" id="year" onChange = {(e) => handleYearChange(e)}>
+                <option value="">--Year--</option>
+                  {yearOptions?.map((year) => {
+                    return <option value={year.value}>{year.label}</option>
+                  })}
+                </select>
                   </span>
                 </Col>
                 <Col md={1}>
@@ -476,7 +495,13 @@ const AttendanceOverview = () => {
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
                   <span>
-                  <Select placeholder="Select Year" isSearchable={false} options={yearOptions} onChange={e => handleYearChange(e)} />
+                  {/* <Select placeholder="Select Year" isSearchable={false} options={yearOptions} onChange={e => handleYearChange(e)} /> */}
+                  <select className="principalGradeView" name="year" id="year" onChange = {(e) => handleYearChange(e)}>
+                <option value="">--Year--</option>
+                  {yearOptions?.map((year) => {
+                    return <option value={year.value}>{year.label}</option>
+                  })}
+                </select>
                   </span>
                 </Col>
                 <Col md={1}>

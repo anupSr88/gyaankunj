@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
 import Select from "react-select";
-import {  saveLessonPlan, getLessonPlanMetadata } from "../../../ApiClient";
+import {  saveLessonPlan, getLessonPlanMetadata, getGradeDetails } from "../../../ApiClient";
 
 const AddLessonPlan = (props) => {
   const [grade, setGrade] = useState("");
+  const [gradeData, setGradeData] = useState([]);
   const [subject, setSubject] = useState("");
   const [teacherName, setTeacherName] = useState();
   const [section, setSection] = useState("");
@@ -21,6 +22,7 @@ const AddLessonPlan = (props) => {
 
   useEffect(() => {
     lessonPlanMetadata()
+    getAllGradeDetails()
   },[grade, section])
 
 
@@ -83,12 +85,20 @@ const AddLessonPlan = (props) => {
     .catch((err) => console.log("metadata err - "))
   }
 
+  const getAllGradeDetails = () => {
+    getGradeDetails()
+    .then((res) => setGradeData(res.data))
+    .catch((err) => console.log(err))
+    }
+
 
   const handleChapterName = (e) => {
     console.log(e.target.value)
     setChapterName(e.target.value)
 
   }
+
+  console.log("lessonMetadata - ", lessonMetadata)
 
   return (
     <>
@@ -107,47 +117,80 @@ const AddLessonPlan = (props) => {
           <Form className="addLessonForm">
             <Row style={{ marginBottom: "50px" }}>
               <Col md={3}>
-                <span>Grade</span>
+                {/* <span>Grade</span>
                 <Select
                   options={gradeOptions}
-                  // value={grade}
                   onChange={(e) => setGrade(e.value)}
                   placeholder="Add Grade"
-                />
+                /> */}
+                <select
+                  className="lessonPlanSubject"
+                  name="grade"
+                  id="grade"
+                  onChange={(e) => setGrade(e.target.value)}
+                >
+                  <option value="">--Grade--</option>
+                  {gradeData?.grade?.map((grade) => {
+                    return <option value={grade?.id}>{grade?.value}</option>;
+                  })}
+                </select>
               </Col>
               <Col md={3}>
-                <span>Section</span>
+                {/* <span>Section</span>
                 <Select
                   options={sectionOptions}
-                  // value={section}
                   onChange={(e) => setSection(e.value)}
                   placeholder="Add Section"
-                />
+                /> */}
+                <select
+                  className="lessonPlanSubject"
+                  name="section"
+                  id="section"
+                  onChange={(e) => setSection(e.target.value)}
+                >
+                  <option value="">--Section--</option>
+                  {gradeData?.section?.map((section) => {
+                    return <option value={section.id}>{section.value}</option>;
+                  })}
+                </select>
               </Col>
               <Col md={3}>
-                <span>Subject</span> <br />
+                {/* <span>Subject</span> <br /> */}
                 {/* <Select
                   options={subjectOptions}
                   onChange={(e) => setSubject(e.value)}
                   placeholder="Add Subject"
                 /> */}
-                <select className="lessonPlanSubject" name="subject" id="subject" onChange = {(e) => setSubject(e.target.value)}>
-                <option value="">Select Chapter Name</option>
-                  {lessonMetadata?.status == "success" && lessonMetadata?.metadata?.map((subjectName) => {
-                    return <option value={subjectName.subject_id}>{subjectName.subject_name}</option>
-                  })}
+                <select
+                  className="lessonPlanSubject"
+                  name="subject"
+                  id="subject"
+                  onChange={(e) => setSubject(e.target.value)}
+                >
+                  <option value="">Select Subject</option>
+                  {lessonMetadata?.status == "success" &&
+                    lessonMetadata?.metadata?.map((subjectName) => {
+                      return (
+                        <option value={subjectName.subject_id}>
+                          {subjectName.subject_name}
+                        </option>
+                      );
+                    })}
                 </select>
               </Col>
               <Col md={3}>
-                <span>Teacher</span>
+                {/* <span>Teacher</span> */}
                 <fieldset disabled>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlInput1"
-                  
-                >
-                  <Form.Control type="text" value={userDetails.name} Disabled/>
-                </Form.Group>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Control
+                      type="text"
+                      value={userDetails.name}
+                      Disabled
+                    />
+                  </Form.Group>
                 </fieldset>
               </Col>
             </Row>
@@ -178,14 +221,25 @@ const AddLessonPlan = (props) => {
             </Row>
             <Row style={{ marginBottom: "50px" }}>
               <Col md={2}>
-                <span>Chapter Name:</span>
+                <span>Chapter Number:</span>
               </Col>
               <Col md={6}>
-                <select className="lessonPlanChName" name="day" id="day" onChange = {(e) => handleChapterName(e)}>
-                <option value="">Select Chapter Name</option>
-                  {lessonMetadata?.status == "success" && lessonMetadata?.metadata?.map((chapterName) => {
-                    return <option value={chapterName.chapter_id}>{chapterName.chapter_name}</option>
-                  })}
+                <select
+                  className="lessonPlanChName"
+                  name="day"
+                  id="day"
+                  onChange={(e) => handleChapterName(e)}
+                >
+                  <option value="">Select Chapter Number</option>
+                  {lessonMetadata?.status == "success" &&
+                    lessonMetadata?.metadata?.map((chapter) => {
+                      console.log("chapter - ", chapter)
+                      return (
+                        <option value={chapter.chapter_id}>
+                          {chapter.chapter_id}
+                        </option>
+                      );
+                    })}
                 </select>
               </Col>
             </Row>
@@ -286,7 +340,22 @@ const AddLessonPlan = (props) => {
           <Button variant="outline-primary" style={{ alignItems: "center" }}>
             Reset
           </Button>
-          <Button variant="outline-primary" onClick={createLessonPlan}>Submit</Button>
+
+          {/* "grade_id": grade,
+    "section_id": section,
+    "subject_id": subject,
+    "teacher_id": userDetails.user_id,
+    "start_date": startDate,
+    "end_date": endDate,
+    "chapter_id": chapterName,
+    "topic_name": topicName,
+    "learning_objectives" : lObjective,
+    "teaching_methods": teachingMethod,
+    "learning_outcome": learningOutcomes,
+    "teaching_aid_references": teachingAids */}
+          <Button variant="outline-primary" disabled = {!(grade && section &&subject &&startDate &&endDate &&topicName &&lObjective &&teachingMethod &&learningOutcomes &&teachingAids &&chapterName)} onClick={createLessonPlan}>
+            Submit
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

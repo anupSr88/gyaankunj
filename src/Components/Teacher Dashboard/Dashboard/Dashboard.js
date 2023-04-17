@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import { Row, Col, Modal, Dropdown, Table, Form, Button, Card } from "react-bootstrap";
 // import DashboardContent from './DashboardContent'
 // import DashboardRightPanel from './DashboardRightPanel'
-import {viewLogBook, getTeacherRoutine, getAllStudentsData, saveAttendance } from '../../../ApiClient'
+import {viewLogBook, getTeacherRoutine, getAllStudentsData, saveAttendance, getGradeDetails } from '../../../ApiClient'
 import '../TeacherDashboard.css'
 import TeacherSidebar from '../TeacherSidebar';
 import Select from 'react-select'
@@ -30,12 +30,15 @@ const TDashboard = () => {
     const [dressDValue, setDressDValue] = useState([])
     const [sectionToFetchAtt, setSectionToFetchAtt] = useState('')
     const [gradeToFetchAtt, setGradeToFetchAtt] = useState('')
+    const [gradeData, setGradeData] = useState([]);
 
 
     useEffect(() => {
       functn()
         fetchTeacherRoutine()
-    }, [])
+        getAllGradeDetails()
+        // getAllStudents()
+    }, [weekDayToFetch])
 
     const functn = () => {
       const today = new Date();
@@ -134,19 +137,19 @@ const TDashboard = () => {
       ]
 
       const handlesectionToFetchLog = (e) => {
-        setSectionToFetchLog(e.value)
+        setSectionToFetchLog(e.target.value)
       }
     
       const handlegradeToFetchLog = (e) => {
-        setGradeToFetchLog(e.value)
+        setGradeToFetchLog(e.target.value)
       }
 
       const handlesectionToFetchAtt = (e) => {
-        setSectionToFetchAtt(e.value)
+        setSectionToFetchAtt(e.target.value)
       }
     
       const handlegradeToFetchAtt = (e) => {
-        setGradeToFetchAtt(e.value)
+        setGradeToFetchAtt(e.target.value)
       }
 
       const handleWeekDayChange = (e) => {
@@ -159,6 +162,12 @@ const TDashboard = () => {
       setAbsenteesValue([])
         setDressDValue([])
     }
+
+    const getAllGradeDetails = () => {
+      getGradeDetails()
+      .then((res) => setGradeData(res.data))
+      .catch((err) => console.log(err))
+      }
 
 
     return (
@@ -182,24 +191,37 @@ const TDashboard = () => {
                   <h4>LogBook</h4>
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
-                  <span>
-                    <Select
-                      placeholder="Section"
-                      isSearchable={false}
-                      options={sectionOptions}
-                      onChange={(e) => handlesectionToFetchLog(e)}
-                    />
-                  </span>
+                
+                    <select
+                      className="principalGradeView"
+                      name="grade"
+                      id="grade"
+                      onChange={(e) => handlegradeToFetchLog(e)}
+                    >
+                      <option value="">--Grade--</option>
+                      {gradeData?.grade?.map((grade) => {
+                        return (
+                          <option value={grade?.id}>{grade?.value}</option>
+                        );
+                      })}
+                    </select>
+                  
                 </Col>
                 <Col md={2} className="teacherRoutingDD">
-                  <span>
-                    <Select
-                      placeholder="Class"
-                      isSearchable={false}
-                      options={classOptions}
-                      onChange={(e) => handlegradeToFetchLog(e)}
-                    />
-                  </span>
+
+                  <select
+                    className="principalGradeView"
+                    name="section"
+                    id="section"
+                    onChange={(e) => handlesectionToFetchLog(e)}
+                  >
+                    <option value="">--Section--</option>
+                    {gradeData?.section?.map((section) => {
+                      return (
+                        <option value={section.id}>{section.value}</option>
+                      );
+                    })}
+                  </select>
                 </Col>
                 <Col md={2} style={{ marginTop: "17px" }}>
                   <Form.Control
@@ -211,7 +233,13 @@ const TDashboard = () => {
                   />
                 </Col>
                 <Col md={1} style={{ paddingTop: "17px" }}>
-                  <Button disabled={!(gradeToFetchLog && sectionToFetchLog, dateToFetchLog)} variant="primary" onClick={getLogBook}>
+                  <Button
+                    disabled={
+                      !(gradeToFetchLog && sectionToFetchLog, dateToFetchLog)
+                    }
+                    variant="primary"
+                    onClick={getLogBook}
+                  >
                     Search
                   </Button>
                 </Col>
@@ -268,8 +296,8 @@ const TDashboard = () => {
                       <th>Homework</th>
                     </tr>
                   </thead>
-                  {
-                    logBookDetails?.log_book_data?.log_record?.length > 0 ? logBookDetails?.log_book_data?.log_record?.map(
+                  {logBookDetails?.log_book_data?.log_record?.length > 0 ? (
+                    logBookDetails?.log_book_data?.log_record?.map(
                       (logData, indx) => {
                         return (
                           <tbody>
@@ -281,16 +309,32 @@ const TDashboard = () => {
                               <td>{logData?.home_work}</td>
                             </tr>
                           </tbody>
-                        )
-                        
+                        );
                       }
                     )
-                    :
-                    logBookDetails?.status == "failure" ? 
-                    <td colSpan={5} style={{height: "100px", paddingTop: "50px", font: "normal normal normal 21px/21px Roboto"}}>{logBookDetails?.message}</td>
-                    :
-                    <td colSpan={5} style={{height: "100px", paddingTop: "50px", font: "normal normal normal 21px/21px Roboto"}}>Select Grade, Section and Date to view Logbook</td>
-                  }
+                  ) : logBookDetails?.status == "failure" ? (
+                    <td
+                      colSpan={5}
+                      style={{
+                        height: "100px",
+                        paddingTop: "50px",
+                        font: "normal normal normal 21px/21px Roboto",
+                      }}
+                    >
+                      {logBookDetails?.message}
+                    </td>
+                  ) : (
+                    <td
+                      colSpan={5}
+                      style={{
+                        height: "100px",
+                        paddingTop: "50px",
+                        font: "normal normal normal 21px/21px Roboto",
+                      }}
+                    >
+                      Select Grade, Section and Date to view Logbook
+                    </td>
+                  )}
                 </Table>
               </div>
             </div>
@@ -308,31 +352,58 @@ const TDashboard = () => {
                 <Col md={4}>
                   <h4>Student's Attendance</h4>
                 </Col>
+            
                 <Col md={2} className="teacherRoutingDD">
-                  <span>
-                    <Select
-                      placeholder="Class"
-                      isSearchable={false}
-                      options={classOptions}
-                      onChange={(e) => handlegradeToFetchAtt(e)}
+                
+                <select
+                  className="principalGradeView"
+                  name="grade"
+                  id="grade"
+                  onChange={(e) => handlegradeToFetchAtt(e)}
+                >
+                  <option value="">--Grade--</option>
+                  {gradeData?.grade?.map((grade) => {
+                    return (
+                      <option value={grade?.id}>{grade?.value}</option>
+                    );
+                  })}
+                </select>
+              
+            </Col>
+            <Col md={2} className="teacherRoutingDD">
+
+              <select
+                className="principalGradeView"
+                name="section"
+                id="section"
+                onChange={(e) => handlesectionToFetchAtt(e)}
+              >
+                <option value="">--Section--</option>
+                {gradeData?.section?.map((section) => {
+                  return (
+                    <option value={section.id}>{section.value}</option>
+                  );
+                })}
+              </select>
+            </Col>
+                <Col
+                  md={2}
+                  style={{ paddingTop: "16px", paddingRight: "100px" }}
+                >
+                  {gradeToFetchAtt && sectionToFetchAtt && (
+                    <FaCheckSquare
+                      onClick={getAllStudents}
+                      style={{
+                        height: "40px",
+                        width: "40px",
+                        color: "blue",
+                        cursor: "pointer",
+                      }}
                     />
-                  </span>
-                </Col>
-                <Col md={2} className="teacherRoutingDD">
-                  <span>
-                    <Select
-                      placeholder="Section"
-                      isSearchable={false}
-                      options={sectionOptions}
-                      onChange={(e) => handlesectionToFetchAtt(e)}
-                    />
-                  </span>
-                </Col>
-                <Col md={2} style={{ paddingTop: "16px", paddingRight: "100px" }}>
-                {(gradeToFetchAtt && sectionToFetchAtt) && <FaCheckSquare onClick={getAllStudents} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />}  
+                  )}
                 </Col>
                 <Col md={2} style={{ paddingTop: "17px" }}>
-                <Button
+                  <Button
                     variant="primary"
                     onClick={() => setShowCheckAttendanceModal(true)}
                     disabled={!(absenteesList?.length || dressDList?.length)}
@@ -365,17 +436,18 @@ const TDashboard = () => {
                   </Col>
                 </Row>
                 <div className="studentAttendanceInner">
-                  {studentDetails?.student_details?.length > 0 ? studentDetails?.student_details?.map((student, indx) => {
-                    return (
-                      <Row style={{ marginTop: "20px" }}>
-                        <Col className="studentAttendanceDetails" md={2}>
-                          {student?.roll_no}
-                        </Col>
-                        <Col className="studentAttendanceDetails" md={6}>
-                          {student?.student_name}
-                        </Col>
+                  {studentDetails?.student_details?.length > 0 ? (
+                    studentDetails?.student_details?.map((student, indx) => {
+                      return (
+                        <Row style={{ marginTop: "20px" }}>
+                          <Col className="studentAttendanceDetails" md={2}>
+                            {student?.roll_no}
+                          </Col>
+                          <Col className="studentAttendanceDetails" md={6}>
+                            {student?.student_name}
+                          </Col>
 
-                        {/* <Col className="studentAttendanceDetails" md={2}>
+                          {/* <Col className="studentAttendanceDetails" md={2}>
                           <Form.Check
                             value={student?.student_name}
                             name="group1"
@@ -394,9 +466,8 @@ const TDashboard = () => {
                           />
                          
                         </Col> */}
-                        <Col md={4}>
-                          <Form>
-                            
+                          <Col md={4}>
+                            <Form>
                               <div key="inline-radio" className="mb-3">
                                 <Form.Check
                                   inline
@@ -405,7 +476,10 @@ const TDashboard = () => {
                                   type="radio"
                                   id={student?.student_id}
                                   onChange={(e) => addAbsentees(e)}
-                                  style={{position: "relative", right: "27px"}}
+                                  style={{
+                                    position: "relative",
+                                    right: "27px",
+                                  }}
                                 />
                                 <Form.Check
                                   inline
@@ -414,19 +488,37 @@ const TDashboard = () => {
                                   type="radio"
                                   id={student?.student_id}
                                   onChange={(e) => addDressDefaulterList(e)}
-                                  style={{position: "relative", left: "82px"}}
+                                  style={{ position: "relative", left: "82px" }}
                                 />
                               </div>
-                          </Form>
-                        </Col>
-                      </Row>
-                    );
-                  })
-                  :
-                    studentDetails?.status == "failure" ? 
-                    <Col md={12} style={{height: "134px", paddingTop: "62px", font: "normal normal normal 21px/21px Roboto"}}>No Data Available!!</Col>
-                :
-                <Col md={12} style={{height: "134px", paddingTop: "62px", font: "normal normal normal 21px/21px Roboto"}}>Select Grade and Section to view Attendance Register</Col>}
+                            </Form>
+                          </Col>
+                        </Row>
+                      );
+                    })
+                  ) : studentDetails?.status == "failure" ? (
+                    <Col
+                      md={12}
+                      style={{
+                        height: "134px",
+                        paddingTop: "62px",
+                        font: "normal normal normal 21px/21px Roboto",
+                      }}
+                    >
+                      No Data Available!!
+                    </Col>
+                  ) : (
+                    <Col
+                      md={12}
+                      style={{
+                        height: "134px",
+                        paddingTop: "62px",
+                        font: "normal normal normal 21px/21px Roboto",
+                      }}
+                    >
+                      Select Grade and Section to view Attendance Register
+                    </Col>
+                  )}
                 </div>
               </div>
             </div>
@@ -438,25 +530,32 @@ const TDashboard = () => {
                   <Col md={12}>
                     <h4>My Schedule</h4>
                   </Col>
-                  </Row>
-                  <Row style={{marginTop: "14px"}}>
+                </Row>
+                <Row style={{ marginTop: "14px" }}>
                   <Col md={10}>
                     <Select
                       placeholder="Day"
                       isSearchable={false}
                       options={weekDayOption}
                       onChange={(e) => handleWeekDayChange(e)}
-                      
                     />
                   </Col>
-                  
-                  <Col md={2}>
-                  {weekDayToFetch !== '' && <FaCheckSquare onClick={fetchTeacherRoutine} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />}
-                  </Col>
-                  
 
+                  <Col md={2}>
+                    {weekDayToFetch !== "" && (
+                      <FaCheckSquare
+                        onClick={fetchTeacherRoutine}
+                        style={{
+                          height: "40px",
+                          width: "40px",
+                          color: "blue",
+                          cursor: "pointer",
+                        }}
+                      />
+                    )}
+                  </Col>
                 </Row>
-                <Row style={{marginTop: "20px"}}>
+                <Row style={{ marginTop: "20px" }}>
                   <Col md={12}>
                     {teacherRoutineData ? (
                       teacherRoutineData?.time_table?.map((routine, indx) => {

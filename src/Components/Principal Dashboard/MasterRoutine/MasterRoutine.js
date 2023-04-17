@@ -99,6 +99,8 @@ const MasterRoutine = () => {
       setEditingState(!editingState)
     }
 
+    console.log("masterRoutineData - ", masterRoutineData)
+
     return (
       <>
       <Row>

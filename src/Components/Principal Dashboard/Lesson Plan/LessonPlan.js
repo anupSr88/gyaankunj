@@ -14,6 +14,10 @@ const TLessonPlan = () => {
     const [teacherName, setTeacherName] = useState('')
 
     useEffect(() => {
+      lessonPlans()
+    },[teacherName])
+
+    useEffect(() => {
       getAllTeachersData()
     },[])
 
@@ -62,7 +66,7 @@ const TLessonPlan = () => {
               <Col md={8} style={{ textAlign: "left", paddingLeft: "50px" }}>
                 <h3>Lesson Plan</h3>
               </Col>
-              <Col md={3} style={{paddingLeft: "119px"}}>
+              <Col md={4} style={{paddingLeft: "119px"}}>
               <select className="teacherScheduleBlock" name="teacher" id="teacher" onChange = {(e) => handleTeacherChange(e)}>
                 <option value="">--Teacher--</option>
                   {teacherData?.teachers?.map((teacher) => {
@@ -70,9 +74,9 @@ const TLessonPlan = () => {
                   })}
                 </select>
               </Col>
-              <Col md={1}>
+              {/* <Col md={1}>
                   {teacherName !== '' && <FaCheckSquare onClick={lessonPlans} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />}
-                  </Col>
+                  </Col> */}
             </Row>
           </div>
           <div className="routineSection">

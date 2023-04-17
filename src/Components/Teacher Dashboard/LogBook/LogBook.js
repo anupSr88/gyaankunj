@@ -14,12 +14,13 @@ const LogBook = () => {
   const [classData, setClassData] = useState('')
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [logBookDetails, setLogBookDetails] = useState({})
+  const [logBookDetails, setLogBookDetails] = useState([])
+  const [grade, setGrade] = useState("");
   const [gradeData, setGradeData] = useState([])
 
-  // useEffect(() => {
-  //   getGradesData()
-  // })
+  useEffect(() => {
+    getAllGradeDetails()
+  },[])
 
   const handleShowLogBook = () => {
     setShowAddLogbook(true)
@@ -46,11 +47,11 @@ const LogBook = () => {
   ]
 
   const handleSectionChange = (e) => {
-    setSection(e.value)
+    setSection(e.target.value)
   }
 
   const handleClassChange = (e) => {
-    setClassData(e.value)
+    setClassData(e.target.value)
   }
 
   const showLogBookData = () => {
@@ -62,11 +63,11 @@ const LogBook = () => {
     .catch((err) => console.log(err))
   }
 
-  const getGradesData = () => {
+  const getAllGradeDetails = () => {
     getGradeDetails()
     .then((res) => setGradeData(res.data))
-      .catch((err) => console.log(err, "err"));
-  }
+    .catch((err) => console.log(err))
+    }
 
   const closeAndLoad = () => {
     setShowAddLogbook(false)
@@ -74,132 +75,197 @@ const LogBook = () => {
   }
 
     return (
-        <>
+      <>
         <Row>
-            <Col md={3} style={{marginTop:"91px", width:"20%"}}>
-                <TeacherSidebar />     
-            </Col>
-            <Col md={9} style={{width:"80%"}}>
-        <div className="reportSection">
-      <Row
-          style={{
-            height: "74px",
-            boxShadow: "0px 3px 6px #B4B3B329",
-            position: "relative",
-            left: "12px",
-            width: "100%",
-            marginBottom:"20px"
-          }}
-        >
-            <Col md={3}>
-            <h4>Log Book</h4>
-            </Col>
-            <Col md={2} className="teacherRoutingDD">
-            <span>
+          <Col md={3} style={{ marginTop: "91px", width: "20%" }}>
+            <TeacherSidebar />
+          </Col>
+          <Col md={9} style={{ width: "80%" }}>
+            <div className="reportSection">
+              <Row
+                style={{
+                  height: "74px",
+                  boxShadow: "0px 3px 6px #B4B3B329",
+                  position: "relative",
+                  left: "12px",
+                  width: "100%",
+                  marginBottom: "20px",
+                }}
+              >
+                <Col md={3}>
+                  <h4>Log Book</h4>
+                </Col>
+                <Col md={2} className="teacherRoutingDD">
+                  {/* <span>
             <Select placeholder="Select Section" isSearchable={false} options={sectionOptions} onChange={e => handleSectionChange(e)} />
-                </span>
-            </Col>
-            <Col md={2} className="teacherRoutingDD">
-            <span>
+                </span> */}
+                  <select
+                    className="principalGradeView"
+                    name="grade"
+                    id="grade"
+                    onChange={(e) => handleClassChange(e)}
+                  >
+                    <option value="">--Grade--</option>
+                    {gradeData?.grade?.map((grade) => {
+                      return <option value={grade?.id}>{grade?.value}</option>;
+                    })}
+                  </select>
+                </Col>
+                <Col md={2} className="teacherRoutingDD">
+                  {/* <span>
             <Select placeholder="Select Class" isSearchable={false} options={classOptions} onChange={e => handleClassChange(e)} />
-                </span>
-            </Col>
-            <Col md={2} style={{marginTop:"17px"}}>
-                <Form.Control
-                  type="date"
-                  name="datepic"
-                  placeholder="DateRange"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
-              </Col>
-            <Col md={1} style={{paddingTop:"17px"}}>
-              <Button variant="outline-primary" onClick={showLogBookData}>Search</Button>
-            </Col>
-            <Col md={2} style={{paddingTop:"17px"}}>
-                <Button variant="outline-primary" onClick={handleShowLogBook}>
-                  + Add Logbook
-                </Button>{" "}
-              </Col>
-        </Row>
-        <Row>
-          <Col md={3}>
-            <span style={{font: "normal normal bold 19px/34px Roboto"}}>Class Teacher's Name:</span> <span>{logBookDetails?.log_book_data?.class_teacher_name}</span>
-          </Col>
-          <Col md={1}>
-            
-          </Col>
-          <Col md={4}>
-          <span style={{font: "normal normal bold 19px/34px Roboto"}}>Day:</span> <span>{logBookDetails?.log_book_data?.day}</span>
-          </Col>
-          <Col md={1}>
-            
-          </Col>
-          <Col md={3}>
-          <span style={{font: "normal normal bold 19px/34px Roboto"}}>Date:</span> <span>{logBookDetails?.log_book_data?.date}</span>
-          </Col>
-        </Row>
-        <div className="routineSection">
-            <div>
-            </div>
-            <Table striped hover>
-              <thead>
-                <tr style={{background: "#7A9ABF 0% 0% no-repeat padding-box", borderRadius: "4px 4px 0px 0px", opacity: "1"}}>
-                  <th>Period</th>
-                  <th>Students Present</th>
-                  <th>Subject</th>
-                  <th>Content Taught</th>
-                  <th>Homework</th>
-                </tr>
-              </thead>
-              {logBookDetails?.status == "failure" ? 
-              <Row>
-                <Col md={12}>
-                <h6 className='failureMessage' style={{position:"relative", left:"300px"}}>{logBookDetails?.message}</h6>
+                </span> */}
+                  <select
+                    className="principalGradeView"
+                    name="section"
+                    id="section"
+                    onChange={(e) => handleSectionChange(e)}
+                  >
+                    <option value="">--Section--</option>
+                    {gradeData?.section?.map((section) => {
+                      return (
+                        <option value={section.id}>{section.value}</option>
+                      );
+                    })}
+                  </select>
+                </Col>
+                <Col md={2} style={{ marginTop: "17px" }}>
+                  <Form.Control
+                    type="date"
+                    name="datepic"
+                    placeholder="DateRange"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
+                </Col>
+                <Col md={1} style={{ paddingTop: "17px" }}>
+                  <Button variant="outline-primary" onClick={showLogBookData}>
+                    Search
+                  </Button>
+                </Col>
+                <Col md={2} style={{ paddingTop: "17px" }}>
+                  <Button variant="outline-primary" onClick={handleShowLogBook}>
+                    + Add Logbook
+                  </Button>{" "}
                 </Col>
               </Row>
-              
-              :
-               logBookDetails?.log_book_data?.log_record?.map((logData, indx) => {
-                return <tbody>
-                <tr>
-                <td>{logData?.period}</td>
-                  <td>{logData?.students_present}</td>
-                  <td>{logData?.subject_name}</td>
-                  <td>{logData?.content_taught}</td>
-                  <td>{logData?.home_work}</td>                   
-                </tr>
-              </tbody>
-              })}
-            </Table>
-            <Row style={{padding: "10px"}}>
-              <Col md={3}>
-                <h6 style={{textAlign : "left"}}>Name of Absentees : </h6>
-              </Col>
-              <Col md={9} style={{textAlign : "left"}}>
-               {logBookDetails?.log_book_data?.name_of_absentees?.map((absentees, indx) => {
-                return absentees?.student_name && `${absentees?.student_name}, `
-               })}
-              </Col>
-            </Row>
-            <Row style={{padding: "10px"}}>
-              <Col md={3}>
-                <h6 style={{textAlign : "left"}}>Number of Dress Defaulters : </h6>
-              </Col>
-              <Col md={9} style={{textAlign : "left"}}>
-               {logBookDetails?.log_book_data?.name_of_dress_defaulters?.map((dressDefaulter, indx) => {
-                return dressDefaulter?.student_name !== null && `${dressDefaulter?.student_name}, `
-               })}
-              </Col>
-            </Row>
-          </div>
-        
-      </div>
-      </Col>
-        {showAddLogbook && <AddLogBook show={showAddLogbook} onHide={() => setShowAddLogbook(false)} gradeData={gradeData} closeAndLoad={closeAndLoad} />}
+              <Row>
+                <Col md={3}>
+                  <span style={{ font: "normal normal bold 19px/34px Roboto" }}>
+                    Class Teacher's Name:
+                  </span>{" "}
+                  <span>
+                    {logBookDetails?.log_book_data?.class_teacher_name}
+                  </span>
+                </Col>
+                <Col md={1}></Col>
+                <Col md={4}>
+                  <span style={{ font: "normal normal bold 19px/34px Roboto" }}>
+                    Day:
+                  </span>{" "}
+                  <span>{logBookDetails?.log_book_data?.day}</span>
+                </Col>
+                <Col md={1}></Col>
+                <Col md={3}>
+                  <span style={{ font: "normal normal bold 19px/34px Roboto" }}>
+                    Date:
+                  </span>{" "}
+                  <span>{logBookDetails?.log_book_data?.date}</span>
+                </Col>
+              </Row>
+              <div className="routineSection">
+                <div></div>
+                <Table striped hover>
+                  <thead>
+                    <tr
+                      style={{
+                        background: "#7A9ABF 0% 0% no-repeat padding-box",
+                        borderRadius: "4px 4px 0px 0px",
+                        opacity: "1",
+                      }}
+                    >
+                      <th>Period</th>
+                      <th>Students Present</th>
+                      <th>Subject</th>
+                      <th>Content Taught</th>
+                      <th>Homework</th>
+                    </tr>
+                  </thead>
+                  {logBookDetails?.status == "failure" ? (
+                    <Row>
+                      <Col md={12}>
+                        <h6
+                          className="failureMessage"
+                          style={{ position: "relative", left: "300px" }}
+                        >
+                          {logBookDetails?.message}
+                        </h6>
+                      </Col>
+                    </Row>
+                  ) : (
+                    logBookDetails?.log_book_data?.log_record?.map(
+                      (logData, indx) => {
+                        return (
+                          <tbody>
+                            <tr>
+                              <td>{logData?.period}</td>
+                              <td>{logData?.students_present}</td>
+                              <td>{logData?.subject_name}</td>
+                              <td>{logData?.content_taught}</td>
+                              <td>{logData?.home_work}</td>
+                            </tr>
+                          </tbody>
+                        );
+                      }
+                    )
+                  )}
+                </Table>
+                <Row style={{ padding: "10px" }}>
+                  <Col md={3}>
+                    <h6 style={{ textAlign: "left" }}>Name of Absentees : </h6>
+                  </Col>
+                  <Col md={9} style={{ textAlign: "left" }}>
+                    {logBookDetails?.log_book_data?.name_of_absentees?.map(
+                      (absentees, indx) => {
+                        return (
+                          absentees?.student_name &&
+                          `${absentees?.student_name}, `
+                        );
+                      }
+                    )}
+                  </Col>
+                </Row>
+                <Row style={{ padding: "10px" }}>
+                  <Col md={3}>
+                    <h6 style={{ textAlign: "left" }}>
+                      Number of Dress Defaulters :{" "}
+                    </h6>
+                  </Col>
+                  <Col md={9} style={{ textAlign: "left" }}>
+                    {logBookDetails?.log_book_data?.name_of_dress_defaulters?.map(
+                      (dressDefaulter, indx) => {
+                        return (
+                          dressDefaulter?.student_name !== null &&
+                          `${dressDefaulter?.student_name}, `
+                        );
+                      }
+                    )}
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </Col>
+          {showAddLogbook && (
+            <AddLogBook
+              show={showAddLogbook}
+              onHide={() => setShowAddLogbook(false)}
+              gradeData={gradeData}
+              closeAndLoad={closeAndLoad}
+            />
+          )}
         </Row>
-        </>
-    )
+      </>
+    );
 }
 
 export default LogBook;

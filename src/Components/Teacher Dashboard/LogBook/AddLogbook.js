@@ -85,6 +85,8 @@ const AddLogBook = (props) => {
     })
   }
 
+  console.log("props - ", props)
+
   const addLogBookData = () => {
     // const today = new Date()
     //     const dd = String(today.getDate()).padStart(2, '0');
@@ -126,8 +128,8 @@ const AddLogBook = (props) => {
               <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Grade</h6>
                 <select className="addLogBookBlock" name="grade" id="grade" onChange = {(e) => handleGradeChange(e)}>
                 <option value="">--Grade--</option>
-                  {gradeOptions?.map((grade) => {
-                    return <option value={grade?.value}>{grade?.label}</option>
+                  {props?.gradeData?.grade?.map((grade) => {
+                    return <option value={grade?.id}>{grade?.value}</option>
                   })}
                 </select>
               </Col>
@@ -184,8 +186,8 @@ const AddLogBook = (props) => {
                 /> */}
                 <select className="addLogBookBlock" name="section" id="section" onChange = {(e) => handleSectionChange(e)}>
                 <option value="">--Section--</option>
-                  {sectionOptions?.map((section) => {
-                    return <option value={section.value}>{section.label}</option>
+                  {props?.gradeData?.section?.map((section) => {
+                    return <option value={section.id}>{section.value}</option>
                   })}
                 </select>
               </Col>
@@ -194,7 +196,7 @@ const AddLogBook = (props) => {
             <Row style={{marginTop: "32px"}}>
               <Col md={5}>
               <h6>Add Subject</h6>
-                <select className="teacherBlock" name="subject" id="subject" onChange = {(e) => handleSubjectChange(e)}>
+                <select className="addLogBookBlock" name="subject" id="subject" onChange = {(e) => handleSubjectChange(e)}>
                 <option value="">--Subject--</option>
                   {allSubjectDetails?.subjects?.map((subject) => {
                     return <option value={subject?.subject_id}>{subject?.subject_name}</option>
@@ -209,7 +211,7 @@ const AddLogBook = (props) => {
           {/* <Button variant="outline-primary" style={{ alignItems: "center" }} onClick={resetData}>
             Reset
           </Button> */}
-          <Button variant="outline-primary" onClick={addLogBookData}>Submit</Button>
+          <Button variant="outline-primary" onClick={addLogBookData} disabled = {!(grade && section && periodData, subject && contentTaught && homework)}>Submit</Button>
         </Modal.Footer>
       </Modal>
     </>

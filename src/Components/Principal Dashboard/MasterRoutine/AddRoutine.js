@@ -158,6 +158,7 @@ const AddRoutine = (props) => {
     newMember = [...newMember, newData];
 
     setDataToAddRoutine(newMember);
+    setTeacherName('')
 
   };
 

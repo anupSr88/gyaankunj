@@ -38,7 +38,7 @@ const TDashboard = () => {
         fetchTeacherRoutine()
         getAllGradeDetails()
         // getAllStudents()
-    }, [weekDayToFetch])
+    }, [])
 
     const functn = () => {
       const today = new Date();
@@ -91,6 +91,8 @@ const TDashboard = () => {
       }
       setAbsenteesValue(newAbsenteesValue)
     }
+
+    console.log("absenteesValue - ", absenteesValue)
     
     const addDressDefaulterList = (e) => {
       let newDressList = [...dressDList, e.target.id]
@@ -594,7 +596,7 @@ const TDashboard = () => {
                                   letterSpacing: " 0px",
                                   color: "white",
                                 }}
-                              >{`${routine.grade}${routine.section_name} --- ${routine.time_range} --- ${routine.subject_name}`}</span>
+                              >{`${routine.grade} ${routine.section_name} --- ${routine.time_range} --- ${routine.subject_name}`}</span>
                             </Card.Body>
                           </Card>
                         );

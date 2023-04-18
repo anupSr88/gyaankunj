@@ -13,11 +13,11 @@ import { FaCheckSquare } from "react-icons/fa";
 
 const PDashboard = () => {
     const [checked, setChecked] = useState(false);
-    const [radioValue, setRadioValue] = useState("1");
+    const [radioValue, setRadioValue] = useState("");
     const [tableData, setTableData] = useState([]);
     const [overallAttendance, setOverallAttendance] = useState({});
     const [grade, setGrade] = useState("");
-    const [section, setSection] = useState("1");
+    const [section, setSection] = useState("");
     const [teacherName, setTeacherName] = useState("");
     const [dayData, setDayData] = useState("");
     const [gradeData, setGradeData] = useState([]);
@@ -106,13 +106,12 @@ const weekDayOption = [
 ]
 
 const handleGradeChange = (e) => {
-setGrade(e.value)
+setGrade(e.target.value)
 }
 
 const handleSectionChange = (e) => {
-console.log("e -", e)
-setSection(e.target.defaultValue)
-setRadioValue(e.currentTarget.value)
+setSection(e.target.value)
+// setRadioValue(e.currentTarget.value)
 }
 
 const handleSectionChangeToFetchLog = (e) => {
@@ -253,7 +252,7 @@ const fetchTeacherRoutine = () => {
                     </Col>
                     <Col md={9} className="attendanceOverviewInner">
                       <Row>
-                        <Col md={7}>
+                        <Col md={6}>
                           <h6
                             style={{
                               background: "#DEFABD 0% 0% no-repeat padding-box",
@@ -269,12 +268,21 @@ const fetchTeacherRoutine = () => {
                             Student
                           </h6>
                         </Col>
-                        <Col md={5} className="dflex">
+                        <Col md={3} className="dflex">
                           
                           <select className="principalGradeView" name="teacher" id="teacher" onChange = {(e) => handleGradeChange(e)}>
                 <option value="">--Grade--</option>
                   {gradeData?.grade?.map((grade) => {
                     return <option value={grade?.id}>{grade?.value}</option>
+                  })}
+                </select>
+                        </Col>
+                        <Col md={3} className="dflex">
+                          
+                          <select className="principalGradeView" name="teacher" id="teacher" onChange={(e) => handleSectionChange(e)}>
+                <option value="">--Section--</option>
+                  {gradeData?.section?.map((section) => {
+                    return <option value={section?.id}>{section?.value}</option>
                   })}
                 </select>
                         </Col>
@@ -333,7 +341,7 @@ const fetchTeacherRoutine = () => {
                           </span>
                         </Col>
                       </Row>
-                      <Row
+                      {/* <Row
                         style={{
                           width: "70%",
                           marginTop: "12px",
@@ -372,7 +380,7 @@ const fetchTeacherRoutine = () => {
                             ))}
                           </ButtonGroup>
                         </Col>
-                      </Row>
+                      </Row> */}
                     </Col>
                   </Row>
                 </div>

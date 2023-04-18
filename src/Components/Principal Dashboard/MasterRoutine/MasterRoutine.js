@@ -230,7 +230,7 @@ const MasterRoutine = () => {
                             rowSpan="3"
                           >
                             {masterRoutineData.time_table &&
-                              `${masterRoutineData.grade_id}A`}
+                              `${masterRoutineData.grade} A`}
                           </td>
                         </tr>
                       )}
@@ -268,7 +268,7 @@ const MasterRoutine = () => {
                             rowSpan="3"
                           >
                             {masterRoutineData.time_table &&
-                              `${masterRoutineData.grade_id}B`}
+                              `${masterRoutineData.grade} B`}
                           </td>
                         </tr>
                       )}
@@ -306,7 +306,7 @@ const MasterRoutine = () => {
                             rowSpan="3"
                           >
                             {masterRoutineData.time_table &&
-                              `${masterRoutineData.grade_id}C`}
+                              `${masterRoutineData.grade} C`}
                           </td>
                         </tr>
                       )}
@@ -344,7 +344,7 @@ const MasterRoutine = () => {
                             rowSpan="3"
                           >
                             {masterRoutineData.time_table &&
-                              `${masterRoutineData.grade_id}D`}
+                              `${masterRoutineData.grade} D`}
                           </td>
                         </tr>
                       )}
@@ -382,7 +382,7 @@ const MasterRoutine = () => {
                             rowSpan="3"
                           >
                             {masterRoutineData.time_table &&
-                              `${masterRoutineData.grade_id}E`}
+                              `${masterRoutineData.grade} E`}
                           </td>
                         </tr>
                       )}

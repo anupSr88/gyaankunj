@@ -78,7 +78,6 @@ const TDashboard = () => {
     }
 
     const addAbsentees = (e) => {
-      console.log("e - ", e)
       let newAbsenteesList = [...absenteesList, e.target.id]
       let newAbsenteesValue = [...absenteesValue, e.target.value]
       if(absenteesList.includes(e.target.id)) {
@@ -108,26 +107,7 @@ const TDashboard = () => {
       setDressDValue(newDressDValue)
     }
 
-
-    const classOptions = [
-        {value: 1, label: 1},
-        {value: 2, label: 2},
-        {value: 3, label: 3},
-        {value: 4, label: 4},
-        {value: 5, label: 5},
-        {value: 6, label: 6},
-        {value: 7, label: 7},
-        {value: 8, label: 8},
-        {value: 9, label: 9},
-        {value: 10, label: 10},
-       ]
-    
-      const sectionOptions = [
-        { value: '1', label: 'A' },
-        { value: '2', label: 'B' },
-        { value: '3', label: 'C' },
-        { value: '4', label: 'D' }
-      ]
+    console.log("dressDValue - ", dressDValue)
 
 
       const weekDayOption = [
@@ -161,12 +141,19 @@ const TDashboard = () => {
     const closeAndLoad = () => {
       setShowCheckAttendanceModal(false)
       getAllStudents()
+      unCheckRadio()
     }
 
     const getAllGradeDetails = () => {
       getGradeDetails()
       .then((res) => setGradeData(res.data))
       .catch((err) => console.log(err))
+      }
+
+      const unCheckRadio = () => {
+        let allRadioBtn = document.querySelectorAll('.radioBtn')
+
+        allRadioBtn.forEach(value => value.checked = false)
       }
 
 
@@ -489,9 +476,10 @@ const TDashboard = () => {
                          
                         </Col> */}
                           <Col md={4}>
-                            <Form>
+                            {/* <Form>
                               <div key="inline-radio" className="mb-3">
                                 <Form.Check
+                                className='radioBtn'
                                   inline
                                   value={student?.student_name}
                                   name="group1"
@@ -513,8 +501,33 @@ const TDashboard = () => {
                                   style={{ position: "relative", left: "82px" }}
                                 />
                               </div>
-                            </Form>
+                            </Form> */}
+                            <input
+                              type="radio"
+                              name="fav_language"
+                              value={student?.student_name}
+                              id={student?.student_id}
+                              className='radioBtn'
+                              onChange={(e) => addAbsentees(e)}
+                              style={{
+                                position: "relative",
+                                right: "46px",
+                              }}
+                            ></input>
+                            <input
+                              type="radio"
+                              name="fav_language"
+                              value={student?.student_name}
+                              id={student?.student_id}
+                              className='radioBtn'
+                              onChange={(e) => addDressDefaulterList(e)}
+                              style={{
+                                position: "relative",
+                                left: "80px",
+                              }}
+                            ></input>
                           </Col>
+                          
                         </Row>
                       );
                     })

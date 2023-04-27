@@ -138,7 +138,7 @@ const AddRoutine = (props) => {
     .catch((err) => console.log("PostData err - ",  err))
   }
 
-  
+  console.log("dataToAddRoutine = ", dataToAddRoutine)
 
   const addRoutineDetails = () => {
     let newMember = [...dataToAddRoutine];
@@ -177,6 +177,8 @@ const AddRoutine = (props) => {
     .then((res) => setGradeData(res.data))
     .catch((err) => console.log(err))
     }
+
+    console.log("gradeData - ", gradeData)
   
   return (
     <>
@@ -199,8 +201,9 @@ const AddRoutine = (props) => {
 
                 <select className="masterRoutineGradeView" name="grade" id="grade" onChange = {(e) => handleGradeChange(e)} disabled = {grade !== ''}>
                 <option value="">--Grade--</option>
-                  {gradeData?.grade?.map((grade) => {
-                    return <option value={grade?.id}>{grade?.value}</option>
+                  {gradeData?.grade_details?.grade_details?.map((grade) => {
+                    console.log("grade - ", grade)
+                    return <option value={grade?.grade_id}>{grade?.grade_id}</option>
                   })}
                 </select>
                 
@@ -224,8 +227,11 @@ const AddRoutine = (props) => {
                 <h6>Add Section</h6>
                 <select className="masterRoutineGradeView" name="section" id="section" onChange = {(e) => handleSectionChange(e)} disabled = {section !== ''}>
                 <option value="">--Section--</option>
-                  {gradeData?.section?.map((section) => {
-                    return <option value={section.id}>{section.value}</option>
+                  {gradeData?.grade_details?.grade_details?.map((section) => {
+                     section?.section_list?.map((sectionName) => {
+                      console.log("sectionName - ", sectionName?.section_name)
+                      return <option>{sectionName?.section_name}</option>
+                    })
                   })}
                 </select>
                 </fieldset>}

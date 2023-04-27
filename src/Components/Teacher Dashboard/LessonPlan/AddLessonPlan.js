@@ -98,8 +98,6 @@ const AddLessonPlan = (props) => {
 
   }
 
-  console.log("lessonMetadata - ", lessonMetadata)
-
   return (
     <>
       <Modal

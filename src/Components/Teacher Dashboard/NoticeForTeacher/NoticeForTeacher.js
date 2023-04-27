@@ -29,7 +29,7 @@ const NoticeForTeacher = () => {
   }
 
   const showResponseHandler = (id) => {
-    allNotices();
+    // allNotices();
     let openHandler = [...hideResponse];
     openHandler.push(id);
     setHideResponse([...openHandler]);

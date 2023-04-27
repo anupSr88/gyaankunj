@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import {Row, Col, Table, Button} from 'react-bootstrap'
 import StudentSidebar from '../StudentSidebar'
 import {studentAssignmentList} from '../../../ApiClient'
+import AssignmentSheet from './StartAssignment'
 
 const StudentAssigments = () => {
 
-    const userDetails = JSON.parse(localStorage.getItem('UserData'))
-
-    const [assignmentFullList, setAssignmentFullList] = useState({})
+  const [showAssignmentSheet, setShowAssignmentSheet] = useState(false)
+  const userDetails = JSON.parse(localStorage.getItem('UserData'))
+  const [assignmentFullList, setAssignmentFullList] = useState({})
 
     useEffect(() => {
         fetchStudentAssignments();
@@ -20,7 +21,13 @@ const StudentAssigments = () => {
         .catch((err) => console.log("Assignment Tab err - ", err))
     }
 
-    console.log("assignmentFullList - ", assignmentFullList)
+    const startAssignment = () => {
+      setShowAssignmentSheet(true)
+    }
+
+    const closeAssignment = () => {
+      setShowAssignmentSheet(false)
+    }
 
 
     return (
@@ -283,6 +290,7 @@ const StudentAssigments = () => {
                       <th>Details</th>
                       <th>Actions</th>
                       <th>Assigned on</th>
+                      <th></th>
                     </tr>
                   </thead>
                   {assignmentFullList?.student_assignments?.map(
@@ -296,6 +304,7 @@ const StudentAssigments = () => {
                             <td>{assignment?.assignment_name}</td>
                             <td>{assignment?.assignment_status}</td>
                             <td>1-1-2022</td>
+                            <td><Button variant="outline-primary" onClick={startAssignment}>Start</Button></td>
                           </tr>
                         </tbody>
                       )
@@ -311,6 +320,7 @@ const StudentAssigments = () => {
             </Row>
             </Col>
             </Row>
+            {showAssignmentSheet && <AssignmentSheet show={showAssignmentSheet} onHide={closeAssignment} />}
         </>
     )
 }

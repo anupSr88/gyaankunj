@@ -178,7 +178,7 @@ const AddRoutine = (props) => {
     .catch((err) => console.log(err))
     }
 
-    console.log("gradeData - ", gradeData)
+    console.log("dataToAddRoutine - ", dataToAddRoutine)
   
   return (
     <>
@@ -227,11 +227,10 @@ const AddRoutine = (props) => {
                 <h6>Add Section</h6>
                 <select className="masterRoutineGradeView" name="section" id="section" onChange = {(e) => handleSectionChange(e)} disabled = {section !== ''}>
                 <option value="">--Section--</option>
-                  {gradeData?.grade_details?.grade_details?.map((section) => {
-                     section?.section_list?.map((sectionName) => {
-                      console.log("sectionName - ", sectionName?.section_name)
-                      return <option>{sectionName?.section_name}</option>
-                    })
+                  {sectionOptions?.map((section) => {
+                     
+                      return <option value={section?.value}>{section?.label}</option>
+                    
                   })}
                 </select>
                 </fieldset>}

@@ -131,6 +131,14 @@ const viewNotification = (userId, role) => {
     return apiInstance.get(`/fetch_notifications?user_id=${userId}&role=${role}`)
 }
 
+const assignmentList = (userId) => {
+    return apiInstance.get(`/view_assignments?teacher_id=${userId}`)
+}
+
+const createAssignment = (postData) => {
+    return apiInstance.post(`/create_assignment`, postData)
+}
+
 
 export {
     // loginUser,
@@ -161,5 +169,7 @@ export {
     getTeachersData,
     lessonPlanAllDetails,
     verifyLessonPlan,
-    viewNotification
+    viewNotification,
+    assignmentList,
+    createAssignment
 }

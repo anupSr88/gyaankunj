@@ -93,9 +93,7 @@ const AddLessonPlan = (props) => {
 
 
   const handleChapterName = (e) => {
-    console.log(e.target.value)
     setChapterName(e.target.value)
-
   }
 
   return (
@@ -115,12 +113,6 @@ const AddLessonPlan = (props) => {
           <Form className="addLessonForm">
             <Row style={{ marginBottom: "50px" }}>
               <Col md={3}>
-                {/* <span>Grade</span>
-                <Select
-                  options={gradeOptions}
-                  onChange={(e) => setGrade(e.value)}
-                  placeholder="Add Grade"
-                /> */}
                 <select
                   className="lessonPlanSubject"
                   name="grade"
@@ -134,12 +126,6 @@ const AddLessonPlan = (props) => {
                 </select>
               </Col>
               <Col md={3}>
-                {/* <span>Section</span>
-                <Select
-                  options={sectionOptions}
-                  onChange={(e) => setSection(e.value)}
-                  placeholder="Add Section"
-                /> */}
                 <select
                   className="lessonPlanSubject"
                   name="section"

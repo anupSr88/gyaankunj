@@ -211,7 +211,7 @@ const AddQuestionSet = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header style={{ borderBottom: "none" }}>
+        <Modal.Header style={{ borderBottom: "none" }} closeButton>
           <Modal.Title
             style={{
               font: "normal normal bold 22px/34px Roboto",

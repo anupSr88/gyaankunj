@@ -29,6 +29,7 @@ const AddQuestionSet = (props) => {
   const [subjectiveQuestionData, setSubjectiveQuestionData] = useState("");
   const [answerJumbleOptions, setAnswerUnjumbleOptions] = useState([{}]);
   const [unJumblequestionText, setUnJumbleQuestionText] = useState("");
+  const [marksData, setmarksData] = useState('')
 
   const userDetails = JSON.parse(localStorage.getItem("UserData"));
 
@@ -60,6 +61,8 @@ const AddQuestionSet = (props) => {
     setAnswerOptions(optionList);
   };
 
+  console.log("marksData = ", marksData)
+
   const saveSingleOptionAssignment = () => {
     let dataFromSingleSelect = [...savedData];
     let savedAssignmentData = {
@@ -67,7 +70,7 @@ const AddQuestionSet = (props) => {
       question: questionText,
       correct_answer: "",
       all_options: answerOptions,
-      marks: "5 marks",
+      marks: marksData,
     };
 
     dataFromSingleSelect = [...dataFromSingleSelect, savedAssignmentData];
@@ -85,6 +88,10 @@ const AddQuestionSet = (props) => {
     setFillBlankQuestionData(e.target.value);
   };
 
+  const handleMarksData = (e) => {
+    setmarksData(e.target.value)
+  }
+
   const handleCorrectAnswer = (e) => {
     setCorrectAnswerData(e.target.value);
   };
@@ -96,8 +103,10 @@ const AddQuestionSet = (props) => {
       question: fillBlankQuestionData,
       correct_answer: correctAnswerData,
       all_options: [],
-      marks: "5 marks",
+      marks: marksData,
     };
+
+    console.log("savedAssignmentData - ", savedAssignmentData)
 
     dataFromSingleSelect = [...dataFromSingleSelect, savedAssignmentData];
     setSavedData(dataFromSingleSelect);
@@ -131,7 +140,7 @@ const AddQuestionSet = (props) => {
       question: multiQuestionText,
       correct_answer: "",
       all_options: multipleAnswerOptions,
-      marks: "5 marks",
+      marks: marksData,
     };
 
     dataFromSingleSelect = [...dataFromSingleSelect, savedAssignmentData];
@@ -154,7 +163,7 @@ const AddQuestionSet = (props) => {
       question: subjectiveQuestionData,
       correct_answer: "",
       all_options: [],
-      marks: "5 marks",
+      marks: marksData,
     };
     dataFromSingleSelect = [...dataFromSingleSelect, savedAssignmentData];
     setSavedData(dataFromSingleSelect);
@@ -188,7 +197,7 @@ const AddQuestionSet = (props) => {
       question: unJumblequestionText,
       correct_answer: "",
       all_options: answerJumbleOptions,
-      marks: "5 marks",
+      marks: marksData,
     };
 
     dataFromSingleSelect = [...dataFromSingleSelect, savedAssignmentData];
@@ -249,8 +258,16 @@ const AddQuestionSet = (props) => {
                             ></input>
                           </Col>
                         </Row>
-                        <Row className="addFillBlankSection">
-                          <Col md={10}>
+                        <Row>
+                          <Col md={4}>
+                            <input
+                              type="text"
+                              placeholder="Add Marks"
+                              className="fillBlankQuest"
+                              onChange={(e) => handleMarksData(e)}
+                            ></input>
+                          </Col>
+                          <Col md={8}>
                             <input
                               type="text"
                               placeholder="Correct Answer"
@@ -258,6 +275,9 @@ const AddQuestionSet = (props) => {
                               onChange={(e) => handleCorrectAnswer(e)}
                             ></input>
                           </Col>
+                        </Row>
+                        <Row className="addFillBlankSection">
+                          
                           <Col md={2}>
                             <Button
                               varient="outline-primary"
@@ -281,6 +301,16 @@ const AddQuestionSet = (props) => {
                               onChange={(e) =>
                                 setMultiQuestionText(e.target.value)
                               }
+                            ></input>
+                          </Col>
+                        </Row>
+                        <Row>
+                        <Col md={4}>
+                            <input
+                              type="text"
+                              placeholder="Add Marks"
+                              className="fillBlankQuest"
+                              onChange={(e) => handleMarksData(e)}
                             ></input>
                           </Col>
                         </Row>
@@ -373,6 +403,16 @@ const AddQuestionSet = (props) => {
                           </Col>
                         </Row>
                         <Row>
+                        <Col md={4}>
+                            <input
+                              type="text"
+                              placeholder="Add Marks"
+                              className="fillBlankQuest"
+                              onChange={(e) => handleMarksData(e)}
+                            ></input>
+                          </Col>
+                        </Row>
+                        <Row>
                           <Col md={8}>
                             <Row>
                               <Col md={12}>
@@ -458,6 +498,16 @@ const AddQuestionSet = (props) => {
                             ></input>
                           </Col>
                         </Row>
+                        <Row>
+                        <Col md={4}>
+                            <input
+                              type="text"
+                              placeholder="Add Marks"
+                              className="fillBlankQuest"
+                              onChange={(e) => handleMarksData(e)}
+                            ></input>
+                          </Col>
+                        </Row>
                         <Row className="addFillBlankSection">
                           <Col md={10}></Col>
                           <Col md={2}>
@@ -483,6 +533,16 @@ const AddQuestionSet = (props) => {
                               onChange={(e) =>
                                 setUnJumbleQuestionText(e.target.value)
                               }
+                            ></input>
+                          </Col>
+                        </Row>
+                        <Row>
+                        <Col md={4}>
+                            <input
+                              type="text"
+                              placeholder="Add Marks"
+                              className="fillBlankQuest"
+                              onChange={(e) => handleMarksData(e)}
                             ></input>
                           </Col>
                         </Row>

@@ -139,6 +139,18 @@ const createAssignment = (postData) => {
     return apiInstance.post(`/create_assignment`, postData)
 }
 
+const SaveAssignmentData = (assignmentData) => {
+    return apiInstance.put(`/save_assignment_details`, assignmentData)
+}
+
+const publishAssignmentData = (id) => {
+    return apiInstance.get(`/publish_assignment?assignment_id=${id}`)
+}
+
+const loadAssignmentData = (AssignmentId, userId) => {
+    return apiInstance.get(`/load_assignment?assignment_id=${AssignmentId}&student_id=${userId}`)
+}
+
 
 export {
     // loginUser,
@@ -171,5 +183,8 @@ export {
     verifyLessonPlan,
     viewNotification,
     assignmentList,
-    createAssignment
+    createAssignment,
+    SaveAssignmentData,
+    publishAssignmentData,
+    loadAssignmentData
 }

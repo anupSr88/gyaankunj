@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
+import {loadAssignmentData} from '../../../ApiClient'
 import './studentAssignment.css'
 
 const AssignmentSheet = (props) => {
 
     const [fullscreen, setFullscreen] = useState(true);
+
+    useEffect(() => {
+      fetchAssignmentData();
+    },[])
+
+    const userDetails = JSON.parse(localStorage.getItem('UserData'))
+
+    const fetchAssignmentData = () => {
+      const AssignmentId = props.assignmentId
+      const userId = userDetails?.user_id
+      loadAssignmentData(AssignmentId, userId)
+      .then((res) => console.log("AssignmentData - ", res.data))
+      .catch((err) => console.log("AssignmentData err - ", err))
+    }
 
   return (
     <>

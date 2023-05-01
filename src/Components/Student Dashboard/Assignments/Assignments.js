@@ -3,12 +3,14 @@ import {Row, Col, Table, Button} from 'react-bootstrap'
 import StudentSidebar from '../StudentSidebar'
 import {studentAssignmentList} from '../../../ApiClient'
 import AssignmentSheet from './StartAssignment'
+import moment from 'moment'
 
 const StudentAssigments = () => {
 
   const [showAssignmentSheet, setShowAssignmentSheet] = useState(false)
   const userDetails = JSON.parse(localStorage.getItem('UserData'))
-  const [assignmentFullList, setAssignmentFullList] = useState({})
+  const [assignmentFullList, setAssignmentFullList] = useState([])
+  const [editIndex, setEditIndex] = useState(null)
 
     useEffect(() => {
         fetchStudentAssignments();
@@ -21,13 +23,16 @@ const StudentAssigments = () => {
         .catch((err) => console.log("Assignment Tab err - ", err))
     }
 
-    const startAssignment = () => {
+    const startAssignment = (id) => {
+      setEditIndex(id)
       setShowAssignmentSheet(true)
     }
 
     const closeAssignment = () => {
       setShowAssignmentSheet(false)
     }
+
+    console.log("assignmentFullList - ", assignmentFullList)
 
 
     return (
@@ -108,20 +113,24 @@ const StudentAssigments = () => {
                   {assignmentFullList?.student_assignments?.map(
                     (assignment, indx) => {
                         console.log("assignment - ", assignment)
-                      return assignment?.assignment_status == "new" ? (
+                      return assignment?.assignment_status == "New" && (
                         <tbody>
                           <tr>
                             <td>{indx + 1}</td>
                             <td>Maths</td>
                             <td>{assignment?.assignment_name}</td>
-                            <td><Button variant="outline-primary">Start</Button></td>
-                            <td>1-1-2022</td>
+                            <td><Button variant="outline-primary" onClick={() => startAssignment(assignment?.assignment_id)}>Start</Button></td>
+                            {showAssignmentSheet && editIndex === assignment?.assignment_id && <AssignmentSheet show={showAssignmentSheet} onHide={closeAssignment} assignmentId={assignment?.assignment_id} />}
+                            <td>{moment(assignment?.assigned_on).format(
+                                  "DD-MMM-YYYY"
+                                )}</td>
                           </tr>
                         </tbody>
                       )
-                      :
-                      (<p>No Assignments Available!!</p>)
+                      // :
+                      // (<p>No Assignments Available!!</p>)
                     }
+                    
                   )}
                
                 </Table>
@@ -146,40 +155,6 @@ const StudentAssigments = () => {
                 <Col md={4}>
                   <h4>In Progress Assignment</h4>
                 </Col>
-                {/* <Col md={2} className="teacherRoutingDD">
-                  <span>
-                    <Select
-                      placeholder="Section"
-                      isSearchable={false}
-                      options={sectionOptions}
-                      onChange={(e) => handlesectionToFetchLog(e)}
-                    />
-                  </span>
-                </Col>
-                <Col md={2} className="teacherRoutingDD">
-                  <span>
-                    <Select
-                      placeholder="Class"
-                      isSearchable={false}
-                      options={classOptions}
-                      onChange={(e) => handlegradeToFetchLog(e)}
-                    />
-                  </span>
-                </Col>
-                <Col md={2} style={{ marginTop: "17px" }}>
-                  <Form.Control
-                    type="date"
-                    name="datepic"
-                    placeholder="DateRange"
-                    value={dateToFetchLog}
-                    onChange={(e) => setDateToFetchLog(e.target.value)}
-                  />
-                </Col>
-                <Col md={1} style={{ paddingTop: "17px" }}>
-                  <Button variant="outline-primary" onClick={getLogBook}>
-                    Search
-                  </Button>
-                </Col> */}
               </Row>
               <Row md={12} style={{justifyContent:"space-evenly", paddingTop:"20px"}}>
                 <Col md={12} className="AssignmentDetails">
@@ -202,19 +177,22 @@ const StudentAssigments = () => {
                   {assignmentFullList?.student_assignments?.map(
                     (assignment, indx) => {
                         console.log("assignment - ", assignment)
-                      return assignment?.assignment_status == "inInprogress" ? (
+                      // return assignment?.assignment_status == "Inprogress" ? 
+                      return assignment?.assignment_status == "Inprogress" && (
                         <tbody>
                           <tr>
                             <td>{indx + 1}</td>
                             <td>Maths</td>
                             <td>{assignment?.assignment_name}</td>
                             <td><Button variant="outline-primary">Open</Button></td>
-                            <td>1-1-2022</td>
+                            <td>{moment(assignment?.assigned_on).format(
+                                  "DD-MMM-YYYY"
+                                )}</td>
                           </tr>
                         </tbody>
                       )
-                      :
-                      (<p>No Assignments Available!!</p>)
+                      // :
+                      // (<p>No Assignments Available!!</p>)
                     }
                   )}
                 </Table>
@@ -295,21 +273,21 @@ const StudentAssigments = () => {
                   </thead>
                   {assignmentFullList?.student_assignments?.map(
                     (assignment, indx) => {
-                        console.log("assignment - ", assignment)
-                      return assignment?.assignment_status == "Submitted" ? (
-                        <tbody>
+                      // return assignment?.assignment_status == "Submitted" ? (
+                        return assignment?.assignment_status == "Submitted" && <tbody>
                           <tr>
                             <td>{indx + 1}</td>
                             <td>Maths</td>
                             <td>{assignment?.assignment_name}</td>
                             <td>{assignment?.assignment_status}</td>
-                            <td>1-1-2022</td>
-                            <td><Button variant="outline-primary" onClick={startAssignment}>Start</Button></td>
+                            <td>{moment(assignment?.assigned_on).format(
+                                  "DD-MMM-YYYY"
+                                )}</td>
                           </tr>
                         </tbody>
-                      )
-                      :
-                      (<p>No Assignments Available!!</p>)
+                      // )
+                      // :
+                      // (<p>No Assignments Available!!</p>)
                     }
                   )}
                 </Table>
@@ -320,7 +298,7 @@ const StudentAssigments = () => {
             </Row>
             </Col>
             </Row>
-            {showAssignmentSheet && <AssignmentSheet show={showAssignmentSheet} onHide={closeAssignment} />}
+            
         </>
     )
 }

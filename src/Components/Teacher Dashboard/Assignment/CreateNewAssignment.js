@@ -20,7 +20,7 @@ const CreateNewAssignment = (props) => {
 
   useEffect(() => {
     lessonPlanMetadata();
-  }, [grade, sectionData]);
+  }, [grade && sectionData]);
 
   useEffect(() => {
     getAllGradeDetails();
@@ -148,7 +148,7 @@ const CreateNewAssignment = (props) => {
                     id="section"
                     onChange={(e) => setSectionData(e.target.value)}
                   >
-                    <option value="">--Grade--</option>
+                    <option value="">--Section--</option>
                     {sectionOptions?.map((section, indx) => {
                       return (
                         <option value={section?.value}>{section?.label}</option>
@@ -168,7 +168,9 @@ const CreateNewAssignment = (props) => {
                     name="section"
                     id="section"
                     onChange={(e) => setChapterNumber(e.target.value)}
+                    // disabled={!(grade && sectionData)}
                   >
+                    <option value="">--Chapter--</option>
                     {lessonMetadata?.status == "success" &&
                       lessonMetadata?.metadata?.map((chapter) => {
                         console.log("chapter - ", chapter);
@@ -200,8 +202,8 @@ const CreateNewAssignment = (props) => {
           {/* <Button variant="outline-primary" style={{ alignItems: "center" }} onClick={resetData}>
             Reset
           </Button> */}
-          <Button variant="outline-primary">Cancel</Button>
-          <Button variant="outline-primary" onClick={createAssignmentData}>
+          <Button variant="outline-primary" onClick={() => props.onHide()}>Cancel</Button>
+          <Button variant="outline-primary" onClick={createAssignmentData} disabled={!(grade && sectionData && chapterNumber && assignmentType && assignmentName)}>
             Create
           </Button>
         </Modal.Footer>

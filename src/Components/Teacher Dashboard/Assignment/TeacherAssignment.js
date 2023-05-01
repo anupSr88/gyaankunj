@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TeacherSidebar from "../TeacherSidebar";
 import { Row, Col, Button, Table } from "react-bootstrap";
 import SaveAssignment from "./SaveAssignment";
-import { assignmentList } from '../../../ApiClient'
+import { assignmentList, publishAssignmentData } from '../../../ApiClient'
 import CreateNewAssignment from "./CreateNewAssignment";
 import { FaCheck } from 'react-icons/fa';
 
@@ -42,6 +42,16 @@ const TeacherAssignment = (props) => {
     const userId = userDetails?.user_id
     assignmentList(userId)
     .then((res) => setAssignmentListView(res.data))
+    .catch((err) => console.log("Assignment list err - ", err))
+  }
+
+  const publishAssignmentModule = (id) => {
+    const assignmentId = id
+    publishAssignmentData(assignmentId)
+    .then((res) => {
+      getAssignmentList()
+      console.log(res.data)
+    })
     .catch((err) => console.log("Assignment list err - ", err))
   }
 
@@ -118,7 +128,7 @@ const TeacherAssignment = (props) => {
                                   >
                                     Save
                                   </Button>
-                                  {showSaveAssignment && editIndex === indx && <SaveAssignment show={showSaveAssignment} onHide={closeAndLoadAssignmentAfterSave} propp={assignment?.assignment_id}/>}
+                                  {showSaveAssignment && editIndex === indx && <SaveAssignment show={showSaveAssignment} onHide={closeAndLoadAssignmentAfterSave} assignmentIdData={assignment?.assignment_id}/>}
                                 </td>
                               ) : assignment?.to_save == false &&
                                 assignment?.is_published == false ? (
@@ -126,6 +136,7 @@ const TeacherAssignment = (props) => {
                                   <Button
                                     style={{ width: "99px", height: "34px" }}
                                     variant="outline-primary"
+                                    onClick={() => publishAssignmentModule(assignment?.assignment_id)}
                                   >
                                     Publish
                                   </Button>

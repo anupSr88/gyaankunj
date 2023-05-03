@@ -33,7 +33,9 @@ useEffect(() => {
     getAttendanceOverview()
     getAllGradeDetails()
     getAllTeachersData()
-},[grade, section])
+    fetchTeacherRoutine()
+},[grade, section, teacherName, weekDayToFetch])
+
 
 const gradeOptions = [
   {value: "1", label: 1},
@@ -272,17 +274,22 @@ const fetchTeacherRoutine = () => {
                           
                           <select className="principalGradeView" name="teacher" id="teacher" onChange = {(e) => handleGradeChange(e)}>
                 <option value="">--Grade--</option>
-                  {gradeData?.grade?.map((grade) => {
-                    return <option value={grade?.id}>{grade?.value}</option>
-                  })}
+                {gradeData?.grade_details?.grade_details?.map((grade) => {
+                      // console.log("grade - ", grade)
+                      return (
+                        <option value={grade?.grade_id}>
+                          {grade?.grade_id}
+                        </option>
+                      );
+                    })}
                 </select>
                         </Col>
                         <Col md={3} className="dflex">
                           
                           <select className="principalGradeView" name="teacher" id="teacher" onChange={(e) => handleSectionChange(e)}>
                 <option value="">--Section--</option>
-                  {gradeData?.section?.map((section) => {
-                    return <option value={section?.id}>{section?.value}</option>
+                  {sectionOptions?.map((section) => {
+                    return <option value={section?.value}>{section?.label}</option>
                   })}
                 </select>
                         </Col>
@@ -401,16 +408,21 @@ const fetchTeacherRoutine = () => {
                     <Col md={2} className="teacherRoutingDD">
                     <select className="principalGradeView" name="grade" id="grade" onChange = {(e) => handleGradeChangeToFetchLog(e)}>
                 <option value="">--Grade--</option>
-                  {gradeData?.grade?.map((grade) => {
-                    return <option value={grade?.id}>{grade?.value}</option>
-                  })}
+                {gradeData?.grade_details?.grade_details?.map((grade) => {
+                      // console.log("grade - ", grade)
+                      return (
+                        <option value={grade?.grade_id}>
+                          {grade?.grade_id}
+                        </option>
+                      );
+                    })}
                 </select>
                     </Col>
                     <Col md={2} className="teacherRoutingDD">
                     <select className="principalGradeView" name="section" id="section" onChange = {(e) => handleSectionChangeToFetchLog(e)}>
                 <option value="">--Section--</option>
-                  {gradeData?.section?.map((section) => {
-                    return <option value={section.id}>{section.value}</option>
+                  {sectionOptions?.map((section) => {
+                    return <option value={section.value}>{section.label}</option>
                   })}
                 </select>
                     </Col>
@@ -541,6 +553,7 @@ const fetchTeacherRoutine = () => {
                   })}
                 </select>
                   </Col>
+                  <Col md={1}></Col>
                   <Col md={5}>
                   <select className="teacherScheduleBlock" name="teacher" id="teacher" onChange = {(e) => handleTeacherChange(e)}>
                 <option value="">--Teacher--</option>
@@ -550,10 +563,10 @@ const fetchTeacherRoutine = () => {
                 </select>
                   </Col>
                   
-                  <Col md={2} style={{paddingRight:"25px"}}>
+                  {/* <Col md={2} style={{paddingRight:"25px"}}>
                   
                   {(teacherName && weekDayToFetch) !== '' && <FaCheckSquare onClick={fetchTeacherRoutine} style={{height:"40px", width:"40px", color:"blue", cursor:"pointer"}} />}
-                  </Col>
+                  </Col> */}
                 </Row>
                 <Row style={{marginTop: "20px"}}>
                   <Col md={12}>
@@ -574,7 +587,7 @@ const fetchTeacherRoutine = () => {
                                   letterSpacing: " 0px",
                                   color: "white",
                                 }}
-                              >{`${routine.time_range} --- ${routine.subject_name}--${routine.grade}${routine.section_name}`}</span>
+                              >{`${routine.time_range} --- ${routine.subject_name}--${routine.grade} ${routine.section_name}`}</span>
                             </Card.Body>
                           </Card>
                         );

@@ -26,8 +26,11 @@ function LessonPlanDetails(props) {
         .catch((err) => console.log("Lesson err - ", err))
     }
 
+    
+
     const showResponseHandler = (id) => {
-        showLessonPlanAllDetails(id)
+        console.log("lessonAllDetails - ", lessonAllDetails)
+        lessonAllDetails?.length === 0 && showLessonPlanAllDetails(id)
         let openHandler = [...hideResponse];
         openHandler.push(id);
         setHideResponse([...openHandler]);

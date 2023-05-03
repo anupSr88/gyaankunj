@@ -128,7 +128,7 @@ const TeacherAssignment = (props) => {
                                   >
                                     Save
                                   </Button>
-                                  {showSaveAssignment && editIndex === indx && <SaveAssignment show={showSaveAssignment} onHide={closeAndLoadAssignmentAfterSave} assignmentIdData={assignment?.assignment_id}/>}
+                                  {showSaveAssignment && editIndex === indx && <SaveAssignment show={showSaveAssignment} onHide={closeAndLoadAssignmentAfterSave} assignmentIdData={assignment?.assignment_id} assignmentGrade={assignment?.grade} assignmentSection={assignment?.section_name}/>}
                                 </td>
                               ) : assignment?.to_save == false &&
                                 assignment?.is_published == false ? (

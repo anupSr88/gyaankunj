@@ -32,8 +32,6 @@ const StudentAssigments = () => {
       setShowAssignmentSheet(false)
     }
 
-    console.log("assignmentFullList - ", assignmentFullList)
-
 
     return (
         <>
@@ -112,7 +110,6 @@ const StudentAssigments = () => {
                   </thead>
                   {assignmentFullList?.student_assignments?.map(
                     (assignment, indx) => {
-                        console.log("assignment - ", assignment)
                       return assignment?.assignment_status == "New" && (
                         <tbody>
                           <tr>
@@ -120,7 +117,7 @@ const StudentAssigments = () => {
                             <td>Maths</td>
                             <td>{assignment?.assignment_name}</td>
                             <td><Button variant="outline-primary" onClick={() => startAssignment(assignment?.assignment_id)}>Start</Button></td>
-                            {showAssignmentSheet && editIndex === assignment?.assignment_id && <AssignmentSheet show={showAssignmentSheet} onHide={closeAssignment} assignmentId={assignment?.assignment_id} />}
+                            {showAssignmentSheet && editIndex === assignment?.assignment_id && <AssignmentSheet show={showAssignmentSheet} onHide={closeAssignment} assignmentId={assignment?.assignment_id} assignmentType = {assignment?.assignment_type_name} assignmentName = {assignment?.assignment_name} />}
                             <td>{moment(assignment?.assigned_on).format(
                                   "DD-MMM-YYYY"
                                 )}</td>
@@ -176,7 +173,6 @@ const StudentAssigments = () => {
                   </thead>
                   {assignmentFullList?.student_assignments?.map(
                     (assignment, indx) => {
-                        console.log("assignment - ", assignment)
                       // return assignment?.assignment_status == "Inprogress" ? 
                       return assignment?.assignment_status == "Inprogress" && (
                         <tbody>

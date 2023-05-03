@@ -120,9 +120,14 @@ const AddLessonPlan = (props) => {
                   onChange={(e) => setGrade(e.target.value)}
                 >
                   <option value="">--Grade--</option>
-                  {gradeData?.grade?.map((grade) => {
-                    return <option value={grade?.id}>{grade?.value}</option>;
-                  })}
+                  {gradeData?.grade_details?.grade_details?.map((grade) => {
+                      // console.log("grade - ", grade)
+                      return (
+                        <option value={grade?.grade_id}>
+                          {grade?.grade_id}
+                        </option>
+                      );
+                    })}
                 </select>
               </Col>
               <Col md={3}>
@@ -133,8 +138,8 @@ const AddLessonPlan = (props) => {
                   onChange={(e) => setSection(e.target.value)}
                 >
                   <option value="">--Section--</option>
-                  {gradeData?.section?.map((section) => {
-                    return <option value={section.id}>{section.value}</option>;
+                  {sectionOptions?.map((section) => {
+                    return <option value={section.value}>{section.label}</option>;
                   })}
                 </select>
               </Col>

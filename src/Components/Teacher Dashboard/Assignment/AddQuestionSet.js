@@ -193,7 +193,7 @@ const AddQuestionSet = (props) => {
   const saveUnJumbleAssignment = () => {
     let dataFromSingleSelect = [...savedData];
     let savedAssignmentData = {
-      type: "multiple_choice(radio)",
+      type: "unjumble",
       question: unJumblequestionText,
       correct_answer: "",
       all_options: answerJumbleOptions,

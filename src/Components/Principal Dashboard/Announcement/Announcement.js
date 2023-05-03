@@ -22,14 +22,14 @@ const Announcements = () => {
     const userDetails = JSON.parse(localStorage.getItem('UserData'))
 
     useEffect(() => {
-      allNotices();
+      allNoticesData();
     }, [])
 
     const handleShowModal = () => {
         setShowAddAnnouncement(true)
   }
 
-  const allNotices = () => {
+  const allNoticesData = () => {
     const user_id = userDetails.user_id
     viewAllNotice(user_id)
     .then((res) => setAllNotice(res.data))
@@ -38,16 +38,16 @@ const Announcements = () => {
 
   const closeAndLoad = () => {
     setShowAddAnnouncement(false)
-    allNotices()
+    allNoticesData()
   }
 
-  const showPublishModal = (key) => {
-    setIndexedPublishNotice(key)
+  const showPublishModal = (noticeId) => {
+    console.log("notice - ", noticeId)
+    setIndexedPublishNotice(noticeId)
     setShowAddAnnouncement(true)
   }
 
   const showResponseHandler = (id) => {
-    allNotices();
     let openHandler = [...hideResponse];
     openHandler.push(id);
     setHideResponse([...openHandler]);
@@ -103,7 +103,6 @@ const Announcements = () => {
                     <div>
                     {
                       allNotice?.notices?.map((notice, indx) => {
-                        console.log("notice - ", notice)
                           return (
                             <fieldset>
                               <Row className="lessonData">
@@ -153,13 +152,23 @@ const Announcements = () => {
                                     textDecoration: "underline",
                                     cursor: "pointer",
                                   }}
-                                  onClick={() => showPublishModal(indx)}
+                                  onClick={() => showPublishModal(notice?.notice_id)}
                                 >
                                   Click here
                                 </a>{" "}
                                 to publish.
                               </p>
                             )}
+                            {/* {showAddAnnouncement && indexedPublishNotice  (
+                <AddAnnouncement
+                notice = {notice}
+                  show={showAddAnnouncement}
+                  onHide={() => {
+                    setShowAddAnnouncement(false);
+                  }}
+                  closeAndLoad={closeAndLoad}
+                />
+              )} */}
                             {hideResponse.includes(notice?.notice_id) && <Row>
                             <Col md={12}>
                               <h6 className='descriptionHeader'>Description :</h6>

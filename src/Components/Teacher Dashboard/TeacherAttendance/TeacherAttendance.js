@@ -119,8 +119,13 @@ const TeacherAttendance = () => {
                     onChange={(e) => handleClassChange(e)}
                   >
                     <option value="">--Grade--</option>
-                    {gradeData?.grade?.map((grade) => {
-                      return <option value={grade?.id}>{grade?.value}</option>;
+                    {gradeData?.grade_details?.grade_details?.map((grade) => {
+                      // console.log("grade - ", grade)
+                      return (
+                        <option value={grade?.grade_id}>
+                          {grade?.grade_id}
+                        </option>
+                      );
                     })}
                   </select>
                 </Col>
@@ -140,9 +145,9 @@ const TeacherAttendance = () => {
                     onChange={(e) => handleSectionSelectChange(e)}
                   >
                     <option value="">--Section--</option>
-                    {gradeData?.section?.map((section) => {
+                    {sectionOptions?.map((section) => {
                       return (
-                        <option value={section.id}>{section.value}</option>
+                        <option value={section.value}>{section.label}</option>
                       );
                     })}
                   </select>

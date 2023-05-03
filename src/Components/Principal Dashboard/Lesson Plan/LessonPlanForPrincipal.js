@@ -48,14 +48,15 @@ function LessonPlanPrinciView(props) {
 
 
 
-  const approveLessonPlan = (lessonId) => {
+  const approveLessonPlan = (lessonDetail) => {
+    console.log("lessonDetail - ", lessonDetail)
     const dataToVerify = {
-       "lesson_id": lessonId.lesson_id,
+       "lesson_id": lessonDetail.chapter_id,
         "verified": true
     }
     verifyLessonPlan(dataToVerify)
     .then((res) => {console.log("Verified - ", res.data)
-    handleVerifyTrue(lessonId.lesson_id)
+    handleVerifyTrue(lessonDetail.chapter_id)
 })
     .catch((err) => console.log("Not Verified"))
   }
@@ -191,7 +192,7 @@ function LessonPlanPrinciView(props) {
                               <Row>
                                 <Col md={8}></Col>
                                 <Col md={2}>
-                    {verifiedTrue ? <Button id={indx} variant="outline-success">Approved</Button> : <Button variant="outline-success" onClick={() => approveLessonPlan(lessons)}>Approve</Button>}
+                    {verifiedTrue ? <Button id={indx} variant="outline-success">Approved</Button> : <Button variant="outline-success" onClick={() => approveLessonPlan(lessonDetail)}>Approve</Button>}
                   </Col>
                   <Col md={2}>
                     {verifiedTrue ? <Button id={indx} variant="outline-danger">Send Back</Button> : <Button variant="outline-danger" onClick={() => showSendbackModal(true)}>Send back</Button>}

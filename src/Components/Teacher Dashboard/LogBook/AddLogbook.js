@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Row, Col } from "react-bootstrap";
 import Select from "react-select";
-import { createLogBook, fetchAllSubjects } from "../../../ApiClient";
+import { createLogBook, fetchAllSubjects, getGradeDetails } from "../../../ApiClient";
 
 const AddLogBook = (props) => {
   const [grade, setGrade] = useState("");
+  const [gradeData, setGradeData] = useState([])
   const [subject, setSubject] = useState("");
   const [teacherName, setTeacherName] = useState();
   const [periodData, setPeriodData] = useState('')
@@ -15,6 +16,7 @@ const AddLogBook = (props) => {
 
   useEffect(() => {
     getAllSubjectsData()
+    getAllGradeDetails()
   },[])
 
   const userDetails = JSON.parse(localStorage.getItem('UserData'))
@@ -75,7 +77,7 @@ const AddLogBook = (props) => {
   }
 
   const handleSectionChange = (e) => {
-    setSection(e.target.value)
+    setSection(e.value)
   }
 
   const getAllSubjectsData = () => {
@@ -109,6 +111,12 @@ const AddLogBook = (props) => {
     .catch((err) => console.log("Logbook Error - ", err))
   }
 
+  const getAllGradeDetails = () => {
+    getGradeDetails()
+    .then((res) => setGradeData(res.data))
+    .catch((err) => console.log(err))
+    }
+
   return (
     <>
       <Modal
@@ -128,9 +136,14 @@ const AddLogBook = (props) => {
               <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Grade</h6>
                 <select className="addLogBookBlock" name="grade" id="grade" onChange = {(e) => handleGradeChange(e)}>
                 <option value="">--Grade--</option>
-                  {props?.gradeData?.grade?.map((grade) => {
-                    return <option value={grade?.id}>{grade?.value}</option>
-                  })}
+                {gradeData?.grade_details?.grade_details?.map((grade) => {
+                      // console.log("grade - ", grade)
+                      return (
+                        <option value={grade?.grade_id}>
+                          {grade?.grade_id}
+                        </option>
+                      );
+                    })}
                 </select>
               </Col>
               <Col md={2}></Col>
@@ -152,11 +165,15 @@ const AddLogBook = (props) => {
             </Row>
             <Row>
             <Col md={5}>
-            <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Period</h6>
-                <select className="addLogBookBlock" name="period" id="period" onChange = {(e) => handlePeriodChange(e)}>
-                <option value="">--Period--</option>
-                  {periodOptions?.map((period) => {
-                    return <option value={period.value}>{period.label}</option>
+              <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Section</h6>
+                {/* <Select
+                  options={sectionOptions}
+                  onChange={(e) => handleSectionChange(e)}
+                /> */}
+                <select className="addLogBookBlock" name="section" id="section" onChange = {(e) => handleSectionChange(e)}>
+                <option value="">--Section--</option>
+                  {sectionOptions?.map((section) => {
+                    return <option value={section.value}>{section.label}</option>
                   })}
                 </select>
               </Col>
@@ -176,22 +193,6 @@ const AddLogBook = (props) => {
                   />
                 </Form.Group>
               </Col>
-            </Row>
-            <Row>
-              <Col md={5}>
-              <h6 style={{font: 'normal normal bold 16px/34px Roboto'}}>Add Section</h6>
-                {/* <Select
-                  options={sectionOptions}
-                  onChange={(e) => handleSectionChange(e)}
-                /> */}
-                <select className="addLogBookBlock" name="section" id="section" onChange = {(e) => handleSectionChange(e)}>
-                <option value="">--Section--</option>
-                  {props?.gradeData?.section?.map((section) => {
-                    return <option value={section.id}>{section.value}</option>
-                  })}
-                </select>
-              </Col>
-              
             </Row>
             <Row style={{marginTop: "32px"}}>
               <Col md={5}>

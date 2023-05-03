@@ -113,7 +113,7 @@ const LoginPage = (props) => {
                     <Form.Group>
                     <a href="#">Forgot password?</a>
                     </Form.Group>
-                    <Button variant="primary" className="loginBtn" onClick={loginMember}>
+                    <Button variant="primary" className="loginBtn" onClick={loginMember} disabled = {!(userName && passwordd)}>
                       Submit
                     </Button>
                   </Form>

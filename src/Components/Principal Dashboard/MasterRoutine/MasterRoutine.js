@@ -125,11 +125,14 @@ const MasterRoutine = () => {
                       onChange={(e) => handleGradeChange(e)}
                     >
                       <option value="">--Grade--</option>
-                      {gradeData?.grade?.map((grade) => {
-                        return (
-                          <option value={grade?.id}>{grade?.value}</option>
-                        );
-                      })}
+                      {gradeData?.grade_details?.grade_details?.map((grade) => {
+                      // console.log("grade - ", grade)
+                      return (
+                        <option value={grade?.grade_id}>
+                          {grade?.grade_id}
+                        </option>
+                      );
+                    })}
                     </select>
                   </Col>
                   <Col md={2}>

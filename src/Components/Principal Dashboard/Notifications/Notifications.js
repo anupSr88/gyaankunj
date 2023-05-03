@@ -15,6 +15,7 @@ const NotificationsForTeacher = () => {
   const [hideResponse, setHideResponse] = useState([]);
   const [sectionExpanded, setSectionExpanded] = useState(false);
   const [selectedRole, setSelectedRole] = useState('')
+  const [initaialSelectRole, setInitialSelectedRole] = useState('principal')
 
   const userName = userDetails?.user_id;
 
@@ -23,13 +24,14 @@ const NotificationsForTeacher = () => {
   }, [selectedRole]);
 
   const roleOptions = [
+    {value: "principal", label: "Self"},
     {value: "teacher", label: "Teacher"},
     {value: "student", label: "Student"},
    ]
 
   const allNotification = () => {
     const userId = userName;
-    const role = selectedRole;
+    const role = selectedRole == "teacher" ? "teacher" : selectedRole == "student" ? "student" : "principal";
     viewNotification(userId, role)
       .then((res) => setNotificationData(res.data))
       .catch((err) => console.log("Notices err - ", err));
@@ -80,7 +82,7 @@ const NotificationsForTeacher = () => {
                 <h4>Notification</h4>
               </Col>
               <Col md={3} className="teacherRoutingDD">
-              <Select placeholder="Select Grade" options={roleOptions} onChange={e => handleRoleChange(e)} isSearchable={false} />
+              <Select placeholder="Select Role" options={roleOptions} onChange={e => handleRoleChange(e)} isSearchable={false} />
               </Col>
             </Row>
 

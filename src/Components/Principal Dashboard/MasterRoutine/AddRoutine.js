@@ -120,6 +120,8 @@ const AddRoutine = (props) => {
     setSection(e.target.value)
   }
 
+  console.log("section - ", section)
+
   const handleDayChange = (e) => {
     setDayData(e.target.value)
   }
@@ -201,10 +203,14 @@ const AddRoutine = (props) => {
 
                 <select className="masterRoutineGradeView" name="grade" id="grade" onChange = {(e) => handleGradeChange(e)} disabled = {grade !== ''}>
                 <option value="">--Grade--</option>
-                  {gradeData?.grade_details?.grade_details?.map((grade) => {
-                    console.log("grade - ", grade)
-                    return <option value={grade?.grade_id}>{grade?.grade_id}</option>
-                  })}
+                {gradeData?.grade_details?.grade_details?.map((grade) => {
+                      // console.log("grade - ", grade)
+                      return (
+                        <option value={grade?.grade_id}>
+                          {grade?.grade_id}
+                        </option>
+                      );
+                    })}
                 </select>
                 
               </Col>
@@ -225,14 +231,20 @@ const AddRoutine = (props) => {
             <Col md={5} style={{paddingLeft:"25%"}}>
               {grade && <fieldset>
                 <h6>Add Section</h6>
-                <select className="masterRoutineGradeView" name="section" id="section" onChange = {(e) => handleSectionChange(e)} disabled = {section !== ''}>
-                <option value="">--Section--</option>
-                  {sectionOptions?.map((section) => {
-                     
-                      return <option value={section?.value}>{section?.label}</option>
-                    
-                  })}
-                </select>
+                <Form.Select
+                    className="lessonPlanSubject"
+                    name="section"
+                    id="section"
+                    style={{width:"292px"}}
+                    onChange={(e) => handleSectionChange(e)}
+                  >
+                    <option value="">--Section--</option>
+                    {sectionOptions?.map((section, indx) => {
+                      return (
+                        <option value={section?.value}>{section?.label}</option>
+                      );
+                    })}
+                  </Form.Select>
                 </fieldset>}
               </Col>
               <Col md={2}></Col>

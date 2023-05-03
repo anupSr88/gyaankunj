@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar, Button } from "react-bootstrap";
+import { Row, Col, ButtonGroup, ToggleButton, Dropdown, Table, ProgressBar, Button, Form } from "react-bootstrap";
 import { useState } from "react";
 import { attendanceOverview, viewAttendanceReport, getGradeDetails } from '../../../ApiClient'
 import { useEffect } from 'react';
@@ -90,11 +90,11 @@ const AttendanceOverview = () => {
       setYear(e.target.value)
     }
     
-    const handleSectionChange = (e) => {
-      console.log("e -", e)
-      setSection(e.target.defaultValue)
-      setRadioValue(e.currentTarget.value)
-    }
+    // const handleSectionChange = (e) => {
+    //   console.log("e -", e)
+    //   setSection(e.target.defaultValue)
+    //   setRadioValue(e.currentTarget.value)
+    // }
     
     const getAttendanceOverview = () => {
       const grade_id = grade
@@ -373,18 +373,31 @@ const AttendanceOverview = () => {
                 <Col md={2} className="teacherRoutingDD">
                     <select className="principalGradeView" name="grade" id="grade" onChange = {(e) => handleGradeChange(e)}>
                 <option value="">--Grade--</option>
-                  {gradeData?.grade?.map((grade) => {
-                    return <option value={grade?.id}>{grade?.value}</option>
-                  })}
+                {gradeData?.grade_details?.grade_details?.map((grade) => {
+                      // console.log("grade - ", grade)
+                      return (
+                        <option value={grade?.grade_id}>
+                          {grade?.grade_id}
+                        </option>
+                      );
+                    })}
                 </select>
                     </Col>
                     <Col md={2} className="teacherRoutingDD">
-                    <select className="principalGradeView" name="section" id="section" onChange = {(e) => handleSectionSelectChange(e)}>
-                <option value="">--Section--</option>
-                  {gradeData?.section?.map((section) => {
-                    return <option value={section.id}>{section.value}</option>
-                  })}
-                </select>
+                    <Form.Select
+                    className="lessonPlanSubject"
+                    name="section"
+                    id="section"
+                    style={{width: "165px", height: "44px", borderRadius: "6px", border: "1px solid gray"}}
+                    onChange={(e) => handleSectionSelectChange(e)}
+                  >
+                    <option value="">--Section--</option>
+                    {sectionOptions?.map((section, indx) => {
+                      return (
+                        <option value={section?.value}>{section?.label}</option>
+                      );
+                    })}
+                  </Form.Select>
                     </Col>
                 <Col md={2} className="teacherRoutingDD">
                   <span>
@@ -398,7 +411,7 @@ const AttendanceOverview = () => {
                   </span>
                 </Col>
                 <Col md={1}>
-                <Button variant="outline-primary" style={{marginTop: "17px"}} onClick={getFullAttendanceData}>Submit</Button>
+                <Button variant="outline-primary" style={{marginTop: "17px"}} onClick={getFullAttendanceData} disabled={!(classSelect && sectionSelect && yearData)}>Submit</Button>
                 </Col>
               </Row>
               <div className="routineSection">
@@ -505,7 +518,7 @@ const AttendanceOverview = () => {
                   </span>
                 </Col>
                 <Col md={1}>
-                <Button variant="outline-primary" style={{marginTop: "17px"}} onClick={getFullAttendanceData}>Submit</Button>
+                <Button variant="outline-primary" style={{marginTop: "17px"}} onClick={getFullAttendanceData} disabled={!(yearData)}>Submit</Button>
                 </Col>
                 <div className="routineSection">
                   <div>

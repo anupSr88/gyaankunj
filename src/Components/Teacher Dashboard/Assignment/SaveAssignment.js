@@ -67,7 +67,6 @@ const SaveAssignment = (props) => {
     };
 
     const assignmentDataFinal = (finalData) => {
-      console.log("finalData - ", finalData)
       let newAssignmentData = [...assignmentDataForStudent]
       let newQuestionSet = {
             "type": finalData?.type,
@@ -122,6 +121,8 @@ const publishAssignmentModule = () => {
   .catch((err) => console.log("Assignment list err - ", err))
 }
 
+console.log("Save props - ", props)
+
   return (
     <>
     
@@ -149,46 +150,14 @@ const publishAssignmentModule = () => {
                       boxShadow: "0px 3px 6px #B4B3B329",
                     }}>
             <Col md={2}>
-            <Form.Group className="mb-3">
-                  {/* <Form.Label>Select grade</Form.Label> */}
-                  <Form.Select
-                    
-                    name="grade"
-                    id="grade"
-                    onChange={(e) => handleGradeChange(e)}
-                  >
-                    <option value="">--Grade--</option>
-                    {gradeData?.grade_details?.grade_details?.map((grade) => {
-                      // console.log("grade - ", grade)
-                      return (
-                        <option value={grade?.grade_id}>
-                          {grade?.grade_id}
-                        </option>
-                      );
-                    })}
-                  </Form.Select>
-                </Form.Group>
-            </Col>
-            <Col md={1}></Col>
-            <Col md={2}>
-            <Form.Group className="mb-3">
-                  {/* <Form.Label>Select Section</Form.Label> */}
-                  <Form.Select
-                    
-                    name="section"
-                    id="section"
-                    onChange={(e) => setSectionData(e.target.value)}
-                  >
-                    <option value="">--Section--</option>
-                    {sectionOptions?.map((section, indx) => {
-                      return (
-                        <option value={section?.value}>{section?.label}</option>
-                      );
-                    })}
-                  </Form.Select>
-                </Form.Group>
-            </Col>
-            <Col md={3}>
+                <h5>Grade:</h5>
+                <p>{props?.assignmentGrade}</p>
+              </Col>
+              <Col md={2}>
+              <h5>Section:</h5>
+                <p>{props?.assignmentSection}</p>
+              </Col>
+            <Col md={4}>
               
             </Col>
             <Col md={2}>
@@ -276,9 +245,9 @@ const publishAssignmentModule = () => {
             </Col>
             <Col md={1}></Col>
             <Col md={2}>
-              {grade && sectionData && <Button variant="success" onClick={addQuestionSetData}>
+              <Button variant="success" onClick={addQuestionSetData}>
                 Add Questions
-              </Button>}
+              </Button>
             </Col>
           </Row>
         </Modal.Body>

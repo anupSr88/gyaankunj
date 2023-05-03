@@ -23,6 +23,7 @@
     "react-moment": "^1.1.3",
     "react-pdf": "^6.2.2",
     "react-pro-sidebar": "^0.7.1",
+    "react-promise-tracker": "^2.1.1",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.0",

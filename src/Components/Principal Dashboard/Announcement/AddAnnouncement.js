@@ -53,7 +53,7 @@ const AddAnnouncement = (props) => {
   }
 
   const closeModal = () => {
-    props.closeAndLoad()
+    props.onHide()
   }
 
   return (
@@ -109,7 +109,7 @@ const AddAnnouncement = (props) => {
           {/* <Button variant="outline-primary" style={{ alignItems: "center" }}>
             Reset
           </Button> */}
-          <Button disabled={(saveNoticeDetails?.notice_id)} variant="outline-primary" onClick={saveNoticeData}>Save</Button>
+          <Button disabled={(saveNoticeDetails?.notice_id) || !(noticeDescription && noticeSubject)} variant="outline-primary" onClick={saveNoticeData}>Save</Button>
           <Button disabled={(!(saveNoticeDetails?.notice_id))} variant="outline-primary" onClick={publishNoticeData}>Publish</Button>
           <Button variant="outline-primary" onClick={closeModal}>Close</Button>
         </Modal.Footer>

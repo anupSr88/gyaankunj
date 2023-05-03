@@ -72,10 +72,10 @@ function HeaderComp(props) {
                     {/* <img src = {downAngle} />  */}
                     <Nav>
                       <NavDropdown align="end" style={{fontSize:"40px", position:"relative", bottom: "13px", right:"14px"}}>
-                      <NavDropdown.Item>
+                      <NavDropdown.Item disabled>
                         {userDetails?.name}
                       </NavDropdown.Item>
-                      <NavDropdown.Item>
+                      <NavDropdown.Item disabled>
                       {userDetails?.role}
                       </NavDropdown.Item>
                       <NavDropdown.Divider />

@@ -13,6 +13,7 @@ const AssignmentSheet = (props) => {
 
     const [fullscreen, setFullscreen] = useState(true);
     const [assignmentFullData, setassignmentFullData] = useState([])
+    const [dataFromChildComponent, setDataFromChildComponent] = useState([])
 
     useEffect(() => {
       fetchAssignmentData();
@@ -27,6 +28,12 @@ const AssignmentSheet = (props) => {
       .then((res) => setassignmentFullData(res.data))
       .catch((err) => console.log("AssignmentData err - ", err)))
     }
+
+    const getAnswerFromChild = (data) => {
+      setDataFromChildComponent(data)
+    }
+
+    console.log("dataFromChildComponent - ", dataFromChildComponent)
 
   return (
     <>
@@ -80,7 +87,10 @@ const AssignmentSheet = (props) => {
                   return (
                     answerType?.type === "fill_in_the_blanks" && (
                       <AnswerTypeFillTheBlank
-                        assignmentFullData={assignmentFullData}
+                        assignmentFullData={assignmentFullData?.assignment_data?.assignmentDataForStudent?.filter((fillQuestionSet, indx) => {
+                          return fillQuestionSet?.type === "fill_in_the_blanks"
+                        })}
+                        getAnswerFromChild={getAnswerFromChild}
                       />
                     )
                   );

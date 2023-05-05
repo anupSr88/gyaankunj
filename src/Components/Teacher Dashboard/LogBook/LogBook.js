@@ -127,9 +127,9 @@ const LogBook = () => {
                     onChange={(e) => handleSectionChange(e)}
                   >
                     <option value="">--Section--</option>
-                    {gradeData?.section?.map((section) => {
+                    {sectionOptions?.map((section, indx) => {
                       return (
-                        <option value={section.id}>{section.value}</option>
+                        <option value={section?.value}>{section?.label}</option>
                       );
                     })}
                   </select>

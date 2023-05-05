@@ -8,6 +8,7 @@ import * as myConstant from './fileConstant'
 import { useNavigate } from "react-router-dom";
 import { loginUser } from '../ApiClient'
 import LoginError from './LoginError'
+import { trackPromise } from "react-promise-tracker";
 
 const LoginPage = (props) => {
 
@@ -35,12 +36,12 @@ const LoginPage = (props) => {
       "Basic " + base64.encode(username + ":" + password)
     );
 
-    let data = fetch(url, { method: "POST", headers: headers })
+    let data = trackPromise(fetch(url, { method: "POST", headers: headers })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log("data - ", data);
+        // console.log("data - ", data);
         if (data.status === "success") {
           let user = localStorage.setItem("UserData", JSON.stringify(data));
           props.onHide();
@@ -68,7 +69,7 @@ const LoginPage = (props) => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      }));
   };
 
 

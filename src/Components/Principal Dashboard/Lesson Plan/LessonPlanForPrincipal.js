@@ -15,6 +15,7 @@ function LessonPlanPrinciView(props) {
   const [verifiedTrue, setverifiedTrue] = useState(false);
   const [lessonAllDetails, setLessonAllDetails] = useState([]);
   const [sendBackModal, showSendbackModal] = useState(false)
+  const [index, setIndex] = useState(null)
 
   // const showLessonPlanDetails = (id) => {
   //     setExpandcard(!expandCard)
@@ -48,22 +49,27 @@ function LessonPlanPrinciView(props) {
 
 
 
-  const approveLessonPlan = (lessonDetail) => {
-    console.log("lessonDetail - ", lessonDetail)
+  const approveLessonPlan = (id) => {
+    console.log("lessonDetail - ", id)
     const dataToVerify = {
-       "lesson_id": lessonDetail.chapter_id,
+       "lesson_id": id,
         "verified": true
     }
     verifyLessonPlan(dataToVerify)
-    .then((res) => {console.log("Verified - ", res.data)
-    handleVerifyTrue(lessonDetail.chapter_id)
+    .then((res) => {
+      console.log("Verified - ", res.data)
+      
+    handleVerifyTrue(id)
 })
     .catch((err) => console.log("Not Verified"))
   }
 
   const handleVerifyTrue = (id) => {
+    setIndex(id)
     setverifiedTrue(true);
   }
+
+  console.log("index - ", index)
 
   return (
     <>
@@ -147,6 +153,7 @@ function LessonPlanPrinciView(props) {
                     {hideResponse?.includes(lessons?.lesson_id) &&
                       lessonAllDetails?.lesson_plan_data?.map(
                         (lessonDetail, indx) => {
+                          console.log("lessonDetail - ", lessonDetail)
                           return (
                             <fieldset>
                               <Row className="lessonData">
@@ -192,7 +199,7 @@ function LessonPlanPrinciView(props) {
                               <Row>
                                 <Col md={8}></Col>
                                 <Col md={2}>
-                    {verifiedTrue ? <Button id={indx} variant="outline-success">Approved</Button> : <Button variant="outline-success" onClick={() => approveLessonPlan(lessonDetail)}>Approve</Button>}
+                    { verifiedTrue && index ===  lessonDetail?.chapter_id ? <Button id={indx} variant="outline-success">Approved</Button> : <Button variant="outline-success" onClick={() => approveLessonPlan(lessonDetail?.chapter_id)}>Approve</Button>}
                   </Col>
                   <Col md={2}>
                     {verifiedTrue ? <Button id={indx} variant="outline-danger">Send Back</Button> : <Button variant="outline-danger" onClick={() => showSendbackModal(true)}>Send back</Button>}

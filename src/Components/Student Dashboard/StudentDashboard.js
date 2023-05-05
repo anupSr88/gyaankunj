@@ -37,7 +37,7 @@ const getStudentAssignmentList = () => {
 }
 
 const getStudentRoutine = () => {
-  const grade="1"
+  const grade=userDetails?.grade
   const year = "2022"
   studentRoutine(grade, year)
   .then((res) => setStudentRoutineData(res.data))
@@ -65,6 +65,8 @@ const weekDayOption = [
     setWeekDayToFetch(e.value)
     // fetchTeacherRoutine()
   }
+
+  console.log("weekDayToFetch - ", weekDayToFetch)
     return ( 
         <>
         <Row>

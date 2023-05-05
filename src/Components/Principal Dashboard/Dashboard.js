@@ -30,11 +30,14 @@ const PDashboard = () => {
     const [weekDayToFetch, setWeekDayToFetch] = useState('')
 
 useEffect(() => {
-    getAttendanceOverview()
-    getAllGradeDetails()
-    getAllTeachersData()
-    fetchTeacherRoutine()
-},[grade, section, teacherName, weekDayToFetch])
+  getAllTeachersData()
+  fetchTeacherRoutine()
+},[teacherName && weekDayToFetch])
+
+useEffect(() => {
+  getAttendanceOverview()
+  getAllGradeDetails()
+},[grade && section])
 
 
 const gradeOptions = [
@@ -499,7 +502,6 @@ const fetchTeacherRoutine = () => {
               </Col>
               {<Col md={9} style={{textAlign : "left"}}>
                 {princiViewLogBook?.log_book_data?.name_of_absentees?.map((absentees, indx) => {
-                  console.log("Absentees - ", absentees)
                  return absentees?.student_name !== null && <span>{`${absentees?.student_name}, `}</span>
                 })}
               </Col>}
@@ -510,7 +512,6 @@ const fetchTeacherRoutine = () => {
               </Col>
               <Col md={9} style={{textAlign : "left"}}>
               {princiViewLogBook?.log_book_data?.name_of_dress_defaulters?.map((dressDefaulter, indx) => {
-                console.log("dressDefaulter - ", dressDefaulter)
                  return dressDefaulter?.student_name !== null && <span>{`${dressDefaulter?.student_name}, `}</span>
                 })}
               </Col>
